@@ -355,9 +355,20 @@ app.post("/chat", async(req, res) => {
    SERVER START
 ========================= */
 const PORT = process.env.PORT || 5000;
-connectDB();
 
-app.listen(PORT, () => {
-    // Fix: changed ${port} to ${PORT}
-    console.log(`Server running on port ${PORT}`);
-});
+// Start server and attempt DB connection
+async function startServer() {
+    try {
+        await connectDB();
+        console.log("✅ MongoDB connected");
+    } catch (err) {
+        console.error("⚠️ MongoDB connection failed, but server continuing:", err.message);
+        // Don't exit - server can still run without DB for now
+    }
+
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+startServer();
