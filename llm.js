@@ -12,15 +12,15 @@ const LLM_PROVIDER = process.env.LLM_PROVIDER || "groq";
    GEMINI CLIENT
 ========================= */
 const genAI =
-    LLM_PROVIDER === "gemini" ?
-    new GoogleGenerativeAI(process.env.GEMINI_API_KEY) :
-    null;
+  LLM_PROVIDER === "gemini"
+    ? new GoogleGenerativeAI(process.env.GEMINI_API_KEY)
+    : null;
 
 /* =========================
    MAIN FUNCTION
 ========================= */
 export async function askLLM(message, policeCalled = false, history = []) {
-    let systemPrompt = `
+  let systemPrompt = `
 You are an intent extractor and response generator for a travel app.
 
 Return ONLY valid JSON. No text, no explanation.
@@ -87,16 +87,17 @@ Rules:
 9. for bus/flight booking if user say only one city name then ask in general for please tell destination too and set intent to general
 10. if user just reply number like 5000,10000 check previous message if user asking for flight or bus or hotel, 
 11. for any price mentioned only numbers like 1000, 2000 then assume lower range to be 0
-
+12. If someone ask for customer support give number +91 8434827927 tell he is my developer , for any customer or tech related support reach out to him, he would help you
+.If someone ask who developed you,TravoAI, then tell great developer Mr. Aryan has created me his linkedin profile is https://www.linkedin.com/in/aryan-kumar-raj-988587b3/
 `;
 
-    let userMessage = message;
+  let userMessage = message;
 
-    /* =========================
-                                               🚨 POLICE CONTEXT
-                                            ========================= */
-    if (policeCalled) {
-        systemPrompt = `
+  /* =========================
+                                                         🚨 POLICE CONTEXT
+                                                      ========================= */
+  if (policeCalled) {
+    systemPrompt = `
 You are an intent extractor and response generator for a travel app.
 
 Return ONLY valid JSON.
@@ -170,58 +171,60 @@ Rules:
 10. if user just reply number like 5000,10000 check previous message if user asking for flight or bus or hotel, 
 11. for any price mentioned only numbers like 1000, 2000 then assume lower range to be 0
 
+12. If someone ask for customer support give number +91 8434827927
+.If someone ask who developed you,TravoAI, then tell great developer Mr. Aryan has created me his linkedin profile is https://www.linkedin.com/in/aryan-kumar-raj-988587b3/
 `;
 
-        userMessage = `IMPORTANT CONTEXT: Police has already been called.
+    userMessage = `IMPORTANT CONTEXT: Police has already been called.
 
 User message: "${message}"`;
-    }
+  }
 
-    /* =========================
-                                               BUILD MESSAGES
-                                            ========================= */
-    const messages = [...history, { role: "user", content: userMessage }];
+  /* =========================
+                                                         BUILD MESSAGES
+                                                      ========================= */
+  const messages = [...history, { role: "user", content: userMessage }];
 
-    let rawResponse;
+  let rawResponse;
 
-    /* =========================
-                                               🔁 PROVIDER SWITCH
-                                            ========================= */
-    if (LLM_PROVIDER === "gemini") {
-        rawResponse = await callGemini(systemPrompt, messages);
-    } else {
-        rawResponse = await callGroq(systemPrompt, messages);
-    }
+  /* =========================
+                                                         🔁 PROVIDER SWITCH
+                                                      ========================= */
+  if (LLM_PROVIDER === "gemini") {
+    rawResponse = await callGemini(systemPrompt, messages);
+  } else {
+    rawResponse = await callGroq(systemPrompt, messages);
+  }
 
-    return JSON.parse(rawResponse);
+  return JSON.parse(rawResponse);
 }
 
 /* =========================
    GROQ CALL
 ========================= */
 async function callGroq(systemPrompt, messages) {
-    const completion = await groq.chat.completions.create({
-        model: "llama-3.1-8b-instant",
-        temperature: 0,
-        messages: [{ role: "system", content: systemPrompt }, ...messages],
-    });
+  const completion = await groq.chat.completions.create({
+    model: "llama-3.1-8b-instant",
+    temperature: 0,
+    messages: [{ role: "system", content: systemPrompt }, ...messages],
+  });
 
-    return completion.choices[0].message.content;
+  return completion.choices[0].message.content;
 }
 
 /* =========================
    GEMINI CALL
 ========================= */
 async function callGemini(systemPrompt, messages) {
-    const model = genAI.getGenerativeModel({
-        model: "gemini-pro",
-        generationConfig: {
-            temperature: 0,
-            responseMimeType: "application/json",
-        },
-    });
+  const model = genAI.getGenerativeModel({
+    model: "gemini-pro",
+    generationConfig: {
+      temperature: 0,
+      responseMimeType: "application/json",
+    },
+  });
 
-    const prompt = `
+  const prompt = `
 ${systemPrompt}
 
 Conversation:

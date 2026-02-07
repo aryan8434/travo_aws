@@ -7,6 +7,11 @@ import { saveMessage } from "./utils/saveChat.js";
 import { getChatHistory } from "./utils/getChatHistory.js";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const app = express();
 app.use(
@@ -163,9 +168,6 @@ function mockHotels(max) {
 /* =========================
    HEALTH CHECK
 ========================= */
-app.get("/", (req, res) => {
-  res.status(200).send("TravoAI backend is running");
-});
 
 /* =========================
    CHAT ENDPOINT
@@ -198,8 +200,8 @@ app.post("/chat", async (req, res) => {
     }
 
     /* =========================
-                                                                                                                                                                                                                       HOTEL SEARCH
-                                                                                                                                                                                                                    ========================= */
+                                                                                                                                                                                                                                                               HOTEL SEARCH
+                                                                                                                                                                                                                                                            ========================= */
     if (intent.intent === "hotel_search") {
       if (!intent.budget) {
         return res.json({
@@ -341,8 +343,8 @@ app.post("/chat", async (req, res) => {
     }
 
     /* =========================
-                                                                                                                                                                                                                       DEFAULT / GENERAL
-                                                                                                                                                                                                                    ========================= */
+                                                                                                                                                                                                                                                               DEFAULT / GENERAL
+                                                                                                                                                                                                                                                            ========================= */
     await saveMessage(sessionId, "llm", responseText);
 
     return res.json({
@@ -383,6 +385,11 @@ async function startServer() {
 
 startServer();
 
+app.use(express.static(path.join(__dirname, "build")));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
 // Global error handler — return JSON on server errors (prevents HTML error pages)
 app.use((err, req, res, next) => {
   console.error("Unhandled error:", err);
