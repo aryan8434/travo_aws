@@ -30,8 +30,10 @@ router.post("/book", auth, async (req, res) => {
     return res.status(400).json({ error: "Insufficient wallet balance" });
   }
 
+  const bookingWithTimestamp = { ...booking, createdAt: new Date() };
+
   await User.findByIdAndUpdate(req.userId, {
-    $push: { bookings: booking },
+    $push: { bookings: bookingWithTimestamp },
     $inc: { wallet: -price },
   });
 
