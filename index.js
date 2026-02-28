@@ -8,6 +8,7 @@ import { getChatHistory } from "./utils/getChatHistory.js";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
 import path from "path";
+import { fetchRealHotels } from "./providers/hotelProvider.js";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -174,7 +175,7 @@ function mockHotels(max) {
 ========================= */
 app.post("/chat", async (req, res) => {
   try {
-    const { message, policeCalled = false, sessionId } = req.body;
+    const { message, policeCalled = false, sessionId, userCity } = req.body;
     const history = await getChatHistory(sessionId);
 
     if (!sessionId) {
@@ -187,7 +188,7 @@ app.post("/chat", async (req, res) => {
     // ✅ Save user message
     await saveMessage(sessionId, "user", message);
 
-    const intent = await askLLM(message, policeCalled, history);
+    const intent = await askLLM(message, policeCalled, history, userCity);
 
     let responseText =
       intent.message ||
@@ -212,7 +213,22 @@ app.post("/chat", async (req, res) => {
         });
       }
 
-      const hotels = mockHotels(intent.budget);
+      // Try fetching real hotels if city is available
+      let hotels = [];
+      const cityToSearch = intent.city || userCity;
+      
+      if (cityToSearch) {
+        console.log(`🔍 Fetching real hotels for: ${cityToSearch}`);
+        hotels = await fetchRealHotels(cityToSearch);
+      }
+
+      // Fallback to mock if real API fails or returns no results
+      if (hotels.length === 0) {
+        hotels = mockHotels(intent.budget);
+      } else {
+        // Filter real hotels by budget
+        hotels = hotels.filter((h) => h.price <= intent.budget).slice(0, 3);
+      }
 
       if (hotels.length === 0) {
         return res.json({
@@ -223,10 +239,11 @@ app.post("/chat", async (req, res) => {
         });
       }
 
+      const locationText = cityToSearch ? ` in ${cityToSearch}` : "";
       return res.json({
         intent: "hotel_search",
         type: "hotel",
-        text: `🏨 Top hotels under ₹${intent.budget}`,
+        text: `🏨 Top hotels under ₹${intent.budget}${locationText}`,
         results: hotels,
       });
     }

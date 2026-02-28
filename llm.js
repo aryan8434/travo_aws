@@ -19,7 +19,7 @@ const genAI =
 /* =========================
    MAIN FUNCTION
 ========================= */
-export async function askLLM(message, policeCalled = false, history = []) {
+export async function askLLM(message, policeCalled = false, history = [], userCity = null) {
   let systemPrompt = `
 You are an intent extractor and response generator for a travel app.
 
