@@ -20,6 +20,10 @@ router.get("/me", auth, async (req, res) => {
 router.post("/book", auth, async (req, res) => {
   const { booking } = req.body;
 
+  if (!booking || typeof booking !== "object") {
+    return res.status(400).json({ error: "Booking payload is required" });
+  }
+
   const price = Number(booking.price) || 0;
 
   // check wallet balance server-side to avoid negative balances
@@ -30,7 +34,16 @@ router.post("/book", auth, async (req, res) => {
     return res.status(400).json({ error: "Insufficient wallet balance" });
   }
 
-  const bookingWithTimestamp = { ...booking, createdAt: new Date() };
+  const normalizedLocation =
+    typeof booking.location === "string" && booking.location.trim()
+      ? booking.location.trim()
+      : "Location not allowed";
+
+  const bookingWithTimestamp = {
+    ...booking,
+    location: normalizedLocation,
+    createdAt: new Date(),
+  };
 
   await User.findByIdAndUpdate(req.userId, {
     $push: { bookings: bookingWithTimestamp },

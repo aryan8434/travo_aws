@@ -19,14 +19,19 @@ const genAI =
 /* =========================
    MAIN FUNCTION
 ========================= */
-export async function askLLM(message, policeCalled = false, history = [], userCity = null) {
+export async function askLLM(
+  message,
+  policeCalled = false,
+  history = [],
+  userCity = null,
+) {
   let systemPrompt = `
 You are an intent extractor and response generator for a travel app.
 
 Return ONLY valid JSON. No text, no explanation.
 Strictly follow this schema:
 {
-  "intent": "hotel_search | police | bus | flight | trip_plan | general",
+  "intent": "hotel_search | police | bus | flight | trip_plan | weather | general",
   "budget": number | null,
   "minPrice": number | null,
   "maxPrice": number | null,
@@ -42,6 +47,10 @@ TIME SLOTS:
 - afternoon: 12:00 to 18:00 (6 PM)
 - evening: 18:00 to 21:00 (9 PM)
 - night: 21:00 to 6:00
+
+USER_LOCATION_CONTEXT:
+- Current detected city (from device): ${userCity || "Unknown"}
+- If city is "Unknown", geolocation is blocked/disabled.
 
 Rules:
 1. If the user asks to PLAN A TRIP:
@@ -74,21 +83,32 @@ Rules:
    - if time preference not mentioned, ask for time preference
    - message = null
 
-5. If the user asks for police or emergency help:
+5. If the user asks for weather:
+   - intent = "weather"
+   - If a city is explicitly mentioned in current message, extract that in "city" and use it.
+   - Else if userCity is NOT "Unknown", use userCity as default.
+   - If userCity is "Unknown":
+     - AI extracts "city" from message.
+     - If no city in message, AI MUST ask: "Please tell me the city name as your device location is disabled."
+     - If city is provided, AI sets it and proceed.
+
+5.1 If user says things like "my city is X", "set city to X", "change my location to X", always extract X in "city" even when intent is "general".
+
+6. If the user asks for police or emergency help:
    - intent = "police"
    - ALWAYS include message according to you whatever you like
 
-6. Otherwise:
+7. Otherwise:
    - intent = "general"
    and answer based on previous chat like a friend, You should give best user experience and guide user as a friend
 
-7. Even if the user is asking for booking you can reply as a general intent and correct the user as a friend.
-8. If police is on the way you can set intent general and talk to the user.
-9. for bus/flight booking if user say only one city name then ask in general for please tell destination too and set intent to general
-10. if user just reply number like 5000,10000 check previous message if user asking for flight or bus or hotel, 
-11. for any price mentioned only numbers like 1000, 2000 then assume lower range to be 0
-12. If someone ask for customer support give number +91 8434827927 tell he is my developer , for any customer or tech related support reach out to him, he would help you
-.If someone ask who developed you,TravoAI, then tell great developer Mr. Aryan has created me his linkedin profile is https://www.linkedin.com/in/aryan-kumar-raj-988587b3/
+8. Even if the user is asking for booking you can reply as a general intent and correct the user as a friend.
+9. If police is on the way you can set intent general and talk to the user.
+10. for bus/flight booking if user say only one city name then ask in general for please tell destination too and set intent to general
+11. if user just reply number like 5000,10000 check previous message if user asking for flight or bus or hotel, 
+12. for any price mentioned only numbers like 1000, 2000 then assume lower range to be 0
+13. If someone ask for customer support give number +91 8434827927 tell he is my developer , for any customer or tech related support reach out to him, he would help you
+14. If someone ask who developed you,TravoAI, then tell great developer Mr. Aryan has created me his linkedin profile is https://www.linkedin.com/in/aryan-kumar-raj-988587b3/
 `;
 
   let userMessage = message;
@@ -186,17 +206,29 @@ User message: "${message}"`;
   const messages = [...history, { role: "user", content: userMessage }];
 
   let rawResponse;
-
-  /* =========================
-                                                         🔁 PROVIDER SWITCH
-                                                      ========================= */
   if (LLM_PROVIDER === "gemini") {
     rawResponse = await callGemini(systemPrompt, messages);
   } else {
     rawResponse = await callGroq(systemPrompt, messages);
   }
 
-  return JSON.parse(rawResponse);
+  let cleanResponse = rawResponse;
+  const jsonMatch = rawResponse.match(/\{[\s\S]*\}/);
+  if (jsonMatch) {
+    cleanResponse = jsonMatch[0];
+  }
+
+  try {
+    return JSON.parse(cleanResponse);
+  } catch (err) {
+    console.error("LLM Parse Error:", err.message);
+    console.log("Raw Response was:", rawResponse);
+    return {
+      intent: "general",
+      message:
+        "I'm sorry, I'm having trouble processing that right now. Could you please try again?",
+    };
+  }
 }
 
 /* =========================

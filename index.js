@@ -5,10 +5,12 @@ import { askLLM } from "./llm.js";
 import { connectDB } from "./db.js";
 import { saveMessage } from "./utils/saveChat.js";
 import { getChatHistory } from "./utils/getChatHistory.js";
+import { getSessionCity, setSessionCity } from "./utils/sessionCity.js";
 import authRoutes from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
 import path from "path";
 import { fetchRealHotels } from "./providers/hotelProvider.js";
+import { fetchWeather } from "./providers/weatherProvider.js";
 import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -23,8 +25,6 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   }),
 );
-app.use(cors());
-
 app.use(express.json());
 app.use("/user", userRoutes);
 
@@ -166,6 +166,47 @@ function mockHotels(max) {
     .slice(0, 3);
 }
 
+function normalizeCityName(rawCity) {
+  if (!rawCity || typeof rawCity !== "string") return null;
+
+  const cleaned = rawCity
+    .replace(/[^a-zA-Z\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (!cleaned) return null;
+
+  return cleaned
+    .split(" ")
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+    .join(" ");
+}
+
+function extractCityFromPrompt(message) {
+  if (!message || typeof message !== "string") return null;
+
+  const patterns = [
+    /(?:my\s+city\s+is|i\s+am\s+in|i'm\s+in|im\s+in|set\s+(?:my\s+)?city\s*(?:to)?|change\s+(?:my\s+)?city\s*(?:to)?|update\s+(?:my\s+)?city\s*(?:to)?|my\s+location\s+is|location\s+is)\s+([a-zA-Z\s]{2,40})/i,
+  ];
+
+  for (const pattern of patterns) {
+    const match = message.match(pattern);
+    if (match?.[1]) {
+      return normalizeCityName(match[1]);
+    }
+  }
+
+  return null;
+}
+
+function isLocationQuery(message) {
+  if (!message || typeof message !== "string") return false;
+
+  return /(?:what(?:'s|\s+is)\s+(?:my\s+)?(?:city|location)|my\s+(?:city|location|loction)|where\s+am\s+i)/i.test(
+    message,
+  );
+}
+
 /* =========================
    HEALTH CHECK
 ========================= */
@@ -176,7 +217,6 @@ function mockHotels(max) {
 app.post("/chat", async (req, res) => {
   try {
     const { message, policeCalled = false, sessionId, userCity } = req.body;
-    const history = await getChatHistory(sessionId);
 
     if (!sessionId) {
       return res.status(400).json({
@@ -185,10 +225,46 @@ app.post("/chat", async (req, res) => {
       });
     }
 
+    console.log(
+      `[CHAT] msg: "${message}" | session: ${sessionId} | city: ${userCity}`,
+    );
+    const history = await getChatHistory(sessionId);
+
+    const incomingCity = normalizeCityName(userCity);
+    const sessionCity = await getSessionCity(sessionId);
+    let activeCity = incomingCity || sessionCity || null;
+
+    if (incomingCity && incomingCity !== sessionCity) {
+      activeCity = await setSessionCity(sessionId, incomingCity);
+    }
+
+    const cityFromPrompt = extractCityFromPrompt(message);
+    if (cityFromPrompt) {
+      activeCity = await setSessionCity(sessionId, cityFromPrompt);
+    }
+
+    if (isLocationQuery(message)) {
+      const locationText = activeCity
+        ? `📍 Your current city is ${activeCity}.`
+        : "📍 I can’t detect your location yet. Please tell me your city name (example: My city is Jaipur).";
+
+      await saveMessage(sessionId, "llm", locationText);
+      return res.json({
+        intent: "general",
+        text: locationText,
+        activeCity,
+      });
+    }
+
     // ✅ Save user message
     await saveMessage(sessionId, "user", message);
 
-    const intent = await askLLM(message, policeCalled, history, userCity);
+    const intent = await askLLM(message, policeCalled, history, activeCity);
+
+    const intentCity = normalizeCityName(intent?.city);
+    if (intentCity && intentCity !== activeCity) {
+      activeCity = await setSessionCity(sessionId, intentCity);
+    }
 
     let responseText =
       intent.message ||
@@ -197,6 +273,7 @@ app.post("/chat", async (req, res) => {
       return res.json({
         intent: "trip_plan",
         text: intent.message,
+        activeCity,
       });
     }
 
@@ -210,13 +287,14 @@ app.post("/chat", async (req, res) => {
           type: "hotel",
           text: "💰 Please tell me your budget.",
           results: [],
+          activeCity,
         });
       }
 
       // Try fetching real hotels if city is available
       let hotels = [];
-      const cityToSearch = intent.city || userCity;
-      
+      const cityToSearch = intentCity || activeCity;
+
       if (cityToSearch) {
         console.log(`🔍 Fetching real hotels for: ${cityToSearch}`);
         hotels = await fetchRealHotels(cityToSearch);
@@ -236,6 +314,7 @@ app.post("/chat", async (req, res) => {
           type: "hotel",
           text: "😕 No hotels found in this budget. Please increase your budget.",
           results: [],
+          activeCity,
         });
       }
 
@@ -245,6 +324,7 @@ app.post("/chat", async (req, res) => {
         type: "hotel",
         text: `🏨 Top hotels under ₹${intent.budget}${locationText}`,
         results: hotels,
+        activeCity,
       });
     }
     if (intent.intent === "bus") {
@@ -254,6 +334,7 @@ app.post("/chat", async (req, res) => {
           type: "bus",
           text: "🚌 Please tell me both source and destination.",
           results: [],
+          activeCity,
         });
       }
 
@@ -263,6 +344,7 @@ app.post("/chat", async (req, res) => {
           type: "bus",
           text: "💰 Please tell me your budget range (e.g., 500 to 5000).",
           results: [],
+          activeCity,
         });
       }
 
@@ -276,6 +358,7 @@ app.post("/chat", async (req, res) => {
           type: "bus",
           text: "🕐 Please tell me your preferred time: morning (6-12), afternoon (12-18), evening (18-21), or night (21-6).",
           results: [],
+          activeCity,
         });
       }
 
@@ -292,6 +375,7 @@ app.post("/chat", async (req, res) => {
           type: "bus",
           text: `😕 No buses found for ${intent.timePreference} (₹${minPrice} - ₹${maxPrice}).`,
           results: [],
+          activeCity,
         });
       }
 
@@ -300,6 +384,7 @@ app.post("/chat", async (req, res) => {
         type: "bus",
         text: `🚌 Available buses from ${intent.from} to ${intent.to} (${intent.timePreference}, ₹${minPrice} - ₹${maxPrice})`,
         results: buses.slice(0, 20),
+        activeCity,
       });
     }
 
@@ -310,6 +395,7 @@ app.post("/chat", async (req, res) => {
           type: "flight",
           text: "✈️ Please tell me both source and destination.",
           results: [],
+          activeCity,
         });
       }
 
@@ -319,6 +405,7 @@ app.post("/chat", async (req, res) => {
           type: "flight",
           text: "💰 Please tell me your budget range (e.g., 5000 to 50000).",
           results: [],
+          activeCity,
         });
       }
 
@@ -332,6 +419,7 @@ app.post("/chat", async (req, res) => {
           type: "flight",
           text: "🕐 Please tell me your preferred time: morning (6-12), afternoon (12-18), evening (18-21), or night (21-6).",
           results: [],
+          activeCity,
         });
       }
 
@@ -348,6 +436,7 @@ app.post("/chat", async (req, res) => {
           type: "flight",
           text: `😕 No flights found for ${intent.timePreference} (₹${minPrice} - ₹${maxPrice}).`,
           results: [],
+          activeCity,
         });
       }
 
@@ -356,6 +445,47 @@ app.post("/chat", async (req, res) => {
         type: "flight",
         text: `✈️ Available flights from ${intent.from} to ${intent.to} (${intent.timePreference}, ₹${minPrice} - ₹${maxPrice})`,
         results: flights.slice(0, 20),
+        activeCity,
+      });
+    }
+
+    if (intent.intent === "weather") {
+      const cityToSearch = intentCity || activeCity;
+
+      if (!cityToSearch) {
+        return res.json({
+          intent: "weather",
+          type: "weather",
+          text:
+            intent.message ||
+            "☁️ Please tell me which city you want the weather for.",
+          results: null,
+          activeCity,
+        });
+      }
+
+      console.log(`🔍 Fetching weather for: ${cityToSearch}`);
+      const weatherData = await fetchWeather(cityToSearch);
+
+      if (!weatherData) {
+        return res.json({
+          intent: "weather",
+          type: "weather",
+          text: `😕 Sorry, I couldn't find weather data for ${cityToSearch}.`,
+          results: null,
+        });
+      }
+
+      const responseMsg = `🌡️ Currently, the weather in your city **${weatherData.city}** is **${weatherData.temp_c}°C** only.`;
+
+      await saveMessage(sessionId, "llm", responseMsg);
+
+      return res.json({
+        intent: "weather",
+        type: "weather",
+        text: responseMsg,
+        results: weatherData,
+        activeCity: weatherData.city || activeCity,
       });
     }
 
@@ -367,6 +497,7 @@ app.post("/chat", async (req, res) => {
     return res.json({
       intent: intent.intent,
       text: responseText,
+      activeCity,
     });
   } catch (err) {
     console.error("Chat error:", err);
@@ -395,7 +526,7 @@ async function startServer() {
     // Don't exit - server can still run without DB for now
   }
 
-  app.listen(PORT, () => {
+  app.listen(PORT, "0.0.0.0", () => {
     console.log(`Server running on port ${PORT}`);
   });
 }
