@@ -6,6 +6,8 @@ const UserSchema = new mongoose.Schema({
 
   wallet: { type: Number, default: 0 },
   bookings: { type: Array, default: [] },
+  paymentMethods: { type: Array, default: [] },
+  walletHistory: { type: Array, default: [] },
 
   // link chat sessions to user
   chatSessions: [{ type: mongoose.Schema.Types.ObjectId, ref: "ChatSession" }],
