@@ -5,6 +5,7 @@ import MessageItem from './MessageItem';
 export default function ChatBox({ messages, onSendMessage, loading, onBookingComplete, onBookingError, onGoToBookings, currentUser, onOpenAuthModal }) {
   const [input, setInput] = useState('');
   const messagesEndRef = useRef(null);
+  const inputRef = useRef(null);
 
   const promptSuggestions = [
     { label: '🚌 Bus Delhi ➔ Jaipur (Evening)', query: 'Book me a bus from Delhi to Jaipur tomorrow after 6 PM under ₹1000' },
@@ -21,16 +22,51 @@ export default function ChatBox({ messages, onSendMessage, loading, onBookingCom
     scrollToBottom();
   }, [messages, loading]);
 
+  // Auto-focus input on initial mount and whenever AI finishes responding
+  useEffect(() => {
+    if (!loading) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 50);
+    }
+  }, [loading]);
+
+  // Global Keydown Listener: When user starts typing anywhere, automatically focus the input field!
+  useEffect(() => {
+    const handleGlobalKeyDown = (e) => {
+      const activeTag = document.activeElement?.tagName?.toLowerCase();
+      // Ignore if user is already typing in an input, textarea, or pressing control keys
+      if (activeTag === 'input' || activeTag === 'textarea' || activeTag === 'select' || e.ctrlKey || e.metaKey || e.altKey) {
+        return;
+      }
+      // If user presses any single character key (a-z, 0-9, etc.), auto-focus the input box
+      if (e.key && e.key.length === 1) {
+        inputRef.current?.focus();
+      }
+    };
+
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    return () => window.removeEventListener('keydown', handleGlobalKeyDown);
+  }, []);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!input.trim() || loading) return;
     onSendMessage(input);
     setInput('');
+
+    // Immediately maintain focus after submitting
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 50);
   };
 
   const handleChipClick = (query) => {
     if (loading) return;
     onSendMessage(query);
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 50);
   };
 
   return (
@@ -57,7 +93,7 @@ export default function ChatBox({ messages, onSendMessage, loading, onBookingCom
                 <button
                   key={idx}
                   onClick={() => handleChipClick(chip.query)}
-                  className="glass-card hover:bg-slate-800/80 p-3 rounded-xl border border-slate-800 hover:border-cyan-500/30 text-left transition-all group"
+                  className="glass-card hover:bg-slate-800/80 p-3 rounded-xl border border-slate-800 hover:border-cyan-500/30 text-left transition-all group cursor-pointer"
                 >
                   <span className="text-xs font-semibold text-slate-200 group-hover:text-cyan-300">
                     {chip.label}
@@ -95,12 +131,13 @@ export default function ChatBox({ messages, onSendMessage, loading, onBookingCom
       <div className="p-4 border-t border-slate-800 glass-panel">
         <form onSubmit={handleSubmit} className="relative flex items-center">
           <input
+            ref={inputRef}
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Type your travel request (e.g., 'Book a bus from Delhi to Jaipur tomorrow after 6 PM')..."
             className="w-full bg-slate-900/90 text-slate-100 text-sm placeholder-slate-500 rounded-xl px-4 py-3.5 pr-12 border border-slate-700 focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-all"
-            disabled={loading}
+            autoFocus
           />
           <button
             type="submit"
