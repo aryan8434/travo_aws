@@ -564,8 +564,8 @@ app.get("/api/admin/chunks", async (req, res) => {
    ========================================================= */
 
 const razorpayInstance = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID || "rzp_test_TFM4cTiksu0var",
-  key_secret: process.env.RAZORPAY_KEY_SECRET || "Vj4M6xnUqUhvGVZm1tbpQLCN",
+  key_id: process.env.RAZORPAY_KEY_ID || "rzp_live_TFMUXWfTRlEFyj",
+  key_secret: process.env.RAZORPAY_KEY_SECRET || "2rAMnoF6bLg5heO0OTPrxiWQ",
 });
 
 // STEP 1: Create Order
@@ -591,7 +591,7 @@ app.post("/api/create-order", async (req, res) => {
         order_id: order.id,
         amount: order.amount,
         currency: order.currency,
-        key_id: process.env.RAZORPAY_KEY_ID || "rzp_test_TFM4cTiksu0var",
+        key_id: process.env.RAZORPAY_KEY_ID || "rzp_live_TFMUXWfTRlEFyj",
       });
     } catch (orderErr) {
       console.warn("Razorpay API order creation note (switching to local test checkout):", orderErr.message || orderErr);
@@ -601,7 +601,7 @@ app.post("/api/create-order", async (req, res) => {
         order_id: `order_sim_${Date.now()}`,
         amount: fixedAmountInPaise,
         currency: "INR",
-        key_id: process.env.RAZORPAY_KEY_ID || "rzp_test_TFM4cTiksu0var",
+        key_id: process.env.RAZORPAY_KEY_ID || "rzp_live_TFMUXWfTRlEFyj",
       });
     }
   } catch (err) {
@@ -635,7 +635,7 @@ app.post("/api/verify-payment", async (req, res) => {
       });
     }
 
-    const secret = process.env.RAZORPAY_KEY_SECRET || "Vj4M6xnUqUhvGVZm1tbpQLCN";
+    const secret = process.env.RAZORPAY_KEY_SECRET || "2rAMnoF6bLg5heO0OTPrxiWQ";
     const body = razorpay_order_id + "|" + razorpay_payment_id;
 
     const expectedSignature = crypto
