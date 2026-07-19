@@ -1,8 +1,32 @@
-import React, { useState } from 'react';
-import { X, Layers, Database, Cpu, Search, FileText, CheckCircle2, ShieldCheck, ArrowRight, Zap, Terminal, Server, ArrowDown, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { X, Layers, Database, Cpu, Search, FileText, CheckCircle2, ShieldCheck, ArrowRight, Zap, Server, Code, Eye, Sparkles } from 'lucide-react';
 
 export default function RagArchitectureModal({ isOpen, onClose }) {
   const [activeTab, setActiveTab] = useState('pipeline');
+  const [chunks, setChunks] = useState([]);
+  const [loadingChunks, setLoadingChunks] = useState(false);
+  const [selectedChunk, setSelectedChunk] = useState(null);
+
+  useEffect(() => {
+    if (isOpen) {
+      fetchLiveChunks();
+    }
+  }, [isOpen]);
+
+  const fetchLiveChunks = async () => {
+    setLoadingChunks(true);
+    try {
+      const res = await axios.get('/api/admin/chunks');
+      if (res.data && res.data.chunks) {
+        setChunks(res.data.chunks);
+      }
+    } catch (err) {
+      console.warn('Error fetching live vector chunks:', err);
+    } finally {
+      setLoadingChunks(false);
+    }
+  };
 
   if (!isOpen) return null;
 
@@ -59,7 +83,7 @@ export default function RagArchitectureModal({ isOpen, onClose }) {
             }`}
           >
             <Database className="w-4 h-4 text-cyan-400" />
-            <span>2. System Architecture & Detailed Guide</span>
+            <span>2. System Architecture & Live Chunks</span>
           </button>
         </div>
 
@@ -221,7 +245,7 @@ export default function RagArchitectureModal({ isOpen, onClose }) {
             </div>
           )}
 
-          {/* TAB 2: SYSTEM ARCHITECTURE & 3-COLUMN DETAILED GUIDE */}
+          {/* TAB 2: SYSTEM ARCHITECTURE & LIVE STORED CHUNKS (3-COLUMN LAYOUT) */}
           {activeTab === 'diagram' && (
             <div className="space-y-6">
               
@@ -255,14 +279,14 @@ export default function RagArchitectureModal({ isOpen, onClose }) {
                 </div>
               </div>
 
-              {/* 3-COLUMN DETAILED TEXT & PARAGRAPH EXPLANATIONS */}
+              {/* 3-COLUMN LAYOUT: COL 1 & COL 2 ARE EXPLANATIONS, COL 3 FEEDS LIVE STORED CHUNKS */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 
                 {/* Column 1 */}
                 <div className="glass-card p-6 rounded-2xl border border-slate-800 space-y-3">
                   <div className="flex items-center gap-2 text-cyan-400">
                     <FileText className="w-5 h-5" />
-                    <h4 className="text-base font-extrabold text-white">1. Data Ingestion & Vector Pipeline</h4>
+                    <h4 className="text-base font-extrabold text-white">1. Data Ingestion & Pipeline</h4>
                   </div>
                   <p className="text-sm text-slate-300 leading-relaxed">
                     TravoAI stores all 1,000+ tour packages as structured documents. Every package includes a 300–800 word description detailing destinations, prices, hotels, daily itineraries, and included services.
@@ -281,7 +305,7 @@ export default function RagArchitectureModal({ isOpen, onClose }) {
                 <div className="glass-card p-6 rounded-2xl border border-slate-800 space-y-3">
                   <div className="flex items-center gap-2 text-emerald-400">
                     <ShieldCheck className="w-5 h-5" />
-                    <h4 className="text-base font-extrabold text-white">2. Cosine Similarity & Anti-Hallucination</h4>
+                    <h4 className="text-base font-extrabold text-white">2. Anti-Hallucination (≥ 0.70)</h4>
                   </div>
                   <p className="text-sm text-slate-300 leading-relaxed">
                     When a user enters a prompt, TravoAI converts the query into the same 768-dim vector space and performs a mathematical <strong>cosine similarity dot-product search</strong> against all indexed package vectors.
@@ -296,23 +320,66 @@ export default function RagArchitectureModal({ isOpen, onClose }) {
                   </div>
                 </div>
 
-                {/* Column 3 */}
-                <div className="glass-card p-6 rounded-2xl border border-slate-800 space-y-3">
-                  <div className="flex items-center gap-2 text-sky-400">
-                    <Cpu className="w-5 h-5" />
-                    <h4 className="text-base font-extrabold text-white">3. Groq LLM & Real-Time Generation</h4>
+                {/* Column 3: FETCHES LIVE STORED VECTOR CHUNKS FROM VECTRA DB */}
+                <div className="glass-card p-6 rounded-2xl border border-sky-500/30 bg-sky-950/10 space-y-3 flex flex-col justify-between">
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-2 text-sky-400">
+                        <Code className="w-5 h-5" />
+                        <h4 className="text-base font-extrabold text-white">3. Live Stored Chunks</h4>
+                      </div>
+                      <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-sky-500/20 text-sky-300 border border-sky-500/30">
+                        Vectra DB
+                      </span>
+                    </div>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      Below are the actual live <strong>vector chunks</strong> stored inside your Vectra Vector Database. Click any chunk to inspect its raw JSON payload & 768-dim vector embeddings:
+                    </p>
+
+                    {/* Live Chunks List Box */}
+                    <div className="bg-slate-950 rounded-xl border border-slate-800 p-2 space-y-2 max-h-56 overflow-y-auto">
+                      {loadingChunks ? (
+                        <div className="text-center py-6 text-xs text-slate-400 animate-pulse">
+                          Fetching live vector chunks from Vectra DB...
+                        </div>
+                      ) : chunks.length === 0 ? (
+                        <div className="text-center py-6 text-xs text-slate-400">
+                          No vector chunks found.
+                        </div>
+                      ) : (
+                        chunks.map((item, idx) => (
+                          <button
+                            key={item.package_id || idx}
+                            onClick={() => setSelectedChunk(item)}
+                            className="w-full text-left p-2.5 bg-slate-900/90 hover:bg-slate-800/90 rounded-lg border border-slate-800 hover:border-sky-500/40 transition-all flex items-center justify-between group"
+                          >
+                            <div className="space-y-0.5 overflow-hidden">
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-[10px] font-mono font-bold text-sky-400 bg-sky-500/10 px-1.5 py-0.5 rounded border border-sky-500/20">
+                                  {item.package_id}
+                                </span>
+                                <span className="text-xs font-bold text-white truncate group-hover:text-sky-300">
+                                  {item.title}
+                                </span>
+                              </div>
+                              <div className="text-[10px] text-slate-400 truncate">
+                                📍 {item.destination} • ₹{item.price_inr?.toLocaleString('en-IN')}
+                              </div>
+                            </div>
+                            <Eye className="w-4 h-4 text-slate-400 group-hover:text-sky-400 shrink-0" />
+                          </button>
+                        ))
+                      )}
+                    </div>
                   </div>
-                  <p className="text-sm text-slate-300 leading-relaxed">
-                    The top matching package context is formatted into a structured prompt and sent to the <strong>Groq Llama-3.3 70B Versatile API</strong> for lightning-fast inference.
-                  </p>
-                  <p className="text-sm text-slate-300 leading-relaxed">
-                    Groq synthesizes the retrieved package data into conversational recommendations, rendering interactive <strong>Booking Cards</strong> with live pricing, hotel tiers, itineraries, and 1-click Razorpay payment buttons directly in the chat!
-                  </p>
-                  <div className="p-3 bg-slate-900 rounded-xl border border-slate-800 text-xs font-mono text-sky-300">
-                    ✓ Groq 70B Llama-3.3<br/>
-                    ✓ Interactive Booking Cards<br/>
-                    ✓ Razorpay Payment Integration
-                  </div>
+
+                  <button
+                    onClick={() => setSelectedChunk(chunks[0] || null)}
+                    className="w-full py-2.5 bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-bold text-xs rounded-xl shadow-md flex items-center justify-center gap-1.5 transition-all mt-2"
+                  >
+                    <Eye className="w-4 h-4" />
+                    <span>Inspect Raw Vector Payload</span>
+                  </button>
                 </div>
 
               </div>
@@ -322,10 +389,69 @@ export default function RagArchitectureModal({ isOpen, onClose }) {
 
         </div>
 
+        {/* INLINE POPUP OVERLAY TO INSPECT SELECTED RAW VECTOR CHUNK */}
+        {selectedChunk && (
+          <div className="absolute inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md animate-fade-in">
+            <div className="relative w-full max-w-2xl bg-[#0f172a] rounded-2xl border border-sky-500/40 p-6 space-y-4 shadow-2xl text-slate-100 max-h-[85vh] flex flex-col">
+              <div className="flex items-center justify-between border-b border-slate-800 pb-3 shrink-0">
+                <div className="flex items-center gap-2">
+                  <Code className="w-5 h-5 text-sky-400" />
+                  <h4 className="text-base font-extrabold text-white">
+                    Raw Vector Chunk Inspector ({selectedChunk.package_id})
+                  </h4>
+                </div>
+                <button
+                  onClick={() => setSelectedChunk(null)}
+                  className="p-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="overflow-y-auto space-y-3 flex-1 font-mono text-xs">
+                <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                  <div className="text-sky-400 font-bold">▶ VECTOR METADATA & EMBEDDING SPECS:</div>
+                  <div className="text-slate-300">
+                    • <strong>Package ID</strong>: "{selectedChunk.package_id}"<br/>
+                    • <strong>Title</strong>: "{selectedChunk.title}"<br/>
+                    • <strong>Destination</strong>: "{selectedChunk.destination}, {selectedChunk.state}"<br/>
+                    • <strong>Price (INR)</strong>: ₹{selectedChunk.price_inr?.toLocaleString('en-IN')}<br/>
+                    • <strong>Vector Dimensions</strong>: 768 Floating Point Values<br/>
+                    • <strong>Similarity Score Cutoff</strong>: ≥ 0.70 (Cosine Distance)
+                  </div>
+                </div>
+
+                <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                  <div className="text-emerald-400 font-bold">▶ RAW CHUNK TEXT STORED IN VECTRA DB:</div>
+                  <p className="text-slate-300 font-sans text-xs leading-relaxed bg-slate-900 p-3 rounded-lg border border-slate-800">
+                    "{selectedChunk.description}"
+                  </p>
+                </div>
+
+                <div className="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                  <div className="text-amber-400 font-bold">▶ RAW JSON PAYLOAD:</div>
+                  <pre className="text-[11px] text-amber-300 bg-slate-900 p-3 rounded-lg overflow-x-auto border border-slate-800">
+                    {JSON.stringify(selectedChunk, null, 2)}
+                  </pre>
+                </div>
+              </div>
+
+              <div className="pt-2 border-t border-slate-800 text-right shrink-0">
+                <button
+                  onClick={() => setSelectedChunk(null)}
+                  className="px-4 py-2 bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs rounded-xl"
+                >
+                  Close Inspector
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Modal Footer */}
         <div className="p-5 bg-slate-900/90 border-t border-slate-800 text-center text-xs text-slate-400 flex items-center justify-between shrink-0 px-6">
           <span className="flex items-center gap-2 text-emerald-400 font-bold text-sm">
-            <CheckCircle2 className="w-4 h-4" /> Live Vectra DB Vector Index Active (8 Tour Packages Loaded)
+            <CheckCircle2 className="w-4 h-4" /> Live Vectra DB Vector Index Active ({chunks.length} Tour Packages Loaded)
           </span>
           <button
             onClick={onClose}
