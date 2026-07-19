@@ -1,0 +1,92 @@
+[
+  {
+    "package_id": "PKG-GOA-001",
+    "title": "Goa Tropical Luxury Beach & Watersports Retreat",
+    "destination": "Goa",
+    "state": "Goa",
+    "country": "India",
+    "price_inr": 32000,
+    "days": 5,
+    "nights": 4,
+    "capacity_people": 2,
+    "hotel_name": "Sea Breeze Luxury Beach Resort & Spa",
+    "hotel_tier": "5 Star Luxury Resort",
+    "rating": 4.9,
+    "category": "Beach & Wellness",
+    "best_months": ["October", "November", "December", "January", "February", "March"],
+    "weather": "Warm & Sunny (28°C)",
+    "difficulty": "Easy",
+    "description": "Indulge in 5 days of absolute tropical luxury in North and South Goa. Experience private beachfront access, luxury spa sessions, scuba diving at Grande Island, Mandovi river luxury sunset cruise, and authentic Goan seafood dining.",
+    "highlights": [
+      "5 Star Beachfront Resort Stay with Infinity Pool",
+      "Scuba Diving & Jet Skiing at Grande Island",
+      "Sunset Luxury Dinner Cruise on Mandovi River",
+      "Guided Old Goa Portuguese Churches & Spice Plantation Tour",
+      "Daily Chef Special Seafood & Continental Buffet Breakfast"
+    ],
+    "included_services": {
+      "meals": "Daily Buffet Breakfast & 3-Course Gourmet Dinner",
+      "transport": "Private Chauffeur AC SUV Airport & Sightseeing Transfers",
+      "guide": "Certified Local English Speaking Tour Manager",
+      "activities": "Scuba Equipment, Jet Ski Pass, Cruise Entry Included"
+    },
+    "excluded_services": [
+      "Flight or Train Tickets to Goa",
+      "Personal Casino Entry & Alcoholic Beverages",
+      "Travel Insurance"
+    ],
+    "activities": ["Scuba Diving", "Parasailing", "Jet Skiing", "Sunset Cruise", "Casino Visit", "Heritage Walk"],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Goa Arrival & Beach Resort Welcome",
+        "description": "Private transfer from Dabolim / MOPA Airport to Sea Breeze Luxury Beach Resort. Welcome coconut drink, check-in to Sea View Suite. Evening leisure walk at Calangute Beach followed by candlelight dinner at resort."
+      },
+      {
+        "day": 2,
+        "title": "Grande Island Scuba Diving & Watersports",
+        "description": "Early morning boat transfer to Grande Island. Professional PADI scuba diving session with under-water video recording, snorkeling, banana ride, and jet skiing. Buffet lunch served on island boat."
+      },
+      {
+        "day": 3,
+        "title": "Old Goa Heritage & Spice Plantation Experience",
+        "description": "Guided tour of Basilica of Bom Jesus and Se Cathedral. Visit Sahakari Organic Spice Plantation with traditional Goan lunch served on banana leaves. Evening Mandovi river luxury sunset cruise with folk dance performance."
+      },
+      {
+        "day": 4,
+        "title": "South Goa Tranquility & Sunset at Palolem",
+        "description": "Drive to South Goa. Explore serene Palolem beach and Cabo de Rama Fort. Optional evening entry to Deltin Royale Luxury Casino."
+      },
+      {
+        "day": 5,
+        "title": "Souvenir Shopping & Airport Departure",
+        "description": "Breakfast at resort, leisure morning by infinity pool. Shopping at Panjim Market for Cashews and Feni. Private transfer to airport for departure flight."
+      }
+    ],
+    "nearby_attractions": ["Aguada Fort", "Chapora Fort", "Baga Beach", "Fontainhas Latin Quarter", "Dudhsagar Waterfalls"],
+    "restaurants": ["Fisherman's Wharf", "Thalassa", "Britto's", "Curlies Beach Shack", "Gunpowder"],
+    "shopping_places": ["Anjuna Flea Market", "Panjim Market", "Saturday Night Market Arpora"],
+    "transport_options": {
+      "airport_transfer": true,
+      "private_car": true,
+      "scooter_available": true
+    },
+    "cancellation_policy": "Full refund 10 days prior to departure date. 50% refund 5 days prior. No refund within 48 hours of travel date.",
+    "travel_tips": [
+      "Carry sunscreen SPF 50+, sunglasses, and light cotton clothes",
+      "Renting a 2-wheeler scooter requires valid original Driving License",
+      "Book water sports early in the morning to avoid long tourist queues"
+    ],
+    "faqs": [
+      {
+        "question": "Is scuba diving safe for non-swimmers?",
+        "answer": "Yes, certified PADI instructors provide 1-on-1 underwater guidance and safety gear for non-swimmers."
+      },
+      {
+        "question": "Are vegetarian and vegan meals available?",
+        "answer": "Yes, all resort dinners and island lunches feature dedicated pure-veg and Jain food options."
+      }
+    ],
+    "tags": ["goa", "luxury", "beach", "scuba diving", "watersports", "cruise", "honeymoon", "spa"]
+  }
+]

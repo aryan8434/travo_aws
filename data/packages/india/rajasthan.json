@@ -1,0 +1,91 @@
+[
+  {
+    "package_id": "PKG-RAJ-001",
+    "title": "Royal Rajasthan Heritage Expedition (Jaipur, Jodhpur & Udaipur)",
+    "destination": "Jaipur & Udaipur",
+    "state": "Rajasthan",
+    "country": "India",
+    "price_inr": 36999,
+    "days": 6,
+    "nights": 5,
+    "capacity_people": 2,
+    "hotel_name": "Fort Rajwada & Shiv Niwas Palace View Resort",
+    "hotel_tier": "5 Star Heritage Palace",
+    "rating": 4.9,
+    "category": "Heritage & Culture",
+    "best_months": ["October", "November", "December", "January", "February", "March"],
+    "weather": "Sunny & Pleasant (22°C)",
+    "difficulty": "Easy",
+    "description": "Experience royal grandiosity across Rajasthan's legendary fortresses and romantic lakes. Stay in heritage palaces in Jaipur, marvel at Mehrangarh Fort in Jodhpur, and enjoy a private boat ride on Lake Pichola in Udaipur.",
+    "highlights": [
+      "Royal Elephant Ride & Amber Fort Sound & Light Show in Jaipur",
+      "Private Sunset Boat Cruise on Lake Pichola in Udaipur",
+      "Mehrangarh Fort & Umaid Bhawan Palace Exploration in Jodhpur",
+      "Authentic Chokhi Dhani Rajasthani Folk Village Cultural Evening",
+      "Heritage Haveli Stay with Royal Rajasthani Buffet Dinners"
+    ],
+    "included_services": {
+      "meals": "Daily Buffet Breakfast & Royal Rajasthani Thali Dinners",
+      "transport": "Private Chauffeur Driven AC Innova Crysta",
+      "guide": "Government Approved Historian Guide at Forts",
+      "activities": "Lake Pichola Boat Cruise & Chokhi Dhani Entry Included"
+    },
+    "excluded_services": [
+      "Interstate Flight / Train Fares",
+      "Camera & Video Shooting Permits at Palaces",
+      "Personal Tipping & Souvenirs"
+    ],
+    "activities": ["Fort Tour", "Lake Pichola Boat Cruise", "Camel Safari", "Chokhi Dhani Folk Dinner", "Shopping"],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Jaipur Pink City Arrival & Chokhi Dhani",
+        "description": "Pickup from Jaipur Airport/Railway Station. Check-in to Heritage Haveli Hotel. Afternoon visit to City Palace and Hawa Mahal. Evening excursion to Chokhi Dhani for Rajasthani folk dance and traditional dinner."
+      },
+      {
+        "day": 2,
+        "title": "Amer Fort & Jaipur Heritage Marvels",
+        "description": "Morning elephant/jeep ride up to Amber Fort. Explore Sheesh Mahal (Mirror Palace), Jaigarh Fort (world's largest cannon on wheels), and Jal Mahal sunset view."
+      },
+      {
+        "day": 3,
+        "title": "Jaipur to Jodhpur Blue City Transit",
+        "description": "Scenic drive to Jodhpur. Visit Mehrangarh Fort perched on a cliff, Jaswant Thada marble cenotaph, and colorful Clock Tower spice markets."
+      },
+      {
+        "day": 4,
+        "title": "Jodhpur to Udaipur City of Lakes Drive",
+        "description": "En-route visit to 15th-century marble Ranakpur Jain Temple. Arrive in Udaipur, check-in to Lake View Palace Hotel."
+      },
+      {
+        "day": 5,
+        "title": "Udaipur City Palace & Lake Pichola Boat Ride",
+        "description": "Explore City Palace complex, Saheliyon-Ki-Bari fountains garden, and Jagdish Temple. Evening private sunset boat cruise on Lake Pichola overlooking Jag Mandir Palace."
+      },
+      {
+        "day": 6,
+        "title": "Udaipur Handicraft Shopping & Departure",
+        "description": "Buy miniature paintings, leather craft, and silver jewelry. Private transfer to Udaipur Maharana Pratap Airport for departure."
+      }
+    ],
+    "nearby_attractions": ["Chittorgarh Fort", "Kumbhalgarh Fort Wall", "Pushkar Brahma Temple", "Mount Abu Hill Station"],
+    "restaurants": ["1559 AD Udaipur", "Ambrai Lake View", "Chokhi Dhani Jaipur", "LMB Sweets Johari Bazaar"],
+    "shopping_places": ["Johari Bazaar Jaipur", "Bapu Bazaar", "Hathi Pol Market Udaipur"],
+    "transport_options": {
+      "airport_transfer": true,
+      "private_car": true
+    },
+    "cancellation_policy": "Full refund up to 10 days before departure. 50% refund between 4 to 9 days.",
+    "travel_tips": [
+      "Wear comfortable walking shoes for cobblestone fort ramps",
+      "Bargain politely at local leather and handicraft markets"
+    ],
+    "faqs": [
+      {
+        "question": "Is the boat ride in Udaipur private?",
+        "answer": "Yes, our luxury package includes private boat transfers on Lake Pichola."
+      }
+    ],
+    "tags": ["rajasthan", "jaipur", "udaipur", "jodhpur", "heritage", "forts", "palace", "luxury", "culture"]
+  }
+]

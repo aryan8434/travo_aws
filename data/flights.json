@@ -1,0 +1,38 @@
+[
+  {
+    "flight_id": "FL-101",
+    "airline": "IndiGo",
+    "flight_number": "6E-2041",
+    "from_airport": "Delhi (DEL)",
+    "to_airport": "Jaipur (JAI)",
+    "departure_time": "08:15",
+    "arrival_time": "09:10",
+    "price_inr": 2850,
+    "cabin_class": "Economy",
+    "stops": 0
+  },
+  {
+    "flight_id": "FL-102",
+    "airline": "Air India",
+    "flight_number": "AI-843",
+    "from_airport": "Delhi (DEL)",
+    "to_airport": "Goa (GOI)",
+    "departure_time": "11:30",
+    "arrival_time": "14:15",
+    "price_inr": 4999,
+    "cabin_class": "Economy",
+    "stops": 0
+  },
+  {
+    "flight_id": "FL-103",
+    "airline": "Vistara",
+    "flight_number": "UK-981",
+    "from_airport": "Mumbai (BOM)",
+    "to_airport": "Delhi (DEL)",
+    "departure_time": "18:45",
+    "arrival_time": "21:00",
+    "price_inr": 5400,
+    "cabin_class": "Premium Economy",
+    "stops": 0
+  }
+]

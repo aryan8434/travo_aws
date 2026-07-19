@@ -1,0 +1,92 @@
+[
+  {
+    "package_id": "PKG-KER-001",
+    "title": "Kerala Backwaters & Misty Munnar Hill Escape",
+    "destination": "Munnar & Alleppey",
+    "state": "Kerala",
+    "country": "India",
+    "price_inr": 24500,
+    "days": 6,
+    "nights": 5,
+    "capacity_people": 2,
+    "hotel_name": "Fragrant Nature Resort Munnar & Luxury Private Houseboat",
+    "hotel_tier": "4 Star Eco Resort & Deluxe Houseboat",
+    "rating": 4.8,
+    "category": "Family & Nature",
+    "best_months": ["September", "October", "November", "December", "January", "February", "March"],
+    "weather": "Pleasant & Cool Hill Breeze (18°C - 24°C)",
+    "difficulty": "Easy",
+    "description": "Immerse yourself in God's Own Country. Experience misty tea gardens in Munnar, wildlife boat safari in Periyar Thekkady, and an overnight private luxury houseboat cruise along Alleppey's backwaters with fresh Keralite fish curry lunch.",
+    "highlights": [
+      "2 Nights Stay in Misty Tea Garden Resort Munnar",
+      "1 Night Luxury Private Backwater Houseboat Stay in Alleppey",
+      "Periyar Wildlife Sanctuary Boat Safari & Elephant Interaction",
+      "Kathakali Dance & Kalaripayattu Martial Arts Live Show",
+      "Ayurvedic Full Body Massage Session Included"
+    ],
+    "included_services": {
+      "meals": "All Meals on Houseboat (Breakfast, Lunch, Evening Tea, Dinner) & Daily Breakfast in Munnar",
+      "transport": "Dedicated AC Private Sedan Driver for Full Circuit",
+      "guide": "Experienced Malayalam & English Speaking Chauffeur Guide",
+      "activities": "Kathakali Tickets, Wildlife Boat Tickets, Spice Plantation Entry Included"
+    },
+    "excluded_services": [
+      "Flight or Train Tickets to Cochin (COK)",
+      "Camera fees at Wildlife Sanctuary",
+      "Personal shopping and laundry"
+    ],
+    "activities": ["Houseboat Cruise", "Tea Tasting", "Wildlife Safari", "Spice Plantation Walk", "Ayurveda Spa"],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Cochin Arrival & Drive to Munnar",
+        "description": "Pickup from Cochin Airport/Railway Station. Scenic drive to Munnar passing Cheeyappara and Valara waterfalls. Check-in to Munnar tea valley resort."
+      },
+      {
+        "day": 2,
+        "title": "Munnar Tea Gardens & Mattupetty Dam Sightseeing",
+        "description": "Visit Eravikulam National Park (home to Nilgiri Tahr), Tea Museum with live tea tasting, Mattupetty Dam boat ride, and Echo Point."
+      },
+      {
+        "day": 3,
+        "title": "Munnar to Thekkady Spice Sanctuary Drive",
+        "description": "Drive through cardamom hills to Thekkady. Guided spice plantation tour, Periyar lake boat safari to spot wild elephants, and evening Kathakali cultural show."
+      },
+      {
+        "day": 4,
+        "title": "Thekkady to Alleppey Houseboat Boarding",
+        "description": "Drive to Alleppey. Board private deluxe houseboat at 12:00 PM. Traditional Karimeen fish curry lunch served onboard as houseboat glides through palm-fringed backwater canals. Overnight stay on houseboat."
+      },
+      {
+        "day": 5,
+        "title": "Alleppey to Cochin Fort Kochi Heritage Tour",
+        "description": "Check out from houseboat after breakfast. Drive to Fort Kochi. Visit Chinese Fishing Nets, St. Francis Church, Mattancherry Palace, and Jewish Synagogue."
+      },
+      {
+        "day": 6,
+        "title": "Cochin Souvenir Shopping & Departure",
+        "description": "Morning Ayurvedic massage session. Buy banana chips and Kerala spices. Transfer to Cochin Airport for departure flight."
+      }
+    ],
+    "nearby_attractions": ["Eravikulam Park", "Vembanad Lake", "Marari Beach", "Athirappilly Waterfalls"],
+    "restaurants": ["Paragon Restaurant Cochin", "Old Harbour Hotel Restaurant", "Kuttanad Seafood Shack"],
+    "shopping_places": ["Lulu Mall Cochin", "Spice Market Mattancherry", "Munnar Tea Outlets"],
+    "transport_options": {
+      "airport_transfer": true,
+      "private_car": true,
+      "houseboat_included": true
+    },
+    "cancellation_policy": "Full refund up to 7 days prior to check-in. 50% refund 3-6 days prior.",
+    "travel_tips": [
+      "Munnar nights can get chilly (15°C); carry a light jacket or sweater",
+      "Book houseboat air conditioning timings (AC operates 9 PM to 6 AM or 24 hrs based on plan)"
+    ],
+    "faqs": [
+      {
+        "question": "Does the houseboat sail all night?",
+        "answer": "No, per government safety rules backwater houseboats anchor by 5:30 PM and resume at 8:00 AM."
+      }
+    ],
+    "tags": ["kerala", "munnar", "alleppey", "houseboat", "nature", "tea gardens", "backwaters", "family", "honeymoon"]
+  }
+]

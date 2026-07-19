@@ -1,0 +1,46 @@
+[
+  {
+    "hotel_id": "HTL-001",
+    "name": "Hotel Watan Residency",
+    "city": "Delhi",
+    "address": "Pahar Ganj, New Delhi",
+    "price_per_night_inr": 1000,
+    "star_rating": 3,
+    "user_rating": 4.1,
+    "amenities": ["Free WiFi", "AC", "Room Service", "24/7 Front Desk"],
+    "image_url": "https://images.unsplash.com/photo-1566073771259-6a8506099945?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "hotel_id": "HTL-002",
+    "name": "Deltin Suites Goa",
+    "city": "Goa",
+    "address": "Candolim, Bardez, Goa",
+    "price_per_night_inr": 5190,
+    "star_rating": 4,
+    "user_rating": 4.5,
+    "amenities": ["Swimming Pool", "Casino Access", "Free Breakfast", "Spa", "Beach Shuttle"],
+    "image_url": "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "hotel_id": "HTL-003",
+    "name": "The Lalit New Delhi",
+    "city": "Delhi",
+    "address": "Barakhamba Avenue, Connaught Place, New Delhi",
+    "price_per_night_inr": 8000,
+    "star_rating": 5,
+    "user_rating": 4.8,
+    "amenities": ["Luxury Spa", "Multiple Restaurants", "Outdoor Pool", "Fitness Center", "Valet Parking"],
+    "image_url": "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=500&auto=format&fit=crop&q=60"
+  },
+  {
+    "hotel_id": "HTL-004",
+    "name": "Hotel Lake View Resort",
+    "city": "Udaipur",
+    "address": "Lake Pichola Ring Road, Udaipur",
+    "price_per_night_inr": 3800,
+    "star_rating": 4,
+    "user_rating": 4.6,
+    "amenities": ["Rooftop Restaurant", "Lake View Rooms", "Free WiFi", "Heritage Decor"],
+    "image_url": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=500&auto=format&fit=crop&q=60"
+  }
+]

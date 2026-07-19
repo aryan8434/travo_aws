@@ -1,0 +1,160 @@
+[
+  {
+    "package_id": "PKG-101",
+    "title": "Goa Tropical Luxury Beach Retreat",
+    "destination": "Goa",
+    "state": "Goa",
+    "country": "India",
+    "days": 5,
+    "nights": 4,
+    "capacity_people": 2,
+    "price_inr": 28999,
+    "hotel_tier": "4 Star Resort",
+    "hotel_name": "Sea Breeze Beach Resort",
+    "rating": 4.7,
+    "category": "Beach & Wellness",
+    "best_months": ["October", "November", "December", "January", "February"],
+    "included_services": {
+      "meals": "Breakfast & Dinner Included",
+      "transport": "Airport Transfers Included",
+      "guide": true,
+      "sightseeing": true
+    },
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival & Baga Beach Sunset",
+        "activities": ["Check-in at Sea Breeze Resort", "Relax at Baga Beach", "Sunset Cruise with Drinks"]
+      },
+      {
+        "day": 2,
+        "title": "North Goa Heritage & Water Sports",
+        "activities": ["Aguada Fort Tour", "Parasailing & Jet Skiing at Calangute", "Night Market Exploration"]
+      },
+      {
+        "day": 3,
+        "title": "South Goa Scuba Diving & Spice Plantation",
+        "activities": ["Scuba Diving at Grand Island", "Sahakari Spice Farm Lunch", "Old Goa Churches"]
+      },
+      {
+        "day": 4,
+        "title": "Dudhsagar Waterfall & Leisure",
+        "activities": ["Jeep Safari to Dudhsagar Falls", "Candlelight Dinner by the Beach"]
+      },
+      {
+        "day": 5,
+        "title": "Departure",
+        "activities": ["Breakfast", "Souvenir Shopping", "Airport Transfer"]
+      }
+    ],
+    "description": "Experience the ultimate beach getaway in Goa with luxury 4-star accommodation, scuba diving, island cruises, and gourmet meals.",
+    "tags": ["beach", "goa", "luxury", "couples", "water sports", "relaxing", "winter"]
+  },
+  {
+    "package_id": "PKG-102",
+    "title": "Kerala Backwaters & Tea Gardens Family Tour",
+    "destination": "Munnar & Alleppey",
+    "state": "Kerala",
+    "country": "India",
+    "days": 6,
+    "nights": 5,
+    "capacity_people": 4,
+    "price_inr": 45000,
+    "hotel_tier": "Premium Family Resort & Houseboat",
+    "hotel_name": "Munnar Hills & Alleppey Houseboat",
+    "rating": 4.9,
+    "category": "Family & Nature",
+    "best_months": ["September", "October", "November", "December", "January", "February", "March"],
+    "included_services": {
+      "meals": "All Meals Included",
+      "transport": "Private AC Vehicle Included",
+      "guide": true,
+      "sightseeing": true
+    },
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Cochin to Munnar Scenic Drive",
+        "activities": ["Cheeyappara Waterfalls", "Tea Garden Walk"]
+      },
+      {
+        "day": 2,
+        "title": "Munnar Sightseeing",
+        "activities": ["Eravikulam National Park", "Mattupetty Dam Boating", "Echo Point"]
+      },
+      {
+        "day": 3,
+        "title": "Munnar to Thekkady Spice Tour",
+        "activities": ["Periyar Wildlife Sanctuary Boat Safari", "Elephant Junction Visit"]
+      },
+      {
+        "day": 4,
+        "title": "Alleppey Houseboat Cruise",
+        "activities": ["Overnight Stay in Deluxe Houseboat", "Backwater Village Cruise", "Authentic Kerala Cuisine"]
+      },
+      {
+        "day": 5,
+        "title": "Kovalam Beach Sunset",
+        "activities": ["Lighthouse Beach", "Ayurvedic Massage Session"]
+      },
+      {
+        "day": 6,
+        "title": "Departure from Trivandrum/Cochin",
+        "activities": ["Breakfast", "Transfer to Airport/Station"]
+      }
+    ],
+    "description": "Serene 6-day family package across Kerala's lush Munnar tea hills, Thekkady wildlife, and Alleppey backwater houseboats.",
+    "tags": ["family", "kerala", "nature", "tea gardens", "houseboat", "backwaters", "relaxing"]
+  },
+  {
+    "package_id": "PKG-103",
+    "title": "Jaipur & Udaipur Royal Rajasthan Heritage Expedition",
+    "destination": "Jaipur & Udaipur",
+    "state": "Rajasthan",
+    "country": "India",
+    "days": 5,
+    "nights": 4,
+    "capacity_people": 2,
+    "price_inr": 34999,
+    "hotel_tier": "Heritage Palace Hotel",
+    "hotel_name": "Fort Rajwada & Lake Palace View Resort",
+    "rating": 4.8,
+    "category": "Heritage & Culture",
+    "best_months": ["October", "November", "December", "January", "February", "March"],
+    "included_services": {
+      "meals": "Breakfast Included",
+      "transport": "Private Chauffeur Car Included",
+      "guide": true,
+      "sightseeing": true
+    },
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Pink City Jaipur Arrival",
+        "activities": ["Hawa Mahal", "City Palace", "Local Chokhi Dhani Dinner"]
+      },
+      {
+        "day": 2,
+        "title": "Jaipur Forts Expedition",
+        "activities": ["Amer Fort Elephant Ride", "Jaigarh & Nahargarh Fort Sunset View"]
+      },
+      {
+        "day": 3,
+        "title": "Drive to Udaipur (City of Lakes)",
+        "activities": ["Scenic drive via Ajmer/Pushkar", "Boat ride on Lake Pichola"]
+      },
+      {
+        "day": 4,
+        "title": "Udaipur Palaces & Lakes",
+        "activities": ["Udaipur City Palace", "Saheliyon Ki Bari", "Jag Mandir Palace"]
+      },
+      {
+        "day": 5,
+        "title": "Departure",
+        "activities": ["Heritage Market Shopping", "Transfer to Udaipur Airport"]
+      }
+    ],
+    "description": "Immerse in royal luxury with heritage palace stays, lakeside dinners, and majestic fort tours in Rajasthan.",
+    "tags": ["heritage", "rajasthan", "jaipur", "udaipur", "royal", "culture", "palace"]
+  }
+]

@@ -1,0 +1,12 @@
+{
+  "verbose": true,
+  "ignore": [
+    "vectra_index/*",
+    "data/*",
+    "build/*",
+    "node_modules/*",
+    ".git/*",
+    "*.log"
+  ],
+  "ext": "js,mjs,cjs"
+}

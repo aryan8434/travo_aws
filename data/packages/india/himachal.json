@@ -1,0 +1,91 @@
+[
+  {
+    "package_id": "PKG-HIM-001",
+    "title": "Himachal Snow Adventure (Manali, Solang Valley & Shimla)",
+    "destination": "Manali & Shimla",
+    "state": "Himachal Pradesh",
+    "country": "India",
+    "price_inr": 21999,
+    "days": 6,
+    "nights": 5,
+    "capacity_people": 2,
+    "hotel_name": "The Himalayan Resort Manali & Snow Valley Resort Shimla",
+    "hotel_tier": "4 Star Mountain Resort",
+    "rating": 4.8,
+    "category": "Adventure & Snow",
+    "best_months": ["October", "November", "December", "January", "February", "March", "April", "May"],
+    "weather": "Cold & Snowy (4°C - 15°C)",
+    "difficulty": "Moderate",
+    "description": "Escape to snow-capped Himalayan peaks. Enjoy skiing and paragliding in Solang Valley, drive through the engineering marvel Atal Tunnel, explore Kasol Manikaran pine valleys, and stroll along Shimla Mall Road.",
+    "highlights": [
+      "Snow Activities, Skiing & Paragliding in Solang Valley",
+      "Scenic Drive through World's Longest Tunnel: Atal Tunnel Sissu",
+      "Hadimba Wooden Temple & Jogini Waterfall Trek in Manali",
+      "Shimla Ridge, Mall Road Shopping & Jakhoo Temple Ropeway",
+      "Campfire with Live Acoustic Music Session"
+    ],
+    "included_services": {
+      "meals": "Daily Hot Buffet Breakfast & Buffet Dinner",
+      "transport": "Private AC Vehicle for Full Circuit (Delhi-Shimla-Manali-Delhi)",
+      "guide": "Local Mountain Tour Escort",
+      "activities": "Atal Tunnel Permit & Campfire Included"
+    },
+    "excluded_services": [
+      "Solang Valley Paragliding / Skiing Gear Rental Charges",
+      "Rohtang Pass NGT Special Permit Fee",
+      "Personal Winter Clothing Rental"
+    ],
+    "activities": ["Skiing", "Paragliding", "Snowboarding", "Trekking", "Atal Tunnel Drive", "Mall Road Walk"],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Delhi to Shimla Scenic Mountain Drive",
+        "description": "Morning pickup from Delhi Airport/Railway Station. Drive through Pinjore gardens up winding Himalayan highway to Shimla. Check-in to hotel."
+      },
+      {
+        "day": 2,
+        "title": "Shimla Kufri Snow View & Mall Road",
+        "description": "Visit Kufri winter sports point for yak rides and snow views. Afternoon walk along Mall Road, Scandal Point, Christ Church, and Jakhoo Hanuman Temple ropeway."
+      },
+      {
+        "day": 3,
+        "title": "Shimla to Manali via Kullu Valley Drive",
+        "description": "Picturesque drive alongside Beas river. En-route river rafting in Kullu and visit famous Kullu Shawl weaving factory."
+      },
+      {
+        "day": 4,
+        "title": "Solang Valley Snow Adventure & Atal Tunnel",
+        "description": "Full day snow adventure at Solang Valley. Drive through 9.02 km Atal Tunnel to Sissu village in Lahaul Valley. Enjoy skiing, ATV rides, and paragliding."
+      },
+      {
+        "day": 5,
+        "title": "Manali Local Sightseeing & Jogini Waterfall Trek",
+        "description": "Visit 450-year-old Hadimba Devi Temple, Vashisht hot water springs, Old Manali cafes, and short nature trek to Jogini Waterfalls."
+      },
+      {
+        "day": 6,
+        "title": "Manali to Delhi Return Journey",
+        "description": "Breakfast at hotel, buy Apple cider and Himachali caps. Drive back to Delhi for onward departure flight."
+      }
+    ],
+    "nearby_attractions": ["Rohtang Pass", "Kasol Parvati Valley", "Manikaran Sahib", "Sethan Valley Igloo Village"],
+    "restaurants": ["Cafe 1947 Old Manali", "Johnson's Cafe", "The Chopsticks Shimla", "Cafe Simla Times"],
+    "shopping_places": ["Mall Road Shimla", "Mall Road Manali", "Kullu Shawl Outlets"],
+    "transport_options": {
+      "delhi_pickup": true,
+      "private_car": true
+    },
+    "cancellation_policy": "Full refund up to 7 days prior. 50% refund 3-6 days prior.",
+    "travel_tips": [
+      "Rent heavy snow boots and woolens at Solang Valley shops",
+      "Keep Motion Sickness medicine handy for winding ghat roads"
+    ],
+    "faqs": [
+      {
+        "question": "Is Rohtang Pass open all year?",
+        "answer": "Rohtang Pass closes in heavy snow (Dec-May), but Solang Valley and Atal Tunnel remain open."
+      }
+    ],
+    "tags": ["himachal", "manali", "shimla", "snow", "solang valley", "atal tunnel", "skiing", "paragliding", "adventure"]
+  }
+]

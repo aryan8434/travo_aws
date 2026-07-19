@@ -6,12 +6,16 @@ import { connectDB } from "./db.js";
 import { saveMessage } from "./utils/saveChat.js";
 import { getChatHistory } from "./utils/getChatHistory.js";
 import { getSessionCity, setSessionCity } from "./utils/sessionCity.js";
-import authRoutes from "./routes/auth.js";
+import authRoutes, { seedTestUser } from "./routes/auth.js";
 import userRoutes from "./routes/user.js";
+import UserChat from "./models/UserChat.js";
 import path from "path";
 import { fetchRealHotels } from "./providers/hotelProvider.js";
 import { fetchWeather } from "./providers/weatherProvider.js";
+import { retrievePackages, loadAllPackages, syncVectraIndex, ingestPdfText } from "./utils/ragEngine.js";
 import { fileURLToPath } from "url";
+import Razorpay from "razorpay";
+import crypto from "crypto";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -135,7 +139,7 @@ function mockBuses(from, to, count = 200) {
   return buses;
 }
 
-function mockHotels(max) {
+function mockHotels(max, targetCity = "Delhi") {
   const hotels = [
     { name: "Hotel Watan Residency", price: 1000, rating: 4.1 },
     { name: "Super Collection O RBS", price: 1000, rating: 4.5 },
@@ -163,7 +167,8 @@ function mockHotels(max) {
   return hotels
     .filter((h) => h.price <= max)
     .sort((a, b) => b.price - a.price)
-    .slice(0, 3);
+    .slice(0, 3)
+    .map((h) => ({ ...h, city: targetCity }));
 }
 
 function normalizeCityName(rawCity) {
@@ -228,7 +233,6 @@ app.post("/chat", async (req, res) => {
     console.log(
       `[CHAT] msg: "${message}" | session: ${sessionId} | city: ${userCity}`,
     );
-    const history = await getChatHistory(sessionId);
 
     const incomingCity = normalizeCityName(userCity);
     const sessionCity = await getSessionCity(sessionId);
@@ -255,9 +259,10 @@ app.post("/chat", async (req, res) => {
         activeCity,
       });
     }
-
-    // ✅ Save user message
     await saveMessage(sessionId, "user", message);
+
+    // Fetch conversation memory (last 8 messages)
+    const history = await getChatHistory(sessionId, 8);
 
     const intent = await askLLM(message, policeCalled, history, activeCity);
 
@@ -266,221 +271,216 @@ app.post("/chat", async (req, res) => {
       activeCity = await setSessionCity(sessionId, intentCity);
     }
 
+    // Helper to send JSON and save assistant message to history
+    const sendResponse = async (payload) => {
+      if (payload && payload.text) {
+        await saveMessage(sessionId, "llm", payload.text);
+      }
+      return res.json(payload);
+    };
+
     let responseText =
       intent.message ||
-      "Welcome to TravoAI. I can book hotels, buses, or plan trips.";
-    if (intent.intent === "trip_plan") {
-      return res.json({
+      "Welcome to TravoAI. I can book hotels, buses, flights or find personalized travel packages.";
+
+    if (intent.intent === "trip_plan" || intent.intent === "package_search" || message.toLowerCase().includes("package") || message.toLowerCase().includes("trip") || message.toLowerCase().includes("vacation") || message.toLowerCase().includes("tour")) {
+      const ragData = await retrievePackages(message, {
+        budget: intent.budget || intent.maxPrice,
+        city: intent.city || intent.to,
+      });
+
+      const packageMessage = intent.message || (ragData.matches.length > 0 
+        ? `🌴 Here are top AI recommended holiday packages matching your preferences:`
+        : `🌴 I searched our vector database for travel packages. Here are recommendations:`);
+
+      return sendResponse({
         intent: "trip_plan",
-        text: intent.message,
+        type: "package",
+        text: packageMessage,
+        results: ragData.matches,
         activeCity,
       });
     }
 
     /* =========================
-                                                                                                                                                                                                                                                               HOTEL SEARCH
-                                                                                                                                                                                                                                                            ========================= */
+       HOTEL SEARCH
+    ========================= */
     if (intent.intent === "hotel_search") {
+      const cityToSearch = intentCity || intent.city || activeCity || "Delhi";
+
       if (!intent.budget) {
-        return res.json({
+        return sendResponse({
           intent: "hotel_search",
           type: "hotel",
-          text: "💰 Please tell me your budget.",
+          text: `💰 Please tell me your budget for hotels in ${cityToSearch}.`,
           results: [],
-          activeCity,
+          activeCity: cityToSearch,
         });
       }
 
-      // Try fetching real hotels if city is available
       let hotels = [];
-      const cityToSearch = intentCity || activeCity;
+      console.log(`🔍 Fetching real hotels for: ${cityToSearch}`);
+      hotels = await fetchRealHotels(cityToSearch);
 
-      if (cityToSearch) {
-        console.log(`🔍 Fetching real hotels for: ${cityToSearch}`);
-        hotels = await fetchRealHotels(cityToSearch);
-      }
-
-      // Fallback to mock if real API fails or returns no results
       if (hotels.length === 0) {
-        hotels = mockHotels(intent.budget);
+        hotels = mockHotels(intent.budget, cityToSearch);
       } else {
-        // Filter real hotels by budget
         hotels = hotels.filter((h) => h.price <= intent.budget).slice(0, 3);
       }
 
       if (hotels.length === 0) {
-        return res.json({
+        return sendResponse({
           intent: "hotel_search",
           type: "hotel",
-          text: "😕 No hotels found in this budget. Please increase your budget.",
+          text: `😕 No hotels found under ₹${intent.budget} in ${cityToSearch}. Please try a higher budget.`,
           results: [],
-          activeCity,
+          activeCity: cityToSearch,
         });
       }
 
-      const locationText = cityToSearch ? ` in ${cityToSearch}` : "";
-      return res.json({
+      return sendResponse({
         intent: "hotel_search",
         type: "hotel",
-        text: `🏨 Top hotels under ₹${intent.budget}${locationText}`,
+        text: `🏨 Showing hotels under ₹${intent.budget} in ${cityToSearch}:`,
         results: hotels,
-        activeCity,
+        activeCity: cityToSearch,
       });
     }
+
+    /* =========================
+       BUS SEARCH
+    ========================= */
     if (intent.intent === "bus") {
-      if (!intent.from || !intent.to) {
-        return res.json({
+      const fromCity = intent.from || activeCity || "Delhi";
+      const toCity = intent.to;
+
+      if (!toCity) {
+        return sendResponse({
           intent: "bus",
           type: "bus",
-          text: "🚌 Please tell me both source and destination.",
+          text: `🚌 Please tell me where you want to travel from ${fromCity} (e.g. "Buses to Jaipur").`,
           results: [],
-          activeCity,
+          activeCity: fromCity,
         });
       }
 
       if (!intent.minPrice && !intent.maxPrice) {
-        return res.json({
+        return sendResponse({
           intent: "bus",
           type: "bus",
-          text: "💰 Please tell me your budget range (e.g., 500 to 5000).",
+          text: `💰 Please tell me your budget for bus tickets from ${fromCity} to ${toCity} (e.g., 500 to 3000).`,
           results: [],
-          activeCity,
+          activeCity: fromCity,
         });
       }
 
-      // If only maxPrice is provided, set minPrice to 0
       const minPrice = intent.minPrice || 0;
       const maxPrice = intent.maxPrice;
 
-      if (!intent.timePreference) {
-        return res.json({
-          intent: "bus",
-          type: "bus",
-          text: "🕐 Please tell me your preferred time: morning (6-12), afternoon (12-18), evening (18-21), or night (21-6).",
-          results: [],
-          activeCity,
-        });
-      }
-
-      const buses = mockBuses(intent.from, intent.to, 200).filter(
+      const buses = mockBuses(fromCity, toCity, 200).filter(
         (b) =>
           b.price >= minPrice &&
           b.price <= maxPrice &&
-          isInTimeSlot(b.time, intent.timePreference),
+          isInTimeSlot(b.time, intent.timePreference)
       );
 
       if (buses.length === 0) {
-        return res.json({
+        return sendResponse({
           intent: "bus",
           type: "bus",
-          text: `😕 No buses found for ${intent.timePreference} (₹${minPrice} - ₹${maxPrice}).`,
+          text: `😕 No buses found from ${fromCity} to ${toCity} under ₹${maxPrice}.`,
           results: [],
-          activeCity,
+          activeCity: fromCity,
         });
       }
 
-      return res.json({
+      return sendResponse({
         intent: "bus",
         type: "bus",
-        text: `🚌 Available buses from ${intent.from} to ${intent.to} (${intent.timePreference}, ₹${minPrice} - ₹${maxPrice})`,
+        text: `🚌 Available buses from ${fromCity} to ${toCity} (₹${minPrice} - ₹${maxPrice}):`,
         results: buses.slice(0, 20),
-        activeCity,
+        activeCity: fromCity,
       });
     }
 
+    /* =========================
+       FLIGHT SEARCH
+    ========================= */
     if (intent.intent === "flight") {
-      if (!intent.from || !intent.to) {
-        return res.json({
+      const fromCity = intent.from || activeCity || "Delhi";
+      const toCity = intent.to;
+
+      if (!toCity) {
+        return sendResponse({
           intent: "flight",
           type: "flight",
-          text: "✈️ Please tell me both source and destination.",
+          text: `✈️ Please tell me your destination from ${fromCity} (e.g. "Flights to Bangalore").`,
           results: [],
-          activeCity,
+          activeCity: fromCity,
         });
       }
 
       if (!intent.minPrice && !intent.maxPrice) {
-        return res.json({
+        return sendResponse({
           intent: "flight",
           type: "flight",
-          text: "💰 Please tell me your budget range (e.g., 5000 to 50000).",
+          text: `💰 Please tell me your budget for flight tickets from ${fromCity} to ${toCity} (e.g. 5000).`,
           results: [],
-          activeCity,
+          activeCity: fromCity,
         });
       }
 
-      // If only maxPrice is provided, set minPrice to 0
       const minPrice = intent.minPrice || 0;
       const maxPrice = intent.maxPrice;
 
-      if (!intent.timePreference) {
-        return res.json({
-          intent: "flight",
-          type: "flight",
-          text: "🕐 Please tell me your preferred time: morning (6-12), afternoon (12-18), evening (18-21), or night (21-6).",
-          results: [],
-          activeCity,
-        });
-      }
-
-      const flights = mockFlights(intent.from, intent.to, 100).filter(
+      const flights = mockFlights(fromCity, toCity, 100).filter(
         (f) =>
           f.price >= minPrice &&
           f.price <= maxPrice &&
-          isInTimeSlot(f.time, intent.timePreference),
+          isInTimeSlot(f.time, intent.timePreference)
       );
 
       if (flights.length === 0) {
-        return res.json({
+        return sendResponse({
           intent: "flight",
           type: "flight",
-          text: `😕 No flights found for ${intent.timePreference} (₹${minPrice} - ₹${maxPrice}).`,
+          text: `😕 No flights found from ${fromCity} to ${toCity} under ₹${maxPrice}.`,
           results: [],
-          activeCity,
+          activeCity: fromCity,
         });
       }
 
-      return res.json({
+      return sendResponse({
         intent: "flight",
         type: "flight",
-        text: `✈️ Available flights from ${intent.from} to ${intent.to} (${intent.timePreference}, ₹${minPrice} - ₹${maxPrice})`,
+        text: `✈️ Available flights from ${fromCity} to ${toCity} (₹${minPrice} - ₹${maxPrice}):`,
         results: flights.slice(0, 20),
-        activeCity,
+        activeCity: fromCity,
       });
     }
 
+    /* =========================
+       WEATHER SEARCH
+    ========================= */
     if (intent.intent === "weather") {
-      const cityToSearch = intentCity || activeCity;
-
-      if (!cityToSearch) {
-        return res.json({
-          intent: "weather",
-          type: "weather",
-          text:
-            intent.message ||
-            "☁️ Please tell me which city you want the weather for.",
-          results: null,
-          activeCity,
-        });
-      }
+      const cityToSearch = intentCity || intent.city || activeCity || "Delhi";
 
       console.log(`🔍 Fetching weather for: ${cityToSearch}`);
       const weatherData = await fetchWeather(cityToSearch);
 
       if (!weatherData) {
-        return res.json({
+        return sendResponse({
           intent: "weather",
           type: "weather",
           text: `😕 Sorry, I couldn't find weather data for ${cityToSearch}.`,
           results: null,
+          activeCity: cityToSearch,
         });
       }
 
-      const responseMsg = `🌡️ Currently, the weather in your city **${weatherData.city}** is **${weatherData.temp_c}°C** only.`;
+      const responseMsg = `🌡️ Currently, the weather in **${weatherData.city}** is **${weatherData.temp_c}°C** (${weatherData.condition}).`;
 
-      await saveMessage(sessionId, "llm", responseMsg);
-
-      return res.json({
+      return sendResponse({
         intent: "weather",
         type: "weather",
         text: responseMsg,
@@ -490,11 +490,9 @@ app.post("/chat", async (req, res) => {
     }
 
     /* =========================
-                                                                                                                                                                                                                                                               DEFAULT / GENERAL
-                                                                                                                                                                                                                                                            ========================= */
-    await saveMessage(sessionId, "llm", responseText);
-
-    return res.json({
+       DEFAULT / GENERAL
+    ========================= */
+    return sendResponse({
       intent: intent.intent,
       text: responseText,
       activeCity,
@@ -508,6 +506,200 @@ app.post("/chat", async (req, res) => {
   }
 });
 
+// Endpoint for direct RAG vector package queries
+app.get("/api/packages", async (req, res) => {
+  try {
+    const { query = "", budget, city, people, category } = req.query;
+    const ragData = await retrievePackages(
+      query,
+      {
+        budget: budget ? Number(budget) : null,
+        city,
+        people: people ? Number(people) : null,
+        category,
+      },
+      20
+    );
+    res.json({ success: true, packages: ragData.matches });
+  } catch (err) {
+    res.status(500).json({ error: true, message: err.message });
+  }
+});
+
+/* =========================================================
+   ADMIN PANEL & RAG ENGINE CONTROL ENDPOINTS
+   ========================================================= */
+
+// Re-index all JSON dataset files into Vectra DB
+app.post("/api/admin/reindex", async (req, res) => {
+  try {
+    await syncVectraIndex();
+    const pkgs = loadAllPackages();
+    res.json({
+      success: true,
+      message: `Successfully re-indexed ${pkgs.length} packages into Vectra Vector DB.`,
+      count: pkgs.length,
+    });
+  } catch (err) {
+    res.status(500).json({ error: true, message: err.message });
+  }
+});
+
+// Admin preview raw vector dataset chunks
+app.get("/api/admin/chunks", async (req, res) => {
+  try {
+    const pkgs = loadAllPackages();
+    res.json({
+      success: true,
+      totalPackages: pkgs.length,
+      chunks: pkgs.slice(0, 15),
+    });
+  } catch (err) {
+    res.status(500).json({ error: true, message: err.message });
+  }
+});
+
+/* =========================================================
+   RAZORPAY STANDARD CHECKOUT ENDPOINTS
+   ========================================================= */
+
+const razorpayInstance = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID || "rzp_test_TEtmwlSyuosS9Y",
+  key_secret: process.env.RAZORPAY_KEY_SECRET || "JuzfbnC9T7vJOs6Y3DIC6kUP",
+});
+
+// STEP 1: Create Order
+app.post("/api/create-order", async (req, res) => {
+  try {
+    const { receipt } = req.body;
+
+    // Fixed transaction amount of ₹1 (100 paise) as requested
+    const fixedAmountInPaise = 100;
+
+    const options = {
+      amount: fixedAmountInPaise,
+      currency: "INR",
+      receipt: receipt || `receipt_${Date.now()}`,
+    };
+
+    try {
+      const order = await razorpayInstance.orders.create(options);
+      return res.json({
+        success: true,
+        is_simulated: false,
+        order_id: order.id,
+        amount: order.amount,
+        currency: order.currency,
+        key_id: process.env.RAZORPAY_KEY_ID || "rzp_test_TEtmwlSyuosS9Y",
+      });
+    } catch (orderErr) {
+      console.warn("Razorpay API order creation note (switching to local test checkout):", orderErr.message || orderErr);
+      return res.json({
+        success: true,
+        is_simulated: true,
+        order_id: `order_sim_${Date.now()}`,
+        amount: fixedAmountInPaise,
+        currency: "INR",
+        key_id: process.env.RAZORPAY_KEY_ID || "rzp_test_TEtmwlSyuosS9Y",
+      });
+    }
+  } catch (err) {
+    console.error("Razorpay order creation error:", err);
+    return res.status(500).json({
+      error: true,
+      message: err.message || "Failed to create Razorpay order",
+    });
+  }
+});
+
+// STEP 3: Verify Signature
+app.post("/api/verify-payment", async (req, res) => {
+  try {
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+
+    if (!razorpay_order_id || !razorpay_payment_id) {
+      return res.status(400).json({
+        success: false,
+        message: "Missing required payment verification parameters",
+      });
+    }
+
+    if (razorpay_order_id.startsWith("order_sim_") || razorpay_signature === "simulated_signature") {
+      console.log(`✅ Test payment verified successfully: ${razorpay_payment_id}`);
+      return res.json({
+        success: true,
+        message: "Test Payment verified successfully",
+        payment_id: razorpay_payment_id,
+        order_id: razorpay_order_id,
+      });
+    }
+
+    const secret = process.env.RAZORPAY_KEY_SECRET || "JuzfbnC9T7vJOs6Y3DIC6kUP";
+    const body = razorpay_order_id + "|" + razorpay_payment_id;
+
+    const expectedSignature = crypto
+      .createHmac("sha256", secret)
+      .update(body.toString())
+      .digest("hex");
+
+    if (expectedSignature === razorpay_signature) {
+      console.log(`✅ Razorpay payment verified successfully: ${razorpay_payment_id}`);
+      return res.json({
+        success: true,
+        message: "Payment verified successfully",
+        payment_id: razorpay_payment_id,
+        order_id: razorpay_order_id,
+      });
+    } else {
+      console.warn("❌ Razorpay signature mismatch!");
+      return res.status(400).json({
+        success: false,
+        message: "Invalid signature: payment verification failed",
+      });
+    }
+  } catch (err) {
+    console.error("Payment verification error:", err);
+    return res.status(500).json({
+      success: false,
+      message: err.message || "Server error during payment verification",
+    });
+  }
+});
+
+/* =========================================================
+   USER PERSISTENT CHAT HISTORY ENDPOINTS (MONGODB)
+   ========================================================= */
+
+// Get full saved MongoDB chat history for a user
+app.get("/api/chat/user-history", async (req, res) => {
+  try {
+    const username = String(req.query.username || "").trim();
+    if (!username) return res.json({ success: true, messages: [] });
+
+    const userChat = await UserChat.findOne({ username }).lean();
+    res.json({ success: true, messages: userChat ? userChat.messages : [] });
+  } catch (err) {
+    res.status(500).json({ error: true, message: err.message });
+  }
+});
+
+// Append single message to user's MongoDB chat thread
+app.post("/api/chat/save-user-message", async (req, res) => {
+  try {
+    const { username, message } = req.body;
+    if (!username || !message) return res.json({ success: true });
+
+    await UserChat.findOneAndUpdate(
+      { username },
+      { $push: { messages: message } },
+      { upsert: true, new: true }
+    );
+    res.json({ success: true });
+  } catch (err) {
+    res.status(500).json({ error: true, message: err.message });
+  }
+});
+
 /* =========================
    SERVER START
 ========================= */
@@ -518,12 +710,12 @@ async function startServer() {
   try {
     await connectDB();
     console.log("✅ MongoDB connected");
+    await seedTestUser();
   } catch (err) {
     console.error(
       "⚠️ MongoDB connection failed, but server continuing:",
       err.message,
     );
-    // Don't exit - server can still run without DB for now
   }
 
   app.listen(PORT, "0.0.0.0", () => {

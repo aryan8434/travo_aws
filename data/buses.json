@@ -1,0 +1,41 @@
+[
+  {
+    "bus_id": "BUS-001",
+    "operator": "Zingbus Express",
+    "bus_type": "AC Sleeper (2+1)",
+    "from_city": "Delhi",
+    "to_city": "Jaipur",
+    "departure_time": "19:30",
+    "arrival_time": "00:45",
+    "duration": "5h 15m",
+    "price_inr": 650,
+    "available_seats": 18,
+    "rating": 4.5
+  },
+  {
+    "bus_id": "BUS-002",
+    "operator": "IntrCity SmartBus",
+    "bus_type": "Volvo Multi-Axle AC Semi Sleeper",
+    "from_city": "Delhi",
+    "to_city": "Jaipur",
+    "departure_time": "21:00",
+    "arrival_time": "02:30",
+    "duration": "5h 30m",
+    "price_inr": 890,
+    "available_seats": 12,
+    "rating": 4.7
+  },
+  {
+    "bus_id": "BUS-003",
+    "operator": "RedBus Premium",
+    "bus_type": "Scania AC Sleeper",
+    "from_city": "Mumbai",
+    "to_city": "Goa",
+    "departure_time": "20:00",
+    "arrival_time": "08:00",
+    "duration": "12h 00m",
+    "price_inr": 1200,
+    "available_seats": 8,
+    "rating": 4.6
+  }
+]

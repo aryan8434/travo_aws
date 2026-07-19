@@ -1,123 +1,113 @@
 import express from "express";
-// import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
 
 const router = express.Router();
 
-// Username validation endpoint for live checks (frontend can call on input)
-// Query param: q (partial or full username)
-router.get("/validate-username", async (req, res) => {
+// Seed default test1234 account
+export async function seedTestUser() {
   try {
-    const q = String(req.query.q || "").trim();
-
-    // Count letters and digits
-    const letters = (q.match(/[A-Za-z]/g) || []).join("");
-    const digits = (q.match(/[0-9]/g) || []).join("");
-
-    const letterCount = letters.length;
-    const digitCount = digits.length;
-
-    // Check availability (exact match)
-    const exists = q ? await User.findOne({ username: q }).lean() : null;
-
-    // Provide some suggestions / matches that start with q
-    const suggestions = q
-      ? await User.find({ username: { $regex: `^${q}`, $options: "i" } })
-          .limit(5)
-          .select("username -_id")
-      : [];
-
-    res.json({
-      q,
-      letterCount,
-      digitCount,
-      letters, // raw letters found
-      digits, // raw digits found
-      meets: {
-        letters: letterCount >= 4,
-        digits: digitCount >= 2,
-      },
-      available: !exists,
-      suggestions: suggestions.map((s) => s.username),
-    });
+    const exists = await User.findOne({ username: "test1234" });
+    if (!exists) {
+      await User.create({
+        username: "test1234",
+        password: "1234",
+        wallet: 10000,
+      });
+      console.log("✅ Default test user 'test1234' (pass: 1234) seeded in MongoDB");
+    }
   } catch (err) {
-    console.error("validate-username error:", err.message);
-    res.status(500).json({ error: "Validation failed" });
+    console.warn("Test user seed warning:", err.message);
   }
-});
+}
 
+// User Signup Endpoint (allows simple 4-digit passwords & simple usernames)
 router.post("/signup", async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    // Basic validation rules
-    const letterCount = (String(username).match(/[A-Za-z]/g) || []).length;
-    const digitCount = (String(username).match(/[0-9]/g) || []).length;
-
-    if (letterCount < 4 || digitCount < 2) {
-      return res.status(400).json({
-        error: "Username must contain at least 4 letters and 2 numbers",
-        details: { letterCount, digitCount },
-      });
+    if (!username || !password) {
+      return res.status(400).json({ error: "Username and password are required" });
     }
 
-    // Password rules: at least 4 letters and 1 digit
-    const passLetterCount = (String(password).match(/[A-Za-z]/g) || []).length;
-    const passDigitCount = (String(password).match(/[0-9]/g) || []).length;
-    if (passLetterCount < 4 || passDigitCount < 1) {
-      return res.status(400).json({
-        error: "Password must contain at least 4 letters and 1 number",
-        details: { passLetterCount, passDigitCount },
-      });
+    const cleanUsername = String(username).trim();
+    const cleanPassword = String(password).trim();
+
+    if (cleanUsername.length < 3) {
+      return res.status(400).json({ error: "Username must be at least 3 characters" });
     }
 
-    const exists = await User.findOne({ username });
+    if (cleanPassword.length < 4) {
+      return res.status(400).json({ error: "Password must be at least 4 digits" });
+    }
+
+    const exists = await User.findOne({ username: cleanUsername });
     if (exists) {
-      return res.status(400).json({ error: "User already exists, login" });
+      return res.status(400).json({ error: "Username already exists. Please login instead." });
     }
 
-    // ❌ bcrypt removed for testing
-    await User.create({ username, password });
-    res.json({ success: true });
+    const newUser = await User.create({
+      username: cleanUsername,
+      password: cleanPassword,
+      wallet: 10000,
+    });
+
+    const token = jwt.sign(
+      { userId: newUser._id, username: cleanUsername },
+      process.env.JWT_SECRET || "supersecret123",
+      { expiresIn: "30d" }
+    );
+
+    res.json({
+      success: true,
+      token,
+      user: {
+        username: cleanUsername,
+        walletBalance: 10000,
+      },
+    });
   } catch (err) {
     console.error("Signup error:", err);
     res.status(500).json({ error: "Signup failed" });
   }
 });
 
+// User Login Endpoint
 router.post("/login", async (req, res) => {
   try {
     const { username, password } = req.body;
 
-    const user = await User.findOne({ username });
+    if (!username || !password) {
+      return res.status(400).json({ error: "Username and password are required" });
+    }
+
+    const cleanUsername = String(username).trim();
+    const cleanPassword = String(password).trim();
+
+    const user = await User.findOne({ username: cleanUsername });
+
     if (!user) {
-      return res
-        .status(400)
-        .json({ error: "Invalid username, create new one" });
+      return res.status(400).json({ error: "User not found. Check username or sign up." });
     }
 
-    // ❌ bcrypt removed
-    // const ok = await bcrypt.compare(password, user.password);
-    // if (!ok) {
-    //   return res.status(400).json({ error: "Invalid credentials" });
-    // }
-
-    // ✅ raw password check
-    if (password !== user.password) {
-      return res.status(400).json({ error: "Invalid password" });
+    if (user.password !== cleanPassword) {
+      return res.status(400).json({ error: "Incorrect password" });
     }
 
-    if (!process.env.JWT_SECRET) {
-      console.error("JWT_SECRET missing when signing token");
-      return res.status(500).json({ error: "Server misconfiguration" });
-    }
+    const token = jwt.sign(
+      { userId: user._id, username: user.username },
+      process.env.JWT_SECRET || "supersecret123",
+      { expiresIn: "30d" }
+    );
 
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "7d",
+    res.json({
+      success: true,
+      token,
+      user: {
+        username: user.username,
+        walletBalance: user.wallet || 10000,
+      },
     });
-
-    res.json({ token });
   } catch (err) {
     console.error("Login error:", err);
     res.status(500).json({ error: "Login failed" });

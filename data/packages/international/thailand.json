@@ -1,0 +1,91 @@
+[
+  {
+    "package_id": "PKG-INT-THAI-001",
+    "title": "Thailand Island Paradise (Phuket, Krabi & Bangkok)",
+    "destination": "Phuket & Bangkok",
+    "country": "Thailand",
+    "price_inr": 48999,
+    "days": 6,
+    "nights": 5,
+    "capacity_people": 2,
+    "hotel_name": "Phuket Grace Beach Resort & Sukhumvit Bangkok Luxury Hotel",
+    "hotel_tier": "4 Star Beachfront Resort",
+    "rating": 4.9,
+    "category": "International & Beach",
+    "best_months": ["November", "December", "January", "February", "March", "April"],
+    "weather": "Tropical & Sunny (30°C)",
+    "difficulty": "Easy",
+    "description": "Experience tropical island heaven in Thailand. Island hop across Phi Phi Islands on a speedboat, marvel at Maya Bay where 'The Beach' was filmed, explore James Bond Island in Phang Nga Bay, and enjoy Bangkok's vibrant shopping & temple architecture.",
+    "highlights": [
+      "Full Day Phi Phi Island Speedboat Tour with Snorkeling & Lunch",
+      "Phang Nga Bay & James Bond Island Sea Canoeing Tour",
+      "Phuket Fantasea Cultural Show & Patong Beach Nightlife Walk",
+      "Bangkok City Temple Tour (Wat Pho Golden Reclining Buddha)",
+      "Chaophraya Princess Luxury Dinner Cruise in Bangkok"
+    ],
+    "included_services": {
+      "meals": "Daily Buffet Breakfast & 2 Speedboat Island Buffet Lunches",
+      "transport": "Private AC Airport & Island Speedboat Transfers",
+      "guide": "English Speaking Thai Licensed Guide",
+      "activities": "Phi Phi Speedboat Ticket, National Park Entry, Cruise Ticket"
+    },
+    "excluded_services": [
+      "International Airfare to Phuket / Bangkok",
+      "Thailand Visa Fees (Visa-Free / Visa on Arrival)",
+      "Personal Watersports Gear Rental"
+    ],
+    "activities": ["Island Hopping", "Snorkeling", "Speedboat Ride", "Dinner Cruise", "Temple Tour", "Shopping"],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Phuket Arrival & Patong Beach Night Walk",
+        "description": "Arrive at Phuket International Airport (HKT). Private transfer to beachfront resort. Evening walk at Bangla Road Patong for vibrant nightlife and Thai street food."
+      },
+      {
+        "day": 2,
+        "title": "Phi Phi Islands Speedboat Tour & Maya Bay",
+        "description": "Board luxury speedboat to Phi Phi Islands. Swim at Pileh Lagoon, snorkel at Coral Bay, visit Monkey Beach, and step onto iconic Maya Bay. Buffet lunch served on Phi Phi Don."
+      },
+      {
+        "day": 3,
+        "title": "Phang Nga Bay & James Bond Island Sea Canoeing",
+        "description": "Explore Phang Nga Bay limestone cliffs. Sea canoeing through Hong Island sea caves and visit James Bond Island (Khao Phing Kan)."
+      },
+      {
+        "day": 4,
+        "title": "Flight to Bangkok & Chaophraya Dinner Cruise",
+        "description": "Fly to Bangkok. Check-in to Sukhumvit city hotel. Evening luxury dinner cruise along Chaophraya River passing illuminated Grand Palace and Wat Arun."
+      },
+      {
+        "day": 5,
+        "title": "Bangkok Temples & MBK Center Shopping",
+        "description": "Guided temple tour visiting Wat Pho (Reclining Buddha) and Wat Traimit (Golden Buddha). Afternoon shopping at Siam Paragon and MBK Shopping Center."
+      },
+      {
+        "day": 6,
+        "title": "Bangkok Airport Departure",
+        "description": "Breakfast at hotel. Private transfer to Suvarnabhumi Airport (BKK) for flight home."
+      }
+    ],
+    "nearby_attractions": ["Big Buddha Phuket", "Grand Palace Bangkok", "Floating Market", "Safari World Bangkok"],
+    "restaurants": ["Breeze Restaurant Phuket", "Savoey Seafood", "Indus Indian Dining Bangkok"],
+    "shopping_places": ["MBK Center", "Chatuchak Weekend Market", "Jungceylon Phuket"],
+    "transport_options": {
+      "airport_transfer": true,
+      "private_car": true,
+      "speedboat_included": true
+    },
+    "cancellation_policy": "Full refund 14 days prior to departure. 50% refund 7 days prior.",
+    "travel_tips": [
+      "Thai Baht cash is recommended for local night markets",
+      "Dress modestly (shoulders & knees covered) when visiting Bangkok temples"
+    ],
+    "faqs": [
+      {
+        "question": "Is Indian food available in Thailand?",
+        "answer": "Yes, Sukhumvit in Bangkok and Patong in Phuket feature hundreds of authentic Indian restaurants."
+      }
+    ],
+    "tags": ["thailand", "phuket", "bangkok", "phi phi island", "international", "beach", "honeymoon", "snorkeling"]
+  }
+]
