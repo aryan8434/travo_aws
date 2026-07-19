@@ -564,17 +564,17 @@ app.get("/api/admin/chunks", async (req, res) => {
    ========================================================= */
 
 const razorpayInstance = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID || "rzp_test_TEtmwlSyuosS9Y",
-  key_secret: process.env.RAZORPAY_KEY_SECRET || "JuzfbnC9T7vJOs6Y3DIC6kUP",
+  key_id: process.env.RAZORPAY_KEY_ID || "rzp_test_TFM4cTiksu0var",
+  key_secret: process.env.RAZORPAY_KEY_SECRET || "Vj4M6xnUqUhvGVZm1tbpQLCN",
 });
 
 // STEP 1: Create Order
 app.post("/api/create-order", async (req, res) => {
   try {
-    const { receipt } = req.body;
+    const { receipt, amount } = req.body;
 
-    // Fixed transaction amount of ₹1 (100 paise) as requested
-    const fixedAmountInPaise = 100;
+    // Minimum amount: 100 paise (₹1)
+    const fixedAmountInPaise = amount && Number(amount) >= 100 ? Number(amount) : 100;
 
     const options = {
       amount: fixedAmountInPaise,
@@ -584,13 +584,14 @@ app.post("/api/create-order", async (req, res) => {
 
     try {
       const order = await razorpayInstance.orders.create(options);
+      console.log(`✅ Live Razorpay Order Created: ${order.id} for ₹${order.amount / 100}`);
       return res.json({
         success: true,
         is_simulated: false,
         order_id: order.id,
         amount: order.amount,
         currency: order.currency,
-        key_id: process.env.RAZORPAY_KEY_ID || "rzp_test_TEtmwlSyuosS9Y",
+        key_id: process.env.RAZORPAY_KEY_ID || "rzp_test_TFM4cTiksu0var",
       });
     } catch (orderErr) {
       console.warn("Razorpay API order creation note (switching to local test checkout):", orderErr.message || orderErr);
@@ -600,7 +601,7 @@ app.post("/api/create-order", async (req, res) => {
         order_id: `order_sim_${Date.now()}`,
         amount: fixedAmountInPaise,
         currency: "INR",
-        key_id: process.env.RAZORPAY_KEY_ID || "rzp_test_TEtmwlSyuosS9Y",
+        key_id: process.env.RAZORPAY_KEY_ID || "rzp_test_TFM4cTiksu0var",
       });
     }
   } catch (err) {
@@ -634,7 +635,7 @@ app.post("/api/verify-payment", async (req, res) => {
       });
     }
 
-    const secret = process.env.RAZORPAY_KEY_SECRET || "JuzfbnC9T7vJOs6Y3DIC6kUP";
+    const secret = process.env.RAZORPAY_KEY_SECRET || "Vj4M6xnUqUhvGVZm1tbpQLCN";
     const body = razorpay_order_id + "|" + razorpay_payment_id;
 
     const expectedSignature = crypto

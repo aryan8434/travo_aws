@@ -67,7 +67,7 @@ export async function initializePayment(item, onSuccess, onError) {
   // 2. RAZORPAY STANDARD WEB CHECKOUT
   try {
     let orderId = `order_sim_${Date.now()}`;
-    let keyId = import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_test_TEtmwlSyuosS9Y";
+    let keyId = import.meta.env.VITE_RAZORPAY_KEY_ID || "rzp_test_TFM4cTiksu0var";
 
     try {
       const orderRes = await axios.post('/api/create-order', {
