@@ -61,6 +61,24 @@
   }
 }
 
+/* Flashy Red-Green Blinking Button Animation (0.5s interval) */
+@keyframes flashBlink {
+  0%, 100% {
+    background-color: #dc2626;
+    box-shadow: 0 0 14px rgba(220, 38, 38, 0.9);
+    border-color: #f87171;
+  }
+  50% {
+    background-color: #059669;
+    box-shadow: 0 0 14px rgba(16, 185, 129, 0.9);
+    border-color: #34d399;
+  }
+}
+
+.animate-flashy-btn {
+  animation: flashBlink 0.5s infinite ease-in-out;
+}
+
 .animate-slide-right {
   animation: slideRight 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

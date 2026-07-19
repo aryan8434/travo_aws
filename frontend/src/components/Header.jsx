@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu, Compass, MapPin, Database, Cpu, Wallet, UserCheck, LogIn, LogOut } from 'lucide-react';
+import { Menu, Compass, MapPin, Database, Cpu, Wallet, UserCheck, LogIn, LogOut, Layers } from 'lucide-react';
 
 export default function Header({
   onToggleDrawer,
@@ -11,10 +11,11 @@ export default function Header({
   currentUser,
   onOpenAuthModal,
   onLogout,
+  onOpenRagModal,
 }) {
   const categories = [
     { id: 'all', label: '🤖 AI Agent' },
-    { id: 'package', label: '🌴 RAG Packages' },
+    { id: 'package', label: '🌴 Tour Packages' },
   ];
 
   return (
@@ -50,21 +51,33 @@ export default function Header({
         </div>
       </div>
 
-      {/* Category Pills */}
-      <div className="hidden sm:flex items-center gap-1.5 bg-slate-900/60 p-1.5 rounded-xl border border-slate-800">
-        {categories.map((cat) => (
-          <button
-            key={cat.id}
-            onClick={() => setSelectedCategory(cat.id)}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 ${
-              selectedCategory === cat.id
-                ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/25'
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
-            }`}
-          >
-            {cat.label}
-          </button>
-        ))}
+      {/* Category Pills & Flashy RAG Architecture Button */}
+      <div className="hidden sm:flex items-center gap-2">
+        <div className="flex items-center gap-1.5 bg-slate-900/60 p-1.5 rounded-xl border border-slate-800">
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              onClick={() => setSelectedCategory(cat.id)}
+              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 ${
+                selectedCategory === cat.id
+                  ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/25'
+                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+              }`}
+            >
+              {cat.label}
+            </button>
+          ))}
+        </div>
+
+        {/* Flashy Red-Green Blinking RAG Architecture Button (0.5s interval) */}
+        <button
+          onClick={onOpenRagModal}
+          className="px-3.5 py-1.5 text-xs font-extrabold rounded-xl text-white animate-flashy-btn transform transition-transform hover:scale-105 flex items-center gap-1.5 cursor-pointer border shadow-lg"
+          title="Click to view RAG Pipeline Architecture & System Design"
+        >
+          <Layers className="w-4 h-4 animate-bounce" />
+          <span>⚡ RAG Architecture</span>
+        </button>
       </div>
 
       {/* Top Right User Auth & Wallet Controls */}

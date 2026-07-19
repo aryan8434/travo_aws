@@ -14,6 +14,7 @@ import SupportView from './components/Pages/SupportView';
 import AboutView from './components/Pages/AboutView';
 import AdminView from './components/Pages/AdminView';
 import WalletView from './components/Pages/WalletView';
+import RagArchitectureModal from './components/Pages/RagArchitectureModal';
 
 // Storage
 import { getStoredTransactions, getStoredBookings, getWalletBalance } from './utils/storage';
@@ -35,6 +36,7 @@ export default function App() {
     }
   });
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isRagModalOpen, setIsRagModalOpen] = useState(false);
 
   // Navigation & Drawer state
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -301,6 +303,7 @@ export default function App() {
         currentUser={currentUser}
         onOpenAuthModal={() => setIsAuthModalOpen(true)}
         onLogout={handleLogout}
+        onOpenRagModal={() => setIsRagModalOpen(true)}
       />
 
       {/* Sliding YouTube-style Left Navigation Drawer */}
@@ -316,6 +319,12 @@ export default function App() {
         isOpen={isAuthModalOpen}
         onClose={() => setIsAuthModalOpen(false)}
         onLoginSuccess={handleLoginSuccess}
+      />
+
+      {/* RAG Architecture Modal */}
+      <RagArchitectureModal
+        isOpen={isRagModalOpen}
+        onClose={() => setIsRagModalOpen(false)}
       />
 
       {/* Main Container Views */}
