@@ -1,0 +1,157 @@
+[
+  {
+    "package_id": "PKG-SRILANKA-PRE",
+    "title": "Sri Lanka Premium — International Culture & Nature (7D/6N)",
+    "destination": "Sri Lanka",
+    "state": "",
+    "country": "Sri Lanka",
+    "region": "international",
+    "price_inr": 127000,
+    "budget_tier": "premium",
+    "days": 7,
+    "nights": 6,
+    "capacity_people": 2,
+    "hotel_name": "Kandy Lake Boutique Hotel",
+    "hotel_tier": "4-Star Resort / Boutique Hotel",
+    "rating": 4.5,
+    "category": "International Culture & Nature",
+    "best_months": [
+      "December",
+      "January",
+      "February",
+      "March",
+      "April"
+    ],
+    "weather": "Tropical, 24–32°C",
+    "difficulty": "Easy",
+    "description": "A 7-day premium international culture & nature experience in Sri Lanka (Sri Lanka). Includes Kandy Lake Boutique Hotel (4-Star Resort / Boutique Hotel), breakfast + one signature dinner, private sedan transfers & sightseeing, and guided highlights: Sigiriya rock fortress climb, Kandy Temple of the Tooth, Ella train ride & Nine Arch Bridge, Yala leopard safari.",
+    "highlights": [
+      "Sigiriya rock fortress climb",
+      "Kandy Temple of the Tooth",
+      "Ella train ride & Nine Arch Bridge",
+      "Yala leopard safari",
+      "Galle Fort walk"
+    ],
+    "included_services": {
+      "meals": "Breakfast + one signature dinner",
+      "transport": "Private sedan transfers & sightseeing",
+      "guide": "Certified local guide for sightseeing days",
+      "activities": "Entry & experience passes for: Sigiriya rock fortress climb, Kandy Temple of the Tooth, Ella train ride & Nine Arch Bridge"
+    },
+    "excluded_services": [
+      "Flights / trains to the gateway city",
+      "Travel insurance",
+      "Personal expenses, tips and optional activities",
+      "Visa fees"
+    ],
+    "activities": [
+      "Sigiriya rock fortress climb",
+      "Kandy Temple of the Tooth",
+      "Ella train ride & Nine Arch Bridge",
+      "Yala leopard safari",
+      "Galle Fort walk",
+      "tea plantation in Nuwara Eliya"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival in Sri Lanka & easy start",
+        "activities": [
+          "Sigiriya rock fortress climb"
+        ],
+        "description": "Day 1: Sigiriya rock fortress climb. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 2,
+        "title": "Kandy Temple of the Tooth",
+        "activities": [
+          "Kandy Temple of the Tooth",
+          "Ella train ride & Nine Arch Bridge"
+        ],
+        "description": "Day 2: Kandy Temple of the Tooth; Ella train ride & Nine Arch Bridge. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 3,
+        "title": "Yala leopard safari",
+        "activities": [
+          "Yala leopard safari",
+          "Galle Fort walk"
+        ],
+        "description": "Day 3: Yala leopard safari; Galle Fort walk. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 4,
+        "title": "Tea plantation in Nuwara Eliya",
+        "activities": [
+          "tea plantation in Nuwara Eliya"
+        ],
+        "description": "Day 4: tea plantation in Nuwara Eliya. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 5,
+        "title": "Explore Sri Lanka",
+        "activities": [],
+        "description": "Day 5: leisure day. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 6,
+        "title": "Explore Sri Lanka",
+        "activities": [],
+        "description": "Day 6: leisure day. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 7,
+        "title": "Souvenir time & departure",
+        "activities": [
+          "shopping at Colombo Pettah Market"
+        ],
+        "description": "Day 7: shopping at Colombo Pettah Market. A local guide accompanies the main sightseeing block."
+      }
+    ],
+    "nearby_attractions": [
+      "Mirissa",
+      "Trincomalee",
+      "Anuradhapura",
+      "Arugam Bay"
+    ],
+    "restaurants": [],
+    "shopping_places": [
+      "Colombo Pettah Market",
+      "Kandy Central Market",
+      "Barefoot & Odel boutiques"
+    ],
+    "transport_options": {
+      "airport_transfer": true,
+      "private_car": true,
+      "scooter_available": false
+    },
+    "cancellation_policy": "Full refund up to 15 days before departure. 50% refund 7–14 days prior. No refund within 6 days of travel. Date changes subject to availability and fare difference.",
+    "travel_tips": [
+      "Best months to travel: December, January, February.",
+      "Carry clothing suited to: Tropical, 24–32°C.",
+      "Try the local food: rice and curry, kottu roti, hoppers."
+    ],
+    "faqs": [
+      {
+        "question": "Is this package customisable?",
+        "answer": "Yes — hotels, duration and add-on experiences can be tailored. Price adjusts accordingly."
+      },
+      {
+        "question": "Are flights included?",
+        "answer": "No. Fares to the gateway city are separate; TravoAI can price them by distance on request."
+      }
+    ],
+    "tags": [
+      "sri-lanka",
+      "premium",
+      "international",
+      "culture",
+      "nature",
+      "international",
+      "7-day"
+    ],
+    "word_target": 2500,
+    "content_status": "skeleton",
+    "detailed_guide": "# Sri Lanka Premium — International Culture & Nature (7D/6N) — Complete Travel Guide\n\n## Overview\n\nSri Lanka Premium — International Culture & Nature (7D/6N) is a 7-day, 6-night premium journey through Sri Lanka, Sri Lanka. This guide expands the itinerary below into a complete, practical trip companion. Expand this section to roughly 180 words covering who the package suits, the headline experiences (Sigiriya rock fortress climb, Kandy Temple of the Tooth, Ella train ride & Nine Arch Bridge), and the overall trip rhythm (comfortable).\n\n## Why Visit\n\nSri Lanka earns its place on this route for its international culture & nature character. Expand to ~170 words on landscape, seasons, cultural texture and the single reason a traveller remembers this trip.\n\n## Getting There & Around\n\nMost travellers reach Sri Lanka via the nearest airport or railhead, then continue by road. Expand to ~180 words: arrival gateways, approximate transfer times, local transport options, and how private sedan transfers & sightseeing are handled in this package.\n\n## Day-by-Day Deep Dive\n\nThe 7-day plan is summarised in the itinerary array. Expand each day to ~110 words here — morning, afternoon and evening — weaving in Mirissa, Trincomalee, Anuradhapura, Arugam Bay. Total this section ~770 words.\n\n## Where to Stay\n\nAccommodation is Kandy Lake Boutique Hotel (4-Star Resort / Boutique Hotel) or a comparable property. Expand to ~150 words on the stay experience, room style, on-site facilities and location trade-offs.\n\n## Food & Dining\n\nSignature dishes to seek out: rice and curry, kottu roti, hoppers, pol sambol, Ceylon tea. Expand to ~170 words on where to eat, dietary notes (veg/Jain/vegan availability), and what the package meal plan (breakfast + one signature dinner) does and does not cover.\n\n## Culture & Etiquette\n\nExpand to ~140 words on local customs, dress codes at religious sites, photography etiquette, language basics and tipping norms relevant to Sri Lanka.\n\n## Budget Breakdown (₹)\n\nPackage price is ₹1,27,000 for 2 travellers (Premium tier). Expand to ~160 words itemising what is included, a realistic estimate of personal spending (meals outside the plan, entry fees, shopping, tips), and money-saving or upgrade options.\n\n## Best Time & Weather\n\nIdeal months: December, January, February, March, April. Typical conditions: Tropical, 24–32°C. Expand to ~130 words on month-by-month trade-offs, festivals, and what to expect in shoulder season.\n\n## Packing List\n\nExpand to ~120 words: clothing for the climate above, footwear, documents, medication, and 3–4 destination-specific items travellers routinely forget for Sri Lanka.\n\n## Safety & Health\n\nExpand to ~140 words on altitude/heat/water precautions as relevant, road-safety notes, emergency numbers (112 in India), nearest hospital guidance, and travel-insurance advice.\n\n## Responsible Travel\n\nExpand to ~120 words on minimising plastic, respecting wildlife and fragile ecosystems near Sri Lanka, supporting local artisans (Colombo Pettah Market, Kandy Central Market, Barefoot & Odel boutiques), and community-based tourism choices.\n\n## FAQ\n\nExpand to ~180 words: 6–8 question-and-answer pairs a traveller would ask before booking a premium Sri Lanka trip (transfers, connectivity, kids, solo travellers, cancellation, customisation).\n\n## Final Word\n\nExpand to ~90 words: a warm closing that sets expectations and points the reader to the booking action for Sri Lanka Premium — International Culture & Nature (7D/6N).\n\n---\n_content_status: skeleton — expand every section above to reach 2500 words total, keep the headings, then set content_status to \"complete\"._"
+  }
+]

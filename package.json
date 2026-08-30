@@ -6,6 +6,8 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon --ignore vectra_index/ --ignore data/ index.js",
+    "generate:packages": "node scripts/generatePackages.mjs",
+    "reindex": "node scripts/reindex.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -16,10 +18,13 @@
     "@google/generative-ai": "^0.24.1",
     "axios": "^1.13.5",
     "bcrypt": "^6.0.0",
+    "compression": "^1.8.1",
     "cors": "^2.8.6",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
     "groq-sdk": "^0.37.0",
+    "helmet": "^8.3.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.5",
     "razorpay": "^2.9.8",

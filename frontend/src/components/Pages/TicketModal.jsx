@@ -1,8 +1,13 @@
 import React from 'react';
 import { X, Printer, Compass, CheckCircle2, ShieldCheck, QrCode, Calendar, MapPin, Users, Hash } from 'lucide-react';
+import InvoiceCard from '../Payment/InvoiceCard';
 
 export default function TicketModal({ booking, onClose }) {
   if (!booking) return null;
+
+  const nominal = Number(booking.nominal_amount ?? booking.actual_price ?? 0);
+  const charged = Number(booking.charged_amount ?? 0);
+  const paidViaWallet = booking.paid_via_wallet;
 
   const handlePrint = () => {
     window.print();
@@ -113,19 +118,23 @@ export default function TicketModal({ booking, onClose }) {
             </div>
           </div>
 
-          {/* QR Code & Total Price Section */}
+          {/* QR Code & Price Section */}
           <div className="flex items-center justify-between bg-slate-900/80 p-4 rounded-2xl border border-cyan-500/20">
             <div className="space-y-1">
-              <span className="text-[10px] text-slate-400 uppercase font-mono block">Total Price Paid</span>
+              <span className="text-[10px] text-slate-400 uppercase font-mono block">Invoice Total</span>
               <div className="text-xl font-extrabold text-cyan-400">
-                ₹{Number(booking.actual_price || 0).toLocaleString('en-IN')}
+                ₹{nominal.toLocaleString('en-IN')}
               </div>
+              <span className="text-[10px] text-slate-400 block">
+                {paidViaWallet
+                  ? 'Paid in full from TravoAI Wallet'
+                  : `Charged via Razorpay: ₹${charged.toLocaleString('en-IN')} confirmation fee`}
+              </span>
               <span className="text-[10px] text-emerald-400 font-semibold flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3" /> Razorpay Verified
+                <ShieldCheck className="w-3 h-3" /> {paidViaWallet ? 'Wallet Settled' : 'Razorpay Verified'}
               </span>
             </div>
 
-            {/* Fake QR Code */}
             {isConfirmed && (
               <div className="bg-white p-2 rounded-xl shadow-md flex flex-col items-center">
                 <img
@@ -137,6 +146,8 @@ export default function TicketModal({ booking, onClose }) {
               </div>
             )}
           </div>
+
+          {booking.invoice && <InvoiceCard invoice={booking.invoice} />}
         </div>
 
         {/* Footer Actions */}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Menu, Compass, MapPin, Database, Cpu, Wallet, UserCheck, LogIn, LogOut, Layers } from 'lucide-react';
 
 export default function Header({
@@ -58,13 +59,18 @@ export default function Header({
             <button
               key={cat.id}
               onClick={() => setSelectedCategory(cat.id)}
-              className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition-all duration-200 ${
-                selectedCategory === cat.id
-                  ? 'bg-cyan-500 text-white shadow-md shadow-cyan-500/25'
-                  : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50'
+              className={`relative px-3 py-1.5 text-xs font-semibold rounded-lg transition-colors duration-200 ${
+                selectedCategory === cat.id ? 'text-white' : 'text-slate-400 hover:text-slate-200'
               }`}
             >
-              {cat.label}
+              {selectedCategory === cat.id && (
+                <motion.span
+                  layoutId="header-cat-pill"
+                  className="absolute inset-0 rounded-lg bg-cyan-500 shadow-md shadow-cyan-500/25"
+                  transition={{ type: 'spring', stiffness: 400, damping: 32 }}
+                />
+              )}
+              <span className="relative z-10">{cat.label}</span>
             </button>
           ))}
         </div>

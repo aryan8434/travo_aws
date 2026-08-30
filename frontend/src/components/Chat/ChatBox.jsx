@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Sparkles, Loader2, Compass } from 'lucide-react';
 import MessageItem from './MessageItem';
 
@@ -103,26 +104,39 @@ export default function ChatBox({ messages, onSendMessage, loading, onBookingCom
             </div>
           </div>
         ) : (
-          messages.map((msg, index) => (
-            <MessageItem
-              key={index}
-              message={msg}
-              onBookingComplete={onBookingComplete}
-              onBookingError={onBookingError}
-              onGoToBookings={onGoToBookings}
-              currentUser={currentUser}
-              onOpenAuthModal={onOpenAuthModal}
-            />
-          ))
+          <AnimatePresence initial={false}>
+            {messages.map((msg, index) => (
+              <MessageItem
+                key={index}
+                message={msg}
+                onBookingComplete={onBookingComplete}
+                onBookingError={onBookingError}
+                onGoToBookings={onGoToBookings}
+                currentUser={currentUser}
+                onOpenAuthModal={onOpenAuthModal}
+              />
+            ))}
+          </AnimatePresence>
         )}
 
         {/* Loading Indicator */}
-        {loading && (
-          <div className="flex items-center gap-3 p-3 glass-panel rounded-xl max-w-xs text-xs text-cyan-400 animate-pulse">
-            <Loader2 className="w-4 h-4 animate-spin text-cyan-400" />
-            <span>AI is analyzing routes & RAG packages...</span>
-          </div>
-        )}
+        <AnimatePresence>
+          {loading && (
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              className="flex items-center gap-3 p-3 glass-panel rounded-xl max-w-xs text-xs text-cyan-400"
+            >
+              <span className="flex gap-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 typing-dot" />
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 typing-dot" style={{ animationDelay: '0.15s' }} />
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 typing-dot" style={{ animationDelay: '0.3s' }} />
+              </span>
+              <span>AI is analyzing routes &amp; RAG packages…</span>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         <div ref={messagesEndRef} />
       </div>

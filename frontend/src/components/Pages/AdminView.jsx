@@ -7,34 +7,45 @@ export default function AdminView({ onBackToHome }) {
   const [message, setMessage] = useState(null);
   const [chunks, setChunks] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
+  const [adminKey, setAdminKey] = useState(() => sessionStorage.getItem('travoai_admin_key') || '');
+
+  const authHeaders = () => ({ headers: { 'x-admin-key': adminKey } });
+
+  const saveKey = (v) => {
+    setAdminKey(v);
+    try { sessionStorage.setItem('travoai_admin_key', v); } catch { /* ignore */ }
+  };
 
   useEffect(() => {
-    fetchChunks();
+    if (adminKey) fetchChunks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchChunks = async () => {
+    if (!adminKey) return;
     try {
-      const res = await axios.get('/api/admin/chunks');
+      const res = await axios.get('/api/admin/chunks', authHeaders());
       if (res.data && res.data.success) {
         setChunks(res.data.chunks || []);
         setTotalCount(res.data.totalPackages || 0);
       }
     } catch (e) {
-      console.warn('Error fetching chunks:', e);
+      setMessage(`⚠️ ${e.response?.data?.error || e.message}`);
     }
   };
 
   const handleReindex = async () => {
+    if (!adminKey) return setMessage('⚠️ Enter the admin key first.');
     setLoading(true);
     setMessage(null);
     try {
-      const res = await axios.post('/api/admin/reindex');
+      const res = await axios.post('/api/admin/reindex', {}, authHeaders());
       if (res.data && res.data.success) {
         setMessage(`✅ ${res.data.message}`);
         fetchChunks();
       }
     } catch (e) {
-      setMessage(`⚠️ Re-indexing failed: ${e.message}`);
+      setMessage(`⚠️ Re-indexing failed: ${e.response?.data?.error || e.message}`);
     } finally {
       setLoading(false);
     }
@@ -64,6 +75,20 @@ export default function AdminView({ onBackToHome }) {
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           <span>{loading ? 'Re-Indexing Vector DB...' : 'Refresh & Re-Index Vector DB'}</span>
+        </button>
+      </div>
+
+      <div className="glass-card p-3 rounded-xl border border-slate-800 flex flex-col sm:flex-row sm:items-center gap-2">
+        <label className="text-xs text-slate-400 font-semibold shrink-0">Admin key</label>
+        <input
+          type="password"
+          value={adminKey}
+          onChange={(e) => saveKey(e.target.value)}
+          placeholder="x-admin-key (ADMIN_KEY on the server)"
+          className="flex-1 bg-slate-900 text-xs text-slate-100 rounded-lg px-3 py-2 border border-slate-700 focus:outline-none focus:border-cyan-500"
+        />
+        <button onClick={fetchChunks} className="px-3 py-2 text-xs font-bold rounded-lg bg-slate-800 hover:bg-slate-700 text-cyan-300 border border-slate-700">
+          Connect
         </button>
       </div>
 

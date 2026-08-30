@@ -1,0 +1,146 @@
+[
+  {
+    "package_id": "PKG-GANGTOK-PRE",
+    "title": "Gangtok Premium — Mountains & Adventure (5D/4N)",
+    "destination": "Gangtok",
+    "state": "Sikkim",
+    "country": "India",
+    "region": "india",
+    "price_inr": 42000,
+    "budget_tier": "premium",
+    "days": 5,
+    "nights": 4,
+    "capacity_people": 2,
+    "hotel_name": "Ridge View Boutique Hotel",
+    "hotel_tier": "4-Star Resort / Boutique Hotel",
+    "rating": 4.5,
+    "category": "Mountains & Adventure",
+    "best_months": [
+      "March",
+      "April",
+      "May",
+      "September",
+      "October",
+      "November",
+      "December"
+    ],
+    "weather": "Cool Himalayan, 4–22°C",
+    "difficulty": "Moderate",
+    "description": "A 5-day premium mountains & adventure experience in Gangtok (Sikkim, India). Includes Ridge View Boutique Hotel (4-Star Resort / Boutique Hotel), breakfast + one signature dinner, private sedan transfers & sightseeing, and guided highlights: Tsomgo Lake & Baba Mandir, Nathula Pass (permit), Rumtek Monastery, MG Marg evening stroll.",
+    "highlights": [
+      "Tsomgo Lake & Baba Mandir",
+      "Nathula Pass (permit)",
+      "Rumtek Monastery",
+      "MG Marg evening stroll",
+      "Hanuman Tok viewpoint"
+    ],
+    "included_services": {
+      "meals": "Breakfast + one signature dinner",
+      "transport": "Private sedan transfers & sightseeing",
+      "guide": "Certified local guide for sightseeing days",
+      "activities": "Entry & experience passes for: Tsomgo Lake & Baba Mandir, Nathula Pass (permit), Rumtek Monastery"
+    },
+    "excluded_services": [
+      "Flights / trains to the gateway city",
+      "Travel insurance",
+      "Personal expenses, tips and optional activities",
+      "Monument still/video camera charges"
+    ],
+    "activities": [
+      "Tsomgo Lake & Baba Mandir",
+      "Nathula Pass (permit)",
+      "Rumtek Monastery",
+      "MG Marg evening stroll",
+      "Hanuman Tok viewpoint",
+      "cable-car ride"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival in Gangtok & easy start",
+        "activities": [
+          "Tsomgo Lake & Baba Mandir"
+        ],
+        "description": "Day 1: Tsomgo Lake & Baba Mandir. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 2,
+        "title": "Nathula Pass (permit)",
+        "activities": [
+          "Nathula Pass (permit)",
+          "Rumtek Monastery"
+        ],
+        "description": "Day 2: Nathula Pass (permit); Rumtek Monastery. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 3,
+        "title": "MG Marg evening stroll",
+        "activities": [
+          "MG Marg evening stroll",
+          "Hanuman Tok viewpoint"
+        ],
+        "description": "Day 3: MG Marg evening stroll; Hanuman Tok viewpoint. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 4,
+        "title": "Cable-car ride",
+        "activities": [
+          "cable-car ride"
+        ],
+        "description": "Day 4: cable-car ride. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 5,
+        "title": "Souvenir time & departure",
+        "activities": [
+          "shopping at MG Marg"
+        ],
+        "description": "Day 5: shopping at MG Marg. A local guide accompanies the main sightseeing block."
+      }
+    ],
+    "nearby_attractions": [
+      "Tsomgo Lake",
+      "Nathula Pass",
+      "Lachung & Yumthang",
+      "Pelling"
+    ],
+    "restaurants": [],
+    "shopping_places": [
+      "MG Marg",
+      "Lal Bazaar",
+      "Sikkim handicraft emporium"
+    ],
+    "transport_options": {
+      "airport_transfer": true,
+      "private_car": true,
+      "scooter_available": true
+    },
+    "cancellation_policy": "Full refund up to 15 days before departure. 50% refund 7–14 days prior. No refund within 6 days of travel. Date changes subject to availability and fare difference.",
+    "travel_tips": [
+      "Best months to travel: March, April, May.",
+      "Carry clothing suited to: Cool Himalayan, 4–22°C.",
+      "Try the local food: Sikkimese gundruk soup, phagshapa, sel roti."
+    ],
+    "faqs": [
+      {
+        "question": "Is this package customisable?",
+        "answer": "Yes — hotels, duration and add-on experiences can be tailored. Price adjusts accordingly."
+      },
+      {
+        "question": "Are flights included?",
+        "answer": "No. Fares to the gateway city are separate; TravoAI can price them by distance on request."
+      }
+    ],
+    "tags": [
+      "gangtok",
+      "premium",
+      "mountains",
+      "adventure",
+      "india",
+      "5-day"
+    ],
+    "word_target": 2500,
+    "content_status": "skeleton",
+    "detailed_guide": "# Gangtok Premium — Mountains & Adventure (5D/4N) — Complete Travel Guide\n\n## Overview\n\nGangtok Premium — Mountains & Adventure (5D/4N) is a 5-day, 4-night premium journey through Gangtok, Sikkim, India. This guide expands the itinerary below into a complete, practical trip companion. Expand this section to roughly 180 words covering who the package suits, the headline experiences (Tsomgo Lake & Baba Mandir, Nathula Pass (permit), Rumtek Monastery), and the overall trip rhythm (comfortable).\n\n## Why Visit\n\nGangtok earns its place on this route for its mountains & adventure character. Expand to ~170 words on landscape, seasons, cultural texture and the single reason a traveller remembers this trip.\n\n## Getting There & Around\n\nMost travellers reach Gangtok via the nearest airport or railhead, then continue by road. Expand to ~180 words: arrival gateways, approximate transfer times, local transport options, and how private sedan transfers & sightseeing are handled in this package.\n\n## Day-by-Day Deep Dive\n\nThe 5-day plan is summarised in the itinerary array. Expand each day to ~110 words here — morning, afternoon and evening — weaving in Tsomgo Lake, Nathula Pass, Lachung & Yumthang, Pelling. Total this section ~550 words.\n\n## Where to Stay\n\nAccommodation is Ridge View Boutique Hotel (4-Star Resort / Boutique Hotel) or a comparable property. Expand to ~150 words on the stay experience, room style, on-site facilities and location trade-offs.\n\n## Food & Dining\n\nSignature dishes to seek out: Sikkimese gundruk soup, phagshapa, sel roti, tongba millet beer, momos. Expand to ~170 words on where to eat, dietary notes (veg/Jain/vegan availability), and what the package meal plan (breakfast + one signature dinner) does and does not cover.\n\n## Culture & Etiquette\n\nExpand to ~140 words on local customs, dress codes at religious sites, photography etiquette, language basics and tipping norms relevant to Gangtok.\n\n## Budget Breakdown (₹)\n\nPackage price is ₹42,000 for 2 travellers (Premium tier). Expand to ~160 words itemising what is included, a realistic estimate of personal spending (meals outside the plan, entry fees, shopping, tips), and money-saving or upgrade options.\n\n## Best Time & Weather\n\nIdeal months: March, April, May, September, October, November, December. Typical conditions: Cool Himalayan, 4–22°C. Expand to ~130 words on month-by-month trade-offs, festivals, and what to expect in shoulder season.\n\n## Packing List\n\nExpand to ~120 words: clothing for the climate above, footwear, documents, medication, and 3–4 destination-specific items travellers routinely forget for Gangtok.\n\n## Safety & Health\n\nExpand to ~140 words on altitude/heat/water precautions as relevant, road-safety notes, emergency numbers (112 in India), nearest hospital guidance, and travel-insurance advice.\n\n## Responsible Travel\n\nExpand to ~120 words on minimising plastic, respecting wildlife and fragile ecosystems near Gangtok, supporting local artisans (MG Marg, Lal Bazaar, Sikkim handicraft emporium), and community-based tourism choices.\n\n## FAQ\n\nExpand to ~180 words: 6–8 question-and-answer pairs a traveller would ask before booking a premium Gangtok trip (transfers, connectivity, kids, solo travellers, cancellation, customisation).\n\n## Final Word\n\nExpand to ~90 words: a warm closing that sets expectations and points the reader to the booking action for Gangtok Premium — Mountains & Adventure (5D/4N).\n\n---\n_content_status: skeleton — expand every section above to reach 2500 words total, keep the headings, then set content_status to \"complete\"._"
+  }
+]

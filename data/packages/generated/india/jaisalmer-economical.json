@@ -1,0 +1,127 @@
+[
+  {
+    "package_id": "PKG-JAISALMER-ECO",
+    "title": "Jaisalmer Economical — Desert & Culture (3D/2N)",
+    "destination": "Jaisalmer",
+    "state": "Rajasthan",
+    "country": "India",
+    "region": "india",
+    "price_inr": 13500,
+    "budget_tier": "economical",
+    "days": 3,
+    "nights": 2,
+    "capacity_people": 2,
+    "hotel_name": "Golden Fort Backpacker Haveli",
+    "hotel_tier": "3-Star / Verified Homestay",
+    "rating": 4.2,
+    "category": "Desert & Culture",
+    "best_months": [
+      "October",
+      "November",
+      "December",
+      "January",
+      "February"
+    ],
+    "weather": "Desert, 8–28°C in season",
+    "difficulty": "Easy",
+    "description": "A 3-day economical desert & culture experience in Jaisalmer (Rajasthan, India). Includes Golden Fort Backpacker Haveli (3-Star / Verified Homestay), daily breakfast, shared ac coach transfers, and guided highlights: Sam sand dunes camel safari, Jaisalmer Fort living heritage, Patwon ki Haveli, Gadisar Lake.",
+    "highlights": [
+      "Sam sand dunes camel safari",
+      "Jaisalmer Fort living heritage",
+      "Patwon ki Haveli",
+      "Gadisar Lake",
+      "Desert night camp with folk music"
+    ],
+    "included_services": {
+      "meals": "Daily breakfast",
+      "transport": "Shared AC coach transfers",
+      "guide": "Certified local guide for sightseeing days",
+      "activities": "Entry & experience passes for: Sam sand dunes camel safari, Jaisalmer Fort living heritage, Patwon ki Haveli"
+    },
+    "excluded_services": [
+      "Flights / trains to the gateway city",
+      "Travel insurance",
+      "Personal expenses, tips and optional activities",
+      "Monument still/video camera charges"
+    ],
+    "activities": [
+      "Sam sand dunes camel safari",
+      "Jaisalmer Fort living heritage",
+      "Patwon ki Haveli",
+      "Gadisar Lake",
+      "desert night camp with folk music",
+      "Kuldhara ghost village"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival in Jaisalmer & easy start",
+        "activities": [
+          "Sam sand dunes camel safari"
+        ],
+        "description": "Day 1: Sam sand dunes camel safari. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 2,
+        "title": "Jaisalmer Fort living heritage",
+        "activities": [
+          "Jaisalmer Fort living heritage",
+          "Patwon ki Haveli"
+        ],
+        "description": "Day 2: Jaisalmer Fort living heritage; Patwon ki Haveli. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 3,
+        "title": "Souvenir time & departure",
+        "activities": [
+          "shopping at Sadar Bazaar"
+        ],
+        "description": "Day 3: shopping at Sadar Bazaar. A local guide accompanies the main sightseeing block."
+      }
+    ],
+    "nearby_attractions": [
+      "Sam Sand Dunes",
+      "Kuldhara",
+      "Khaba Fort",
+      "Desert National Park"
+    ],
+    "restaurants": [],
+    "shopping_places": [
+      "Sadar Bazaar",
+      "Bhatia Market",
+      "Manak Chowk"
+    ],
+    "transport_options": {
+      "airport_transfer": true,
+      "private_car": false,
+      "scooter_available": true
+    },
+    "cancellation_policy": "Full refund up to 15 days before departure. 50% refund 7–14 days prior. No refund within 6 days of travel. Date changes subject to availability and fare difference.",
+    "travel_tips": [
+      "Best months to travel: October, November, December.",
+      "Carry clothing suited to: Desert, 8–28°C in season.",
+      "Try the local food: ker sangri, dal baati, makhaniya lassi."
+    ],
+    "faqs": [
+      {
+        "question": "Is this package customisable?",
+        "answer": "Yes — hotels, duration and add-on experiences can be tailored. Price adjusts accordingly."
+      },
+      {
+        "question": "Are flights included?",
+        "answer": "No. Fares to the gateway city are separate; TravoAI can price them by distance on request."
+      }
+    ],
+    "tags": [
+      "jaisalmer",
+      "economical",
+      "desert",
+      "culture",
+      "india",
+      "3-day"
+    ],
+    "word_target": 2500,
+    "content_status": "skeleton",
+    "detailed_guide": "# Jaisalmer Economical — Desert & Culture (3D/2N) — Complete Travel Guide\n\n## Overview\n\nJaisalmer Economical — Desert & Culture (3D/2N) is a 3-day, 2-night economical journey through Jaisalmer, Rajasthan, India. This guide expands the itinerary below into a complete, practical trip companion. Expand this section to roughly 180 words covering who the package suits, the headline experiences (Sam sand dunes camel safari, Jaisalmer Fort living heritage, Patwon ki Haveli), and the overall trip rhythm (value-focused).\n\n## Why Visit\n\nJaisalmer earns its place on this route for its desert & culture character. Expand to ~170 words on landscape, seasons, cultural texture and the single reason a traveller remembers this trip.\n\n## Getting There & Around\n\nMost travellers reach Jaisalmer via the nearest airport or railhead, then continue by road. Expand to ~180 words: arrival gateways, approximate transfer times, local transport options, and how shared ac coach transfers are handled in this package.\n\n## Day-by-Day Deep Dive\n\nThe 3-day plan is summarised in the itinerary array. Expand each day to ~110 words here — morning, afternoon and evening — weaving in Sam Sand Dunes, Kuldhara, Khaba Fort, Desert National Park. Total this section ~330 words.\n\n## Where to Stay\n\nAccommodation is Golden Fort Backpacker Haveli (3-Star / Verified Homestay) or a comparable property. Expand to ~150 words on the stay experience, room style, on-site facilities and location trade-offs.\n\n## Food & Dining\n\nSignature dishes to seek out: ker sangri, dal baati, makhaniya lassi, pyaaz kachori, desert mushroom curry. Expand to ~170 words on where to eat, dietary notes (veg/Jain/vegan availability), and what the package meal plan (daily breakfast) does and does not cover.\n\n## Culture & Etiquette\n\nExpand to ~140 words on local customs, dress codes at religious sites, photography etiquette, language basics and tipping norms relevant to Jaisalmer.\n\n## Budget Breakdown (₹)\n\nPackage price is ₹13,500 for 2 travellers (Economical tier). Expand to ~160 words itemising what is included, a realistic estimate of personal spending (meals outside the plan, entry fees, shopping, tips), and money-saving or upgrade options.\n\n## Best Time & Weather\n\nIdeal months: October, November, December, January, February. Typical conditions: Desert, 8–28°C in season. Expand to ~130 words on month-by-month trade-offs, festivals, and what to expect in shoulder season.\n\n## Packing List\n\nExpand to ~120 words: clothing for the climate above, footwear, documents, medication, and 3–4 destination-specific items travellers routinely forget for Jaisalmer.\n\n## Safety & Health\n\nExpand to ~140 words on altitude/heat/water precautions as relevant, road-safety notes, emergency numbers (112 in India), nearest hospital guidance, and travel-insurance advice.\n\n## Responsible Travel\n\nExpand to ~120 words on minimising plastic, respecting wildlife and fragile ecosystems near Jaisalmer, supporting local artisans (Sadar Bazaar, Bhatia Market, Manak Chowk), and community-based tourism choices.\n\n## FAQ\n\nExpand to ~180 words: 6–8 question-and-answer pairs a traveller would ask before booking a economical Jaisalmer trip (transfers, connectivity, kids, solo travellers, cancellation, customisation).\n\n## Final Word\n\nExpand to ~90 words: a warm closing that sets expectations and points the reader to the booking action for Jaisalmer Economical — Desert & Culture (3D/2N).\n\n---\n_content_status: skeleton — expand every section above to reach 2500 words total, keep the headings, then set content_status to \"complete\"._"
+  }
+]

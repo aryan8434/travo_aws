@@ -4,8 +4,20 @@ import axios from 'axios'
 import App from './App.jsx'
 import './index.css'
 
-// Direct all frontend API calls to Express backend on port 5000
-axios.defaults.baseURL = 'http://localhost:5000';
+// In dev, Vite proxies /chat /api /user /auth to the backend (see vite.config.js).
+// In prod the build is served by Express, so same-origin requests just work.
+// Override only if the API lives elsewhere.
+if (import.meta.env.VITE_API_URL) {
+  axios.defaults.baseURL = import.meta.env.VITE_API_URL;
+}
+
+// Attach the auth token (if any) to every request.
+const stored = (() => {
+  try { return JSON.parse(localStorage.getItem('travoai_user') || 'null'); } catch { return null; }
+})();
+if (stored?.token) {
+  axios.defaults.headers.common.Authorization = `Bearer ${stored.token}`;
+}
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

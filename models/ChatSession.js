@@ -26,6 +26,11 @@ const ChatSessionSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+    // Remembered booking slots (intent, from, to, prices…) — see utils/sessionContext.js
+    context: {
+      type: Object,
+      default: {},
+    },
     messages: {
       type: [MessageSchema],
       default: [],

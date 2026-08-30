@@ -102,17 +102,54 @@ cd backend
 npm install
 ```
 
-Create a `.env` file:
+Create a `.env` file (see [`.env.example`](.env.example) for all options):
 ```env
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret
-GROQ_API_KEY=your_groq_api_key
+JWT_SECRET=a_long_random_string_min_16_chars      # required
+GROQ_API_KEY=your_groq_api_key                    # chat intent extraction
+GROQ_MODEL=openai/gpt-oss-20b                     # llama-3.1-8b-instant retired 2026-08-16
+GEMINI_API_KEY=your_gemini_api_key                # optional: RAG embeddings + alt LLM
+GEMINI_MODEL=gemini-flash-latest                  # if LLM_PROVIDER=gemini
+GEMINI_EMBED_MODEL=gemini-embedding-001           # text-embedding-004 retired
+ADMIN_KEY=a_secret_min_12_chars                   # required for /api/admin/*
+CORS_ORIGINS=http://localhost:3000,http://localhost:5000
+RAZORPAY_KEY_ID=                                  # payments are LIVE-only
+RAZORPAY_KEY_SECRET=                              # both required or payments return 503
 ```
 
 ```bash
-npm start
+npm start                 # start the API + serve the built frontend
+npm run generate:packages # (re)build the 130+ holiday-package catalog
+npm run reindex           # rebuild the Vectra vector index (incremental)
 ```
+
+> **Payments — flat ₹1 confirmation.** Every charge is a flat **₹1 fee**; the
+> booking / wallet credit and the **GST invoice** are for the full amount.
+> `PAYMENTS_MODE=live` runs the real Razorpay checkout with strict verification
+> (signature + payment fetch + ₹1 amount check) — **`rzp_test_…` keys work
+> perfectly**. `PAYMENTS_MODE=test` (default with no keys) auto-completes the ₹1
+> step with no gateway call, still raising the full invoice, clearly labelled
+> "TravoAI Test Mode".
+>
+> **Holiday packages ask for a location first.** The assistant asks which state
+> or destination you want a package for (listing only what's stocked), then
+> shows **only** that location's packages, ranked by your budget/tier.
+>
+> **RAG embeddings**: with `GEMINI_API_KEY` set, packages embed with
+> `gemini-embedding-001` (768-dim); otherwise an offline local embedding is used
+> automatically. The free-tier daily embedding quota is small — a full
+> `npm run reindex -- --force` of the whole catalog needs a paid tier or several
+> days; the run is resumable and falls back to local for un-embedded chunks.
+> See [`scripts/CONTENT_PIPELINE.md`](scripts/CONTENT_PIPELINE.md) for filling
+> the 2,000–2,500-word package guides.
+>
+> **Chat LLM**: `LLM_PROVIDER=groq` (default, `openai/gpt-oss-20b`) or
+> `LLM_PROVIDER=gemini` (`gemini-flash-latest`). If the model call fails, a
+> keyword heuristic keeps flight/bus/hotel/package search working.
+>
+> **Flights** are priced from real great-circle distance between ~60 Indian
+> airport cities at a random ₹2.0–₹2.5 per km (`GET /api/airports` lists them).
 
 ### Frontend Setup
 
@@ -133,11 +170,16 @@ VITE_API_URL=http://localhost:5000
 
 | Method | Endpoint | Description |
 |---|---|---|
-| `POST` | `/auth/register` | Register a new user |
+| `POST` | `/auth/signup` | Register a new user (bcrypt-hashed password) |
 | `POST` | `/auth/login` | Login and receive JWT |
-| `GET` | `/user/me` | Get current user profile |
-| `POST` | `/user/wallet/add` | Add funds to wallet |
+| `GET` | `/user/me` | Get current user profile (auth) |
+| `POST` | `/user/book` | Create a booking, debit wallet atomically (auth) |
+| `POST` | `/user/wallet/topup` | Add funds — requires a verified Razorpay payment (auth) |
 | `POST` | `/chat` | Send a message to the AI |
+| `GET`  | `/api/packages` | RAG package search (`query`, `tier`, `budgetMax`, `category`) |
+| `GET`  | `/api/airports` | List supported flight cities |
+| `POST` | `/api/create-order` · `/api/verify-payment` | Razorpay live checkout |
+| `POST` | `/api/admin/reindex` | Rebuild vector index (`x-admin-key` header) |
 
 ---
 

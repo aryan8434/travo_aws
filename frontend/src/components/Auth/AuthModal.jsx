@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { X, Lock, User, KeyRound, Sparkles, CheckCircle2, AlertCircle, ArrowRight, ShieldCheck } from 'lucide-react';
 import axios from 'axios';
+import { backdrop, scaleIn } from '../../lib/motion';
 
 export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
   const [isLogin, setIsLogin] = useState(true);
   const [username, setUsername] = useState('test1234');
-  const [password, setPassword] = useState('1234');
+  const [password, setPassword] = useState('test12345');
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
   const [successMsg, setSuccessMsg] = useState(null);
 
-  if (!isOpen) return null;
-
   const handleQuickFillTestUser = () => {
     setUsername('test1234');
-    setPassword('1234');
+    setPassword('test12345');
     setErrorMsg(null);
   };
 
@@ -35,12 +35,13 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
       const res = await axios.post(endpoint, { username, password });
       const data = res.data;
 
-      if (data.success || data.token) {
-        const userObj = data.user || { username, walletBalance: 10000 };
+      if ((data.success || data.token) && data.token) {
+        const userObj = { ...(data.user || { username, walletBalance: 10000 }), token: data.token };
+        axios.defaults.headers.common.Authorization = `Bearer ${data.token}`;
         setSuccessMsg(isLogin ? `👋 Welcome back, ${userObj.username}!` : '🎉 Account created successfully!');
 
         setTimeout(() => {
-          if (onLoginSuccess) onLoginSuccess(userObj, data.token);
+          if (onLoginSuccess) onLoginSuccess(userObj);
           onClose();
         }, 800);
       } else {
@@ -54,8 +55,24 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-md glass-panel bg-[#0f172a] rounded-3xl border border-cyan-500/30 overflow-hidden shadow-2xl space-y-0 text-slate-100">
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          variants={backdrop}
+          initial="hidden"
+          animate="show"
+          exit="exit"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+          onClick={onClose}
+        >
+          <motion.div
+            variants={scaleIn}
+            initial="hidden"
+            animate="show"
+            exit="exit"
+            onClick={(e) => e.stopPropagation()}
+            className="relative w-full max-w-md glass-panel bg-[#0f172a] rounded-3xl border border-cyan-500/30 overflow-hidden shadow-2xl space-y-0 text-slate-100"
+          >
         {/* Top Banner */}
         <div className="bg-gradient-to-r from-cyan-950 via-slate-900 to-blue-950 p-5 border-b border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
@@ -104,7 +121,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
                 <Sparkles className="w-3.5 h-3.5 text-cyan-400" /> Default Test Account:
               </span>
               <span className="text-[11px] font-mono text-slate-300">
-                User: <strong className="text-white">test1234</strong> | Pass: <strong className="text-white">1234</strong>
+                User: <strong className="text-white">test1234</strong> | Pass: <strong className="text-white">test12345</strong>
               </span>
             </div>
             <button
@@ -146,7 +163,7 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
             </div>
 
             <div className="space-y-1">
-              <label className="text-xs text-slate-400 font-semibold block">Password (4+ Digits)</label>
+              <label className="text-xs text-slate-400 font-semibold block">Password (6+ characters)</label>
               <div className="relative">
                 <Lock className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
                 <input
@@ -175,7 +192,9 @@ export default function AuthModal({ isOpen, onClose, onLoginSuccess }) {
           <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
           <span>MongoDB Persistent Chat History & Wallet Sync Activated</span>
         </div>
-      </div>
-    </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   );
 }

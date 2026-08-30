@@ -1,8 +1,18 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { Star, Calendar, Users, MapPin, Bus, Plane, Hotel, Sparkles, CheckCircle2, ArrowRight, ShieldCheck, Lock } from 'lucide-react';
 import { initializePayment } from '../../utils/razorpay';
+import { fadeInUp } from '../../lib/motion';
 
-export default function BookingCard({ item, cardType, onBookingComplete, onBookingError, currentUser, onOpenAuthModal }) {
+const cardAnim = {
+  variants: fadeInUp,
+  initial: 'hidden',
+  animate: 'show',
+  whileHover: { y: -4, transition: { duration: 0.18 } },
+  whileTap: { scale: 0.99 },
+};
+
+function BookingCard({ item, cardType, onBookingComplete, onBookingError, currentUser, onOpenAuthModal }) {
   if (!item) return null;
 
   const isPackage = cardType === 'package' || item.package_id || item.days;
@@ -35,7 +45,7 @@ export default function BookingCard({ item, cardType, onBookingComplete, onBooki
      ========================================================= */
   if (isPackage) {
     return (
-      <div className="glass-card rounded-2xl overflow-hidden border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300 shadow-xl shadow-cyan-950/20 my-3 group">
+      <motion.div {...cardAnim} className="glass-card rounded-2xl overflow-hidden border border-cyan-500/20 hover:border-cyan-500/40 transition-colors duration-300 shadow-xl shadow-cyan-950/20 my-3 group">
         <div className="bg-gradient-to-r from-cyan-950/60 via-slate-900 to-blue-950/60 p-4 border-b border-cyan-500/10 flex justify-between items-start">
           <div>
             <div className="flex items-center gap-2 mb-1 flex-wrap">
@@ -114,7 +124,7 @@ export default function BookingCard({ item, cardType, onBookingComplete, onBooki
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
@@ -123,7 +133,7 @@ export default function BookingCard({ item, cardType, onBookingComplete, onBooki
      ========================================================= */
   if (isBus) {
     return (
-      <div className="glass-card rounded-xl p-3 border border-slate-800 hover:border-cyan-500/30 transition-all my-2 flex items-center justify-between">
+      <motion.div {...cardAnim} className="glass-card rounded-xl p-3 border border-slate-800 hover:border-cyan-500/30 transition-colors my-2 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
             <Bus className="w-5 h-5" />
@@ -156,7 +166,7 @@ export default function BookingCard({ item, cardType, onBookingComplete, onBooki
             Book Seat
           </button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
@@ -165,7 +175,7 @@ export default function BookingCard({ item, cardType, onBookingComplete, onBooki
      ========================================================= */
   if (isFlight) {
     return (
-      <div className="glass-card rounded-xl p-3 border border-slate-800 hover:border-sky-500/30 transition-all my-2 flex items-center justify-between">
+      <motion.div {...cardAnim} className="glass-card rounded-xl p-3 border border-slate-800 hover:border-sky-500/30 transition-colors my-2 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400">
             <Plane className="w-5 h-5" />
@@ -178,9 +188,20 @@ export default function BookingCard({ item, cardType, onBookingComplete, onBooki
               </span>
             </div>
             <div className="text-xs text-slate-400 mt-0.5">
-              <span>{item.from || item.from_airport} ➔ {item.to || item.to_airport}</span>
+              <span>
+                {item.from || item.from_airport}
+                {item.fromIata ? ` (${item.fromIata})` : ''} ➔ {item.to || item.to_airport}
+                {item.toIata ? ` (${item.toIata})` : ''}
+              </span>
               <span className="ml-2 text-cyan-400 font-mono">🛫 {item.time || item.departure_time}</span>
             </div>
+            {item.distance_km && (
+              <div className="text-[10px] text-slate-500 mt-0.5">
+                {item.distance_km.toLocaleString('en-IN')} km · ₹{item.rate_per_km}/km
+                {item.duration ? ` · ${item.duration}` : ''}
+                {item.stops === 0 ? ' · non-stop' : item.stops ? ` · ${item.stops} stop` : ''}
+              </div>
+            )}
           </div>
         </div>
 
@@ -198,7 +219,7 @@ export default function BookingCard({ item, cardType, onBookingComplete, onBooki
             Book Flight
           </button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
@@ -207,7 +228,7 @@ export default function BookingCard({ item, cardType, onBookingComplete, onBooki
      ========================================================= */
   if (isHotel) {
     return (
-      <div className="glass-card rounded-xl p-3 border border-slate-800 hover:border-amber-500/30 transition-all my-2 flex items-center justify-between">
+      <motion.div {...cardAnim} className="glass-card rounded-xl p-3 border border-slate-800 hover:border-amber-500/30 transition-colors my-2 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400">
             <Hotel className="w-5 h-5" />
@@ -239,9 +260,11 @@ export default function BookingCard({ item, cardType, onBookingComplete, onBooki
             Book Room
           </button>
         </div>
-      </div>
+      </motion.div>
     );
   }
 
   return null;
 }
+
+export default React.memo(BookingCard);

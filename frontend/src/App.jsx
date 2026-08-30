@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy, Suspense } from 'react';
 import axios from 'axios';
 import Header from './components/Header';
 import ChatBox from './components/Chat/ChatBox';
@@ -6,18 +6,24 @@ import RightSidebar from './components/Sidebar/RightSidebar';
 import LeftDrawer from './components/Sidebar/LeftDrawer';
 import AuthModal from './components/Auth/AuthModal';
 
-// Pages
-import PackagesView from './components/Pages/PackagesView';
-import TransactionsView from './components/Pages/TransactionsView';
-import BookingsView from './components/Pages/BookingsView';
-import SupportView from './components/Pages/SupportView';
-import AboutView from './components/Pages/AboutView';
-import AdminView from './components/Pages/AdminView';
-import WalletView from './components/Pages/WalletView';
-import RagArchitectureModal from './components/Pages/RagArchitectureModal';
+// Pages — lazy so each is a separate chunk, loaded on first navigation
+const PackagesView = lazy(() => import('./components/Pages/PackagesView'));
+const TransactionsView = lazy(() => import('./components/Pages/TransactionsView'));
+const BookingsView = lazy(() => import('./components/Pages/BookingsView'));
+const SupportView = lazy(() => import('./components/Pages/SupportView'));
+const AboutView = lazy(() => import('./components/Pages/AboutView'));
+const AdminView = lazy(() => import('./components/Pages/AdminView'));
+const WalletView = lazy(() => import('./components/Pages/WalletView'));
+const RagArchitectureModal = lazy(() => import('./components/Pages/RagArchitectureModal'));
 
 // Storage
 import { getStoredTransactions, getStoredBookings, getWalletBalance } from './utils/storage';
+
+const ViewFallback = () => (
+  <div className="flex-1 flex items-center justify-center text-xs text-slate-500 animate-pulse">
+    Loading…
+  </div>
+);
 
 export default function App() {
   const [messages, setMessages] = useState([]);
@@ -56,57 +62,75 @@ export default function App() {
     setWalletBalance(getWalletBalance());
   }, [currentView, isDrawerOpen]);
 
-  // Load MongoDB saved chat history whenever user changes
+  // Restore the auth header from a persisted session on first mount.
+  useEffect(() => {
+    if (currentUser?.token && !axios.defaults.headers.common.Authorization) {
+      axios.defaults.headers.common.Authorization = `Bearer ${currentUser.token}`;
+    }
+  }, []);
+
+  // Load saved chat history whenever the user changes
   useEffect(() => {
     if (currentUser?.username) {
-      loadUserChatHistory(currentUser.username);
+      loadUserChatHistory();
     }
   }, [currentUser]);
 
-  const loadUserChatHistory = async (username) => {
+  const loadUserChatHistory = async () => {
+    if (!axios.defaults.headers.common.Authorization) return;
     try {
-      const res = await axios.get(`/api/chat/user-history?username=${username}`);
+      const res = await axios.get('/api/chat/user-history');
       if (res.data && res.data.messages && res.data.messages.length > 0) {
         setMessages(res.data.messages);
       }
     } catch (err) {
-      console.warn("MongoDB chat history fetch error:", err);
+      console.warn("Chat history fetch error:", err);
     }
   };
 
   const handleLoginSuccess = (userObj) => {
     setCurrentUser(userObj);
     localStorage.setItem('travoai_user', JSON.stringify(userObj));
+    if (userObj.token) {
+      axios.defaults.headers.common.Authorization = `Bearer ${userObj.token}`;
+    }
     if (userObj.walletBalance) {
       setWalletBalance(userObj.walletBalance);
     }
-    loadUserChatHistory(userObj.username);
+    loadUserChatHistory();
   };
 
   const handleLogout = () => {
     setCurrentUser(null);
     localStorage.removeItem('travoai_user');
+    delete axios.defaults.headers.common.Authorization;
   };
 
   const handleBookingComplete = (booking) => {
     setWalletBalance(getWalletBalance());
 
     const isWallet = booking.paid_via_wallet;
-    const headerTitle = isWallet ? "🎉 **Booking Confirmed via TravoAI Wallet Balance!**" : "🎉 **Booking Confirmed!**";
+    const nominal = Number(booking.nominal_amount ?? booking.actual_price);
+    const headerTitle = isWallet ? "🎉 **Booking Confirmed — paid from TravoAI Wallet**" : "🎉 **Booking Confirmed**";
     const paymentLine = isWallet
-      ? `* **Deducted from Wallet**: ₹${Number(booking.actual_price).toLocaleString('en-IN')}\n* **Remaining Balance**: ₹${Number(booking.remaining_wallet_balance || 0).toLocaleString('en-IN')}`
-      : `* **Total Amount Paid**: ₹${Number(booking.actual_price).toLocaleString('en-IN')}`;
+      ? `* **Paid from Wallet**: ₹${nominal.toLocaleString('en-IN')}\n* **Remaining Balance**: ₹${Number(booking.remaining_wallet_balance || 0).toLocaleString('en-IN')}`
+      : `* **Invoice Total**: ₹${nominal.toLocaleString('en-IN')}\n* **Charged via Razorpay now**: ₹1 (confirmation fee)`;
+
+    const invoiceLine = booking.invoice
+      ? `\n* **Invoice No.**: \`${booking.invoice.invoice_no}\``
+      : '';
 
     const botMsg = {
       sender: 'bot',
-      text: `${headerTitle}\n\n* **Item**: ${booking.item_name}\n* **PNR Number**: \`${booking.pnr}\`\n* **Ticket Number**: \`${booking.ticket_number}\`\n* **Booking ID**: \`${booking.booking_id}\`\n* **Transaction ID**: \`${booking.txn_id || 'TXN-CONFIRMED'}\`\n${paymentLine}\n\nYour verified digital pass with an interactive QR code has been generated! You can view or download your ticket anytime under **My Bookings** in the top-left menu.`,
-      booking: booking
+      text: `${headerTitle}\n\n* **Item**: ${booking.item_name}\n* **PNR Number**: \`${booking.pnr}\`\n* **Ticket Number**: \`${booking.ticket_number}\`\n* **Booking ID**: \`${booking.booking_id}\`\n* **Transaction ID**: \`${booking.txn_id || 'TXN-CONFIRMED'}\`${invoiceLine}\n${paymentLine}\n\nYour verified digital pass (with QR) and GST invoice are ready — open them from the card below or under **My Bookings**.`,
+      booking: booking,
+      invoice: booking.invoice || null,
     };
 
     setMessages((prev) => [...prev, botMsg]);
 
     if (currentUser?.username) {
-      axios.post('/api/chat/save-user-message', { username: currentUser.username, message: botMsg }).catch(e => e);
+      axios.post('/api/chat/save-user-message', { message: botMsg }).catch(e => e);
     }
   };
 
@@ -123,7 +147,7 @@ export default function App() {
     setMessages((prev) => [...prev, botMsg]);
 
     if (currentUser?.username) {
-      axios.post('/api/chat/save-user-message', { username: currentUser.username, message: botMsg }).catch(e => e);
+      axios.post('/api/chat/save-user-message', { message: botMsg }).catch(e => e);
     }
   };
 
@@ -250,7 +274,7 @@ export default function App() {
     setLoading(true);
 
     if (currentUser?.username) {
-      axios.post('/api/chat/save-user-message', { username: currentUser.username, message: userMsg }).catch(e => e);
+      axios.post('/api/chat/save-user-message', { message: userMsg }).catch(e => e);
     }
 
     try {
@@ -276,15 +300,23 @@ export default function App() {
       setMessages((prev) => [...prev, botMsg]);
 
       if (currentUser?.username) {
-        axios.post('/api/chat/save-user-message', { username: currentUser.username, message: botMsg }).catch(e => e);
+        axios.post('/api/chat/save-user-message', { message: botMsg }).catch(e => e);
       }
     } catch (error) {
       console.error('Chat error:', error);
-      const errBotMsg = {
-        sender: 'bot',
-        text: "⚠️ Connection error: Please check if the backend server (`node index.js`) is running."
-      };
-      setMessages((prev) => [...prev, errBotMsg]);
+      const status = error.response?.status;
+
+      // The server sends its own quota-style message for 429/503; only fall
+      // back to a generic line when it could not be reached at all.
+      const text =
+        error.response?.data?.text ||
+        (status === 429
+          ? "🔌 **API tokens exhausted** — too many requests in a short time. Please wait a moment and try again."
+          : status
+            ? "🔌 **API tokens exhausted** — the AI service quota for this session has run out. Please try again in a few minutes."
+            : "📡 **Can't reach the TravoAI server.** Make sure the backend is running (`npm start`), then try again.");
+
+      setMessages((prev) => [...prev, { sender: 'bot', text }]);
     } finally {
       setLoading(false);
     }
@@ -322,12 +354,14 @@ export default function App() {
       />
 
       {/* RAG Architecture Modal */}
-      <RagArchitectureModal
-        isOpen={isRagModalOpen}
-        onClose={() => setIsRagModalOpen(false)}
-      />
+      {isRagModalOpen && (
+        <Suspense fallback={null}>
+          <RagArchitectureModal isOpen={isRagModalOpen} onClose={() => setIsRagModalOpen(false)} />
+        </Suspense>
+      )}
 
       {/* Main Container Views */}
+      <Suspense fallback={<ViewFallback />}>
       <div className="flex flex-1 overflow-hidden">
         {currentView === 'home' && (
           <>
@@ -402,6 +436,7 @@ export default function App() {
           />
         )}
       </div>
+      </Suspense>
     </div>
   );
 }

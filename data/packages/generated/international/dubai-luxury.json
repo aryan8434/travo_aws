@@ -1,0 +1,151 @@
+[
+  {
+    "package_id": "PKG-DUBAI-LUX",
+    "title": "Dubai Luxury — International City & Desert (6D/5N)",
+    "destination": "Dubai",
+    "state": "",
+    "country": "United Arab Emirates",
+    "region": "international",
+    "price_inr": 404000,
+    "budget_tier": "luxury",
+    "days": 6,
+    "nights": 5,
+    "capacity_people": 2,
+    "hotel_name": "Palm Jumeirah Beachfront Luxury Suites",
+    "hotel_tier": "5-Star Luxury / Palace Collection",
+    "rating": 4.9,
+    "category": "International City & Desert",
+    "best_months": [
+      "November",
+      "December",
+      "January",
+      "February",
+      "March"
+    ],
+    "weather": "Desert, 18–30°C in season",
+    "difficulty": "Easy",
+    "description": "A 6-day luxury international city & desert experience in Dubai (United Arab Emirates). Includes Palm Jumeirah Beachfront Luxury Suites (5-Star Luxury / Palace Collection), all-day gourmet dining & private chef experience, private suv with chauffeur & on-call concierge, and guided highlights: Burj Khalifa At The Top, desert safari with dune bashing, Dubai Mall & fountain show, Palm Jumeirah & Atlantis.",
+    "highlights": [
+      "Burj Khalifa At The Top",
+      "Desert safari with dune bashing",
+      "Dubai Mall & fountain show",
+      "Palm Jumeirah & Atlantis",
+      "Old Dubai abra & souks"
+    ],
+    "included_services": {
+      "meals": "All-day gourmet dining & private chef experience",
+      "transport": "Private SUV with chauffeur & on-call concierge",
+      "guide": "Certified local guide for sightseeing days",
+      "activities": "Entry & experience passes for: Burj Khalifa At The Top, desert safari with dune bashing, Dubai Mall & fountain show"
+    },
+    "excluded_services": [
+      "Flights / trains to the gateway city",
+      "Travel insurance",
+      "Personal expenses, tips and optional activities",
+      "Visa fees"
+    ],
+    "activities": [
+      "Burj Khalifa At The Top",
+      "desert safari with dune bashing",
+      "Dubai Mall & fountain show",
+      "Palm Jumeirah & Atlantis",
+      "Old Dubai abra & souks",
+      "Museum of the Future"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival in Dubai & easy start",
+        "activities": [
+          "Burj Khalifa At The Top"
+        ],
+        "description": "Day 1: Burj Khalifa At The Top. Unstructured time is built in for spa, pool or private experiences."
+      },
+      {
+        "day": 2,
+        "title": "Desert safari with dune bashing",
+        "activities": [
+          "desert safari with dune bashing",
+          "Dubai Mall & fountain show"
+        ],
+        "description": "Day 2: desert safari with dune bashing; Dubai Mall & fountain show. Unstructured time is built in for spa, pool or private experiences."
+      },
+      {
+        "day": 3,
+        "title": "Palm Jumeirah & Atlantis",
+        "activities": [
+          "Palm Jumeirah & Atlantis",
+          "Old Dubai abra & souks"
+        ],
+        "description": "Day 3: Palm Jumeirah & Atlantis; Old Dubai abra & souks. Unstructured time is built in for spa, pool or private experiences."
+      },
+      {
+        "day": 4,
+        "title": "Museum of the Future",
+        "activities": [
+          "Museum of the Future"
+        ],
+        "description": "Day 4: Museum of the Future. Unstructured time is built in for spa, pool or private experiences."
+      },
+      {
+        "day": 5,
+        "title": "Explore Dubai",
+        "activities": [],
+        "description": "Day 5: leisure day. Unstructured time is built in for spa, pool or private experiences."
+      },
+      {
+        "day": 6,
+        "title": "Souvenir time & departure",
+        "activities": [
+          "shopping at Dubai Mall"
+        ],
+        "description": "Day 6: shopping at Dubai Mall. Unstructured time is built in for spa, pool or private experiences."
+      }
+    ],
+    "nearby_attractions": [
+      "Abu Dhabi",
+      "Sharjah",
+      "Hatta",
+      "Al Ain"
+    ],
+    "restaurants": [],
+    "shopping_places": [
+      "Dubai Mall",
+      "Mall of the Emirates",
+      "Gold & Spice Souk"
+    ],
+    "transport_options": {
+      "airport_transfer": true,
+      "private_car": true,
+      "scooter_available": false
+    },
+    "cancellation_policy": "Full refund up to 15 days before departure. 50% refund 7–14 days prior. No refund within 6 days of travel. Date changes subject to availability and fare difference.",
+    "travel_tips": [
+      "Best months to travel: November, December, January.",
+      "Carry clothing suited to: Desert, 18–30°C in season.",
+      "Try the local food: shawarma, machboos, luqaimat."
+    ],
+    "faqs": [
+      {
+        "question": "Is this package customisable?",
+        "answer": "Yes — hotels, duration and add-on experiences can be tailored. Price adjusts accordingly."
+      },
+      {
+        "question": "Are flights included?",
+        "answer": "No. Fares to the gateway city are separate; TravoAI can price them by distance on request."
+      }
+    ],
+    "tags": [
+      "dubai",
+      "luxury",
+      "international",
+      "city",
+      "desert",
+      "international",
+      "6-day"
+    ],
+    "word_target": 2500,
+    "content_status": "skeleton",
+    "detailed_guide": "# Dubai Luxury — International City & Desert (6D/5N) — Complete Travel Guide\n\n## Overview\n\nDubai Luxury — International City & Desert (6D/5N) is a 6-day, 5-night luxury journey through Dubai, United Arab Emirates. This guide expands the itinerary below into a complete, practical trip companion. Expand this section to roughly 180 words covering who the package suits, the headline experiences (Burj Khalifa At The Top, desert safari with dune bashing, Dubai Mall & fountain show), and the overall trip rhythm (unhurried and curated).\n\n## Why Visit\n\nDubai earns its place on this route for its international city & desert character. Expand to ~170 words on landscape, seasons, cultural texture and the single reason a traveller remembers this trip.\n\n## Getting There & Around\n\nMost travellers reach Dubai via the nearest airport or railhead, then continue by road. Expand to ~180 words: arrival gateways, approximate transfer times, local transport options, and how private suv with chauffeur & on-call concierge are handled in this package.\n\n## Day-by-Day Deep Dive\n\nThe 6-day plan is summarised in the itinerary array. Expand each day to ~110 words here — morning, afternoon and evening — weaving in Abu Dhabi, Sharjah, Hatta, Al Ain. Total this section ~660 words.\n\n## Where to Stay\n\nAccommodation is Palm Jumeirah Beachfront Luxury Suites (5-Star Luxury / Palace Collection) or a comparable property. Expand to ~150 words on the stay experience, room style, on-site facilities and location trade-offs.\n\n## Food & Dining\n\nSignature dishes to seek out: shawarma, machboos, luqaimat, Emirati mezze, global fine dining. Expand to ~170 words on where to eat, dietary notes (veg/Jain/vegan availability), and what the package meal plan (all-day gourmet dining & private chef experience) does and does not cover.\n\n## Culture & Etiquette\n\nExpand to ~140 words on local customs, dress codes at religious sites, photography etiquette, language basics and tipping norms relevant to Dubai.\n\n## Budget Breakdown (₹)\n\nPackage price is ₹4,04,000 for 2 travellers (Luxury tier). Expand to ~160 words itemising what is included, a realistic estimate of personal spending (meals outside the plan, entry fees, shopping, tips), and money-saving or upgrade options.\n\n## Best Time & Weather\n\nIdeal months: November, December, January, February, March. Typical conditions: Desert, 18–30°C in season. Expand to ~130 words on month-by-month trade-offs, festivals, and what to expect in shoulder season.\n\n## Packing List\n\nExpand to ~120 words: clothing for the climate above, footwear, documents, medication, and 3–4 destination-specific items travellers routinely forget for Dubai.\n\n## Safety & Health\n\nExpand to ~140 words on altitude/heat/water precautions as relevant, road-safety notes, emergency numbers (112 in India), nearest hospital guidance, and travel-insurance advice.\n\n## Responsible Travel\n\nExpand to ~120 words on minimising plastic, respecting wildlife and fragile ecosystems near Dubai, supporting local artisans (Dubai Mall, Mall of the Emirates, Gold & Spice Souk), and community-based tourism choices.\n\n## FAQ\n\nExpand to ~180 words: 6–8 question-and-answer pairs a traveller would ask before booking a luxury Dubai trip (transfers, connectivity, kids, solo travellers, cancellation, customisation).\n\n## Final Word\n\nExpand to ~90 words: a warm closing that sets expectations and points the reader to the booking action for Dubai Luxury — International City & Desert (6D/5N).\n\n---\n_content_status: skeleton — expand every section above to reach 2500 words total, keep the headings, then set content_status to \"complete\"._"
+  }
+]

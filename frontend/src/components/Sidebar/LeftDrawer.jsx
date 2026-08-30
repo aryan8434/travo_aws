@@ -1,9 +1,9 @@
 import React from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Home, Package, CreditCard, BookmarkCheck, Wallet, HelpCircle, Info, Settings, X, Compass, Sparkles, ExternalLink, ShieldCheck } from 'lucide-react';
+import { backdrop, slideInLeft } from '../../lib/motion';
 
 export default function LeftDrawer({ isOpen, onClose, currentView, setCurrentView }) {
-  if (!isOpen) return null;
-
   const menuItems = [
     { id: 'home', label: 'Home (AI Agent)', icon: Home, badge: 'RAG' },
     { id: 'wallet', label: 'TravoAI Wallet', icon: Wallet, badge: 'Pay' },
@@ -21,15 +21,27 @@ export default function LeftDrawer({ isOpen, onClose, currentView, setCurrentVie
   };
 
   return (
-    <div className="relative z-50">
-      {/* Backdrop overlay */}
-      <div
-        onClick={onClose}
-        className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity animate-fade-in"
-      />
+    <AnimatePresence>
+      {isOpen && (
+        <div className="relative z-50">
+          {/* Backdrop overlay */}
+          <motion.div
+            variants={backdrop}
+            initial="hidden"
+            animate="show"
+            exit="exit"
+            onClick={onClose}
+            className="fixed inset-0 bg-black/70 backdrop-blur-sm"
+          />
 
-      {/* Sliding Drawer Panel (YouTube style) */}
-      <aside className="fixed left-0 top-0 bottom-0 w-72 glass-panel border-r border-slate-800 bg-[#0f172a]/95 text-slate-100 flex flex-col justify-between p-4 shadow-2xl z-50 animate-slide-right">
+          {/* Sliding Drawer Panel (YouTube style) */}
+          <motion.aside
+            variants={slideInLeft}
+            initial="hidden"
+            animate="show"
+            exit="exit"
+            className="fixed left-0 top-0 bottom-0 w-72 glass-panel border-r border-slate-800 bg-[#0f172a]/95 text-slate-100 flex flex-col justify-between p-4 shadow-2xl z-50"
+          >
         {/* Top Header */}
         <div>
           <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
@@ -108,7 +120,9 @@ export default function LeftDrawer({ isOpen, onClose, currentView, setCurrentVie
             TravoAI v1.0 • Groq + Vectra RAG
           </div>
         </div>
-      </aside>
-    </div>
+          </motion.aside>
+        </div>
+      )}
+    </AnimatePresence>
   );
 }

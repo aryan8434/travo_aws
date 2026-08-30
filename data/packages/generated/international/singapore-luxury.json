@@ -1,0 +1,152 @@
+[
+  {
+    "package_id": "PKG-SINGAPORE-LUX",
+    "title": "Singapore Luxury — International City & Family (6D/5N)",
+    "destination": "Singapore",
+    "state": "",
+    "country": "Singapore",
+    "region": "international",
+    "price_inr": 445000,
+    "budget_tier": "luxury",
+    "days": 6,
+    "nights": 5,
+    "capacity_people": 2,
+    "hotel_name": "Marina Bay Skyline Luxury Suites",
+    "hotel_tier": "5-Star Luxury / Palace Collection",
+    "rating": 5,
+    "category": "International City & Family",
+    "best_months": [
+      "February",
+      "March",
+      "April",
+      "July",
+      "August",
+      "September"
+    ],
+    "weather": "Equatorial, 25–33°C",
+    "difficulty": "Easy",
+    "description": "A 6-day luxury international city & family experience in Singapore (Singapore). Includes Marina Bay Skyline Luxury Suites (5-Star Luxury / Palace Collection), all-day gourmet dining & private chef experience, private suv with chauffeur & on-call concierge, and guided highlights: Gardens by the Bay & Supertree show, Universal Studios Sentosa, Marina Bay Sands SkyPark, Singapore Zoo & Night Safari.",
+    "highlights": [
+      "Gardens by the Bay & Supertree show",
+      "Universal Studios Sentosa",
+      "Marina Bay Sands SkyPark",
+      "Singapore Zoo & Night Safari",
+      "Chinatown & Little India walk"
+    ],
+    "included_services": {
+      "meals": "All-day gourmet dining & private chef experience",
+      "transport": "Private SUV with chauffeur & on-call concierge",
+      "guide": "Certified local guide for sightseeing days",
+      "activities": "Entry & experience passes for: Gardens by the Bay & Supertree show, Universal Studios Sentosa, Marina Bay Sands SkyPark"
+    },
+    "excluded_services": [
+      "Flights / trains to the gateway city",
+      "Travel insurance",
+      "Personal expenses, tips and optional activities",
+      "Visa fees"
+    ],
+    "activities": [
+      "Gardens by the Bay & Supertree show",
+      "Universal Studios Sentosa",
+      "Marina Bay Sands SkyPark",
+      "Singapore Zoo & Night Safari",
+      "Chinatown & Little India walk",
+      "Jewel Changi rain vortex"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival in Singapore & easy start",
+        "activities": [
+          "Gardens by the Bay & Supertree show"
+        ],
+        "description": "Day 1: Gardens by the Bay & Supertree show. Unstructured time is built in for spa, pool or private experiences."
+      },
+      {
+        "day": 2,
+        "title": "Universal Studios Sentosa",
+        "activities": [
+          "Universal Studios Sentosa",
+          "Marina Bay Sands SkyPark"
+        ],
+        "description": "Day 2: Universal Studios Sentosa; Marina Bay Sands SkyPark. Unstructured time is built in for spa, pool or private experiences."
+      },
+      {
+        "day": 3,
+        "title": "Singapore Zoo & Night Safari",
+        "activities": [
+          "Singapore Zoo & Night Safari",
+          "Chinatown & Little India walk"
+        ],
+        "description": "Day 3: Singapore Zoo & Night Safari; Chinatown & Little India walk. Unstructured time is built in for spa, pool or private experiences."
+      },
+      {
+        "day": 4,
+        "title": "Jewel Changi rain vortex",
+        "activities": [
+          "Jewel Changi rain vortex"
+        ],
+        "description": "Day 4: Jewel Changi rain vortex. Unstructured time is built in for spa, pool or private experiences."
+      },
+      {
+        "day": 5,
+        "title": "Explore Singapore",
+        "activities": [],
+        "description": "Day 5: leisure day. Unstructured time is built in for spa, pool or private experiences."
+      },
+      {
+        "day": 6,
+        "title": "Souvenir time & departure",
+        "activities": [
+          "shopping at Orchard Road"
+        ],
+        "description": "Day 6: shopping at Orchard Road. Unstructured time is built in for spa, pool or private experiences."
+      }
+    ],
+    "nearby_attractions": [
+      "Sentosa",
+      "Pulau Ubin",
+      "Johor Bahru",
+      "Batam"
+    ],
+    "restaurants": [],
+    "shopping_places": [
+      "Orchard Road",
+      "Bugis Street",
+      "Haji Lane"
+    ],
+    "transport_options": {
+      "airport_transfer": true,
+      "private_car": true,
+      "scooter_available": false
+    },
+    "cancellation_policy": "Full refund up to 15 days before departure. 50% refund 7–14 days prior. No refund within 6 days of travel. Date changes subject to availability and fare difference.",
+    "travel_tips": [
+      "Best months to travel: February, March, April.",
+      "Carry clothing suited to: Equatorial, 25–33°C.",
+      "Try the local food: Hainanese chicken rice, chilli crab, laksa."
+    ],
+    "faqs": [
+      {
+        "question": "Is this package customisable?",
+        "answer": "Yes — hotels, duration and add-on experiences can be tailored. Price adjusts accordingly."
+      },
+      {
+        "question": "Are flights included?",
+        "answer": "No. Fares to the gateway city are separate; TravoAI can price them by distance on request."
+      }
+    ],
+    "tags": [
+      "singapore",
+      "luxury",
+      "international",
+      "city",
+      "family",
+      "international",
+      "6-day"
+    ],
+    "word_target": 2500,
+    "content_status": "skeleton",
+    "detailed_guide": "# Singapore Luxury — International City & Family (6D/5N) — Complete Travel Guide\n\n## Overview\n\nSingapore Luxury — International City & Family (6D/5N) is a 6-day, 5-night luxury journey through Singapore, Singapore. This guide expands the itinerary below into a complete, practical trip companion. Expand this section to roughly 180 words covering who the package suits, the headline experiences (Gardens by the Bay & Supertree show, Universal Studios Sentosa, Marina Bay Sands SkyPark), and the overall trip rhythm (unhurried and curated).\n\n## Why Visit\n\nSingapore earns its place on this route for its international city & family character. Expand to ~170 words on landscape, seasons, cultural texture and the single reason a traveller remembers this trip.\n\n## Getting There & Around\n\nMost travellers reach Singapore via the nearest airport or railhead, then continue by road. Expand to ~180 words: arrival gateways, approximate transfer times, local transport options, and how private suv with chauffeur & on-call concierge are handled in this package.\n\n## Day-by-Day Deep Dive\n\nThe 6-day plan is summarised in the itinerary array. Expand each day to ~110 words here — morning, afternoon and evening — weaving in Sentosa, Pulau Ubin, Johor Bahru, Batam. Total this section ~660 words.\n\n## Where to Stay\n\nAccommodation is Marina Bay Skyline Luxury Suites (5-Star Luxury / Palace Collection) or a comparable property. Expand to ~150 words on the stay experience, room style, on-site facilities and location trade-offs.\n\n## Food & Dining\n\nSignature dishes to seek out: Hainanese chicken rice, chilli crab, laksa, kaya toast, satay at Lau Pa Sat. Expand to ~170 words on where to eat, dietary notes (veg/Jain/vegan availability), and what the package meal plan (all-day gourmet dining & private chef experience) does and does not cover.\n\n## Culture & Etiquette\n\nExpand to ~140 words on local customs, dress codes at religious sites, photography etiquette, language basics and tipping norms relevant to Singapore.\n\n## Budget Breakdown (₹)\n\nPackage price is ₹4,45,000 for 2 travellers (Luxury tier). Expand to ~160 words itemising what is included, a realistic estimate of personal spending (meals outside the plan, entry fees, shopping, tips), and money-saving or upgrade options.\n\n## Best Time & Weather\n\nIdeal months: February, March, April, July, August, September. Typical conditions: Equatorial, 25–33°C. Expand to ~130 words on month-by-month trade-offs, festivals, and what to expect in shoulder season.\n\n## Packing List\n\nExpand to ~120 words: clothing for the climate above, footwear, documents, medication, and 3–4 destination-specific items travellers routinely forget for Singapore.\n\n## Safety & Health\n\nExpand to ~140 words on altitude/heat/water precautions as relevant, road-safety notes, emergency numbers (112 in India), nearest hospital guidance, and travel-insurance advice.\n\n## Responsible Travel\n\nExpand to ~120 words on minimising plastic, respecting wildlife and fragile ecosystems near Singapore, supporting local artisans (Orchard Road, Bugis Street, Haji Lane), and community-based tourism choices.\n\n## FAQ\n\nExpand to ~180 words: 6–8 question-and-answer pairs a traveller would ask before booking a luxury Singapore trip (transfers, connectivity, kids, solo travellers, cancellation, customisation).\n\n## Final Word\n\nExpand to ~90 words: a warm closing that sets expectations and points the reader to the booking action for Singapore Luxury — International City & Family (6D/5N).\n\n---\n_content_status: skeleton — expand every section above to reach 2500 words total, keep the headings, then set content_status to \"complete\"._"
+  }
+]

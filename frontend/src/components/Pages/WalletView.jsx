@@ -1,43 +1,49 @@
 import React, { useState } from 'react';
-import { Wallet, PlusCircle, CreditCard, ArrowLeft, ShieldCheck, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Wallet, PlusCircle, CreditCard, ArrowLeft, ShieldCheck, Sparkles, CheckCircle2, AlertCircle } from 'lucide-react';
 import { initializePayment } from '../../utils/razorpay';
 import { getWalletBalance, addWalletBalance } from '../../utils/storage';
+import InvoiceCard from '../Payment/InvoiceCard';
 
 export default function WalletView({ onBackToHome, onBalanceUpdate }) {
   const [balance, setBalance] = useState(getWalletBalance());
   const [customAmount, setCustomAmount] = useState('2000');
   const [loading, setLoading] = useState(false);
   const [successMsg, setSuccessMsg] = useState(null);
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [invoice, setInvoice] = useState(null);
 
-  const presetAmounts = [500, 1000, 2000, 5000, 10000];
+  const presetAmounts = [500, 1000, 2000, 5000, 10000, 50000];
 
   const handleAddMoney = () => {
-    const amount = Number(customAmount);
-    if (!amount || amount < 10) return;
+    const amount = Math.round(Number(customAmount));
+    if (!amount || amount < 1) return;
 
     setLoading(true);
     setSuccessMsg(null);
+    setErrorMsg(null);
+    setInvoice(null);
 
     const walletItem = {
       title: `TravoAI Wallet Top-Up (₹${amount.toLocaleString('en-IN')})`,
       price: amount,
-      package_id: 'WALLET_TOPUP'
+      package_id: 'WALLET_TOPUP',
     };
 
     initializePayment(
       walletItem,
-      (booking) => {
+      (result) => {
+        // Only ₹1 was charged via Razorpay — credit the full requested amount.
         const newBal = addWalletBalance(amount);
         setBalance(newBal);
         if (onBalanceUpdate) onBalanceUpdate(newBal);
-
-        setSuccessMsg(`🎉 Successfully credited ₹${amount.toLocaleString('en-IN')} to your TravoAI Wallet! (Razorpay test charge: ₹1)`);
+        setInvoice(result?.invoice || null);
+        setSuccessMsg(`🎉 ₹${amount.toLocaleString('en-IN')} credited to your TravoAI Wallet. Only ₹1 was charged via Razorpay — invoice raised for the full amount.`);
         setLoading(false);
       },
       (err) => {
-        console.warn('Wallet topup error:', err);
+        setErrorMsg(err?.message || 'Wallet top-up failed. Please try again.');
         setLoading(false);
-      }
+      },
     );
   };
 
@@ -55,7 +61,7 @@ export default function WalletView({ onBackToHome, onBalanceUpdate }) {
           <h2 className="text-2xl font-extrabold text-white flex items-center gap-2">
             <Wallet className="w-6 h-6 text-cyan-400" /> TravoAI Digital Wallet
           </h2>
-          <p className="text-xs text-slate-400">Add funds using Razorpay Standard Checkout for 1-click travel booking</p>
+          <p className="text-xs text-slate-400">Add any amount — Razorpay charges a flat ₹1 confirmation fee, and the full amount is credited to your wallet with a GST invoice.</p>
         </div>
       </div>
 
@@ -63,6 +69,19 @@ export default function WalletView({ onBackToHome, onBalanceUpdate }) {
         <div className="p-4 rounded-2xl bg-emerald-950/90 border border-emerald-500/30 text-emerald-300 text-xs font-semibold flex items-center gap-2 animate-fade-in shadow-xl">
           <CheckCircle2 className="w-5 h-5 text-emerald-400 shrink-0" />
           <span>{successMsg}</span>
+        </div>
+      )}
+
+      {errorMsg && (
+        <div className="p-4 rounded-2xl bg-rose-950/90 border border-rose-500/30 text-rose-300 text-xs font-semibold flex items-center gap-2 animate-fade-in shadow-xl">
+          <AlertCircle className="w-5 h-5 text-rose-400 shrink-0" />
+          <span>{errorMsg}</span>
+        </div>
+      )}
+
+      {invoice && (
+        <div className="max-w-lg">
+          <InvoiceCard invoice={invoice} />
         </div>
       )}
 
@@ -131,12 +150,13 @@ export default function WalletView({ onBackToHome, onBalanceUpdate }) {
 
           <button
             onClick={handleAddMoney}
-            disabled={loading || !customAmount || Number(customAmount) < 10}
+            disabled={loading || !customAmount || Number(customAmount) < 1}
             className="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-extrabold text-sm rounded-2xl shadow-xl shadow-cyan-500/20 flex items-center justify-center gap-2 transition-all disabled:opacity-50"
           >
             <CreditCard className="w-4 h-4" />
-            <span>{loading ? 'Opening Razorpay Modal...' : `Add ₹${Number(customAmount || 0).toLocaleString('en-IN')} via Razorpay (₹1 Test)`}</span>
+            <span>{loading ? 'Opening Razorpay…' : `Credit ₹${Number(customAmount || 0).toLocaleString('en-IN')} · pay ₹1`}</span>
           </button>
+          <p className="text-[10px] text-slate-500 text-center">You pay ₹1 now. ₹{Number(customAmount || 0).toLocaleString('en-IN')} is added to your wallet.</p>
         </div>
       </div>
     </div>

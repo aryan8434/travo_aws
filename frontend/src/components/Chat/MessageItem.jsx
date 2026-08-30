@@ -1,15 +1,26 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Bot, User, Sparkles, BookmarkCheck, Eye } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import BookingCard from './BookingCard';
 import TicketModal from '../Pages/TicketModal';
+import InvoiceCard from '../Payment/InvoiceCard';
+import { useMotion, staggerParent } from '../../lib/motion';
 
 export default function MessageItem({ message, onBookingComplete, onBookingError, onGoToBookings, currentUser, onOpenAuthModal }) {
   const [showTicketModal, setShowTicketModal] = useState(false);
   const isUser = message.sender === 'user';
+  const { fadeInUp } = useMotion();
 
   return (
-    <div className={`flex gap-3 my-4 ${isUser ? 'justify-end' : 'justify-start'} animate-fade-in`}>
+    <motion.div
+      variants={fadeInUp}
+      initial="hidden"
+      animate="show"
+      exit="exit"
+      layout
+      className={`flex gap-3 my-4 ${isUser ? 'justify-end' : 'justify-start'}`}
+    >
       {/* Bot Avatar */}
       {!isUser && (
         <div className="w-8 h-8 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center text-white shrink-0 shadow-md shadow-cyan-500/20">
@@ -50,8 +61,15 @@ export default function MessageItem({ message, onBookingComplete, onBookingError
                 className="px-3.5 py-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-bold text-xs rounded-xl shadow-md flex items-center gap-1.5 transition-all"
               >
                 <Eye className="w-4 h-4" />
-                <span>View / Download Ticket PDF</span>
+                <span>View Ticket &amp; Invoice</span>
               </button>
+            </div>
+          )}
+
+          {/* GST invoice for the full amount (₹1 charged via gateway) */}
+          {!isUser && (message.invoice || message.booking?.invoice) && (
+            <div className="mt-4">
+              <InvoiceCard invoice={message.invoice || message.booking.invoice} />
             </div>
           )}
         </div>
@@ -63,7 +81,7 @@ export default function MessageItem({ message, onBookingComplete, onBookingError
               <Sparkles className="w-3.5 h-3.5" /> Found {message.results.length} Available Option(s):
             </div>
 
-            <div className="space-y-2">
+            <motion.div className="space-y-2" variants={staggerParent} initial="hidden" animate="show">
               {message.results.map((item, idx) => (
                 <BookingCard
                   key={item.id || item.package_id || item.bus_id || item.flight_id || item.hotel_id || idx}
@@ -75,7 +93,7 @@ export default function MessageItem({ message, onBookingComplete, onBookingError
                   onOpenAuthModal={onOpenAuthModal}
                 />
               ))}
-            </div>
+            </motion.div>
           </div>
         )}
       </div>
@@ -94,6 +112,6 @@ export default function MessageItem({ message, onBookingComplete, onBookingError
           onClose={() => setShowTicketModal(false)}
         />
       )}
-    </div>
+    </motion.div>
   );
 }

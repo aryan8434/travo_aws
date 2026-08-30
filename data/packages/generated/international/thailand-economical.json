@@ -1,0 +1,151 @@
+[
+  {
+    "package_id": "PKG-THAILAND-ECO",
+    "title": "Thailand Economical — International Beach & City (6D/5N)",
+    "destination": "Thailand",
+    "state": "",
+    "country": "Thailand",
+    "region": "international",
+    "price_inr": 48000,
+    "budget_tier": "economical",
+    "days": 6,
+    "nights": 5,
+    "capacity_people": 2,
+    "hotel_name": "Sukhumvit City Budget Hotel",
+    "hotel_tier": "3-Star / Verified Homestay",
+    "rating": 4.2,
+    "category": "International Beach & City",
+    "best_months": [
+      "November",
+      "December",
+      "January",
+      "February",
+      "March"
+    ],
+    "weather": "Tropical, 26–34°C",
+    "difficulty": "Easy",
+    "description": "A 6-day economical international beach & city experience in Thailand (Thailand). Includes Sukhumvit City Budget Hotel (3-Star / Verified Homestay), daily breakfast, shared ac coach transfers, and guided highlights: Bangkok Grand Palace & Wat Pho, Phi Phi island speedboat tour, Phuket Big Buddha, Chiang Mai temples & night bazaar.",
+    "highlights": [
+      "Bangkok Grand Palace & Wat Pho",
+      "Phi Phi island speedboat tour",
+      "Phuket Big Buddha",
+      "Chiang Mai temples & night bazaar",
+      "Thai cooking class"
+    ],
+    "included_services": {
+      "meals": "Daily breakfast",
+      "transport": "Shared AC coach transfers",
+      "guide": "Certified local guide for sightseeing days",
+      "activities": "Entry & experience passes for: Bangkok Grand Palace & Wat Pho, Phi Phi island speedboat tour, Phuket Big Buddha"
+    },
+    "excluded_services": [
+      "Flights / trains to the gateway city",
+      "Travel insurance",
+      "Personal expenses, tips and optional activities",
+      "Visa fees"
+    ],
+    "activities": [
+      "Bangkok Grand Palace & Wat Pho",
+      "Phi Phi island speedboat tour",
+      "Phuket Big Buddha",
+      "Chiang Mai temples & night bazaar",
+      "Thai cooking class",
+      "floating market"
+    ],
+    "itinerary": [
+      {
+        "day": 1,
+        "title": "Arrival in Thailand & easy start",
+        "activities": [
+          "Bangkok Grand Palace & Wat Pho"
+        ],
+        "description": "Day 1: Bangkok Grand Palace & Wat Pho. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 2,
+        "title": "Phi Phi island speedboat tour",
+        "activities": [
+          "Phi Phi island speedboat tour",
+          "Phuket Big Buddha"
+        ],
+        "description": "Day 2: Phi Phi island speedboat tour; Phuket Big Buddha. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 3,
+        "title": "Chiang Mai temples & night bazaar",
+        "activities": [
+          "Chiang Mai temples & night bazaar",
+          "Thai cooking class"
+        ],
+        "description": "Day 3: Chiang Mai temples & night bazaar; Thai cooking class. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 4,
+        "title": "Floating market",
+        "activities": [
+          "floating market"
+        ],
+        "description": "Day 4: floating market. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 5,
+        "title": "Explore Thailand",
+        "activities": [],
+        "description": "Day 5: leisure day. A local guide accompanies the main sightseeing block."
+      },
+      {
+        "day": 6,
+        "title": "Souvenir time & departure",
+        "activities": [
+          "shopping at Chatuchak Weekend Market"
+        ],
+        "description": "Day 6: shopping at Chatuchak Weekend Market. A local guide accompanies the main sightseeing block."
+      }
+    ],
+    "nearby_attractions": [
+      "Krabi",
+      "Koh Samui",
+      "Ayutthaya",
+      "Pattaya"
+    ],
+    "restaurants": [],
+    "shopping_places": [
+      "Chatuchak Weekend Market",
+      "MBK Center",
+      "Chiang Mai Walking Street"
+    ],
+    "transport_options": {
+      "airport_transfer": true,
+      "private_car": false,
+      "scooter_available": false
+    },
+    "cancellation_policy": "Full refund up to 15 days before departure. 50% refund 7–14 days prior. No refund within 6 days of travel. Date changes subject to availability and fare difference.",
+    "travel_tips": [
+      "Best months to travel: November, December, January.",
+      "Carry clothing suited to: Tropical, 26–34°C.",
+      "Try the local food: pad thai, tom yum goong, green curry."
+    ],
+    "faqs": [
+      {
+        "question": "Is this package customisable?",
+        "answer": "Yes — hotels, duration and add-on experiences can be tailored. Price adjusts accordingly."
+      },
+      {
+        "question": "Are flights included?",
+        "answer": "No. Fares to the gateway city are separate; TravoAI can price them by distance on request."
+      }
+    ],
+    "tags": [
+      "thailand",
+      "economical",
+      "international",
+      "beach",
+      "city",
+      "international",
+      "6-day"
+    ],
+    "word_target": 2500,
+    "content_status": "skeleton",
+    "detailed_guide": "# Thailand Economical — International Beach & City (6D/5N) — Complete Travel Guide\n\n## Overview\n\nThailand Economical — International Beach & City (6D/5N) is a 6-day, 5-night economical journey through Thailand, Thailand. This guide expands the itinerary below into a complete, practical trip companion. Expand this section to roughly 180 words covering who the package suits, the headline experiences (Bangkok Grand Palace & Wat Pho, Phi Phi island speedboat tour, Phuket Big Buddha), and the overall trip rhythm (value-focused).\n\n## Why Visit\n\nThailand earns its place on this route for its international beach & city character. Expand to ~170 words on landscape, seasons, cultural texture and the single reason a traveller remembers this trip.\n\n## Getting There & Around\n\nMost travellers reach Thailand via the nearest airport or railhead, then continue by road. Expand to ~180 words: arrival gateways, approximate transfer times, local transport options, and how shared ac coach transfers are handled in this package.\n\n## Day-by-Day Deep Dive\n\nThe 6-day plan is summarised in the itinerary array. Expand each day to ~110 words here — morning, afternoon and evening — weaving in Krabi, Koh Samui, Ayutthaya, Pattaya. Total this section ~660 words.\n\n## Where to Stay\n\nAccommodation is Sukhumvit City Budget Hotel (3-Star / Verified Homestay) or a comparable property. Expand to ~150 words on the stay experience, room style, on-site facilities and location trade-offs.\n\n## Food & Dining\n\nSignature dishes to seek out: pad thai, tom yum goong, green curry, mango sticky rice, boat noodles. Expand to ~170 words on where to eat, dietary notes (veg/Jain/vegan availability), and what the package meal plan (daily breakfast) does and does not cover.\n\n## Culture & Etiquette\n\nExpand to ~140 words on local customs, dress codes at religious sites, photography etiquette, language basics and tipping norms relevant to Thailand.\n\n## Budget Breakdown (₹)\n\nPackage price is ₹48,000 for 2 travellers (Economical tier). Expand to ~160 words itemising what is included, a realistic estimate of personal spending (meals outside the plan, entry fees, shopping, tips), and money-saving or upgrade options.\n\n## Best Time & Weather\n\nIdeal months: November, December, January, February, March. Typical conditions: Tropical, 26–34°C. Expand to ~130 words on month-by-month trade-offs, festivals, and what to expect in shoulder season.\n\n## Packing List\n\nExpand to ~120 words: clothing for the climate above, footwear, documents, medication, and 3–4 destination-specific items travellers routinely forget for Thailand.\n\n## Safety & Health\n\nExpand to ~140 words on altitude/heat/water precautions as relevant, road-safety notes, emergency numbers (112 in India), nearest hospital guidance, and travel-insurance advice.\n\n## Responsible Travel\n\nExpand to ~120 words on minimising plastic, respecting wildlife and fragile ecosystems near Thailand, supporting local artisans (Chatuchak Weekend Market, MBK Center, Chiang Mai Walking Street), and community-based tourism choices.\n\n## FAQ\n\nExpand to ~180 words: 6–8 question-and-answer pairs a traveller would ask before booking a economical Thailand trip (transfers, connectivity, kids, solo travellers, cancellation, customisation).\n\n## Final Word\n\nExpand to ~90 words: a warm closing that sets expectations and points the reader to the booking action for Thailand Economical — International Beach & City (6D/5N).\n\n---\n_content_status: skeleton — expand every section above to reach 2500 words total, keep the headings, then set content_status to \"complete\"._"
+  }
+]

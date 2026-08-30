@@ -124,11 +124,18 @@ export default function TransactionsView({ transactions, onBackToHome }) {
                 {/* Amount Details */}
                 <div className="text-left md:text-right border-t md:border-t-0 pt-2 md:pt-0 border-slate-800">
                   <div className="text-base font-extrabold text-cyan-400">
-                    ₹{Number(txn.actual_price || 0).toLocaleString('en-IN')}
+                    ₹{Number(txn.nominal_amount ?? txn.actual_price ?? 0).toLocaleString('en-IN')}
                   </div>
                   <span className="text-[10px] text-slate-400 block font-mono">
-                    Gateway Charge: ₹1 (Test)
+                    {txn.payment_method === 'TravoAI Wallet'
+                      ? 'Settled from wallet'
+                      : `Gateway charge: ₹${Number(txn.charged_amount ?? 1).toLocaleString('en-IN')}`}
                   </span>
+                  {txn.invoice?.invoice_no && (
+                    <span className="text-[10px] text-slate-500 block font-mono">
+                      Invoice {txn.invoice.invoice_no}
+                    </span>
+                  )}
                   <span className="text-[10px] text-emerald-400 font-semibold flex items-center gap-1 md:justify-end mt-0.5">
                     <ShieldCheck className="w-3 h-3" /> {txn.payment_method || 'Razorpay PG'}
                   </span>

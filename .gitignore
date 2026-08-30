@@ -12,6 +12,13 @@ dist
 dist-ssr
 *.local
 .env
+.env.*
+!.env.example
+
+# Vector index — rebuilt by `npm run reindex`
+vectra_index/
+uploads/*
+!uploads/.gitkeep
 
 # Editor directories and files
 .vscode/*
